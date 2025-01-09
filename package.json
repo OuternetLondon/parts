@@ -1,0 +1,24 @@
+{
+  "name": "outernetapp",
+  "version": "1.0.0",
+  "description": "## General - This is starting from a base example Blazor project - We'll be working on making the same project in Node.js - The Node.js project can exist in the same folder structure as the Blazor project - App is mobile optimized - App uses bootstrap 5 - UI is very modern and mobile optimized, And uses black as the primary background color, white text and #b59654 for accent or button colors (with black text when used as a background).",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2",
+    "install": "^0.13.0",
+    "qrcode": "^1.5.4",
+    "socket.io": "^4.8.1",
+    "sqlite3": "^5.1.7",
+    "ws": "^8.18.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}

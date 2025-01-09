@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Steering Wheel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        #steering-data {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+        }
+        #calibrate-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #steering-wheel {
+            width: 200px;
+            height: 200px;
+            border: 10px solid #333;
+            border-radius: 50%;
+            margin-top: 20px;
+            transform-origin: center center;
+            position: relative;
+        }
+        #center-mark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 10px;
+            height: 50px;
+            background-color: #333;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+<body>
+    <h1>Phone Steering Wheel</h1>
+    <div id="connection-status">Connecting...</div>
+    <button id="calibrate-btn">Calibrate</button>
+    <div id="steering-wheel">
+        <div id="center-mark"></div>
+    </div>
+    <div id="steering-data">
+        Tilt Left/Right: <span id="gamma">0</span>°<br>
+        Tilt Forward/Back: <span id="beta">0</span>°
+    </div>
+
+    <script>
+        
+        
+    </script>
+</body>
+</html>

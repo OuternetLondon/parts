@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+
+  jack-wood-container:
+    container_name: jack-wood-container
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5055:5055"
+    volumes:
+      - .:/app
+      - ../certs:/etc/letsencrypt
+    environment:
+      NODE_ENV: development
