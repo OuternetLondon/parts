@@ -14,7 +14,7 @@ const generateJSON = (userId, controlType, action, data) => {
   };
 };
 
-function Button(){
+function Button({style, component_mapping}){
       const {user} = useContext(UserContext);
       const socket = useSocket()
       
@@ -28,9 +28,10 @@ function Button(){
         <>
        <button
        onClick={() => handleClick()}
-       className="w-16 h-16 bg-blue-500 hover:bg-green-500 rounded-full transition-colors duration-200"
+       style={style}
+       //className="w-16 h-16 bg-blue-500 hover:bg-green-500 rounded-full transition-colors duration-200"
     >
-      Button
+      {component_mapping}
     </button>
         </>
     )

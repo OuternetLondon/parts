@@ -1,8 +1,6 @@
 import React, { useState, useRef, useEffect, useContext} from 'react';
-import { io } from 'socket.io-client';
 import { UserContext } from '../context/userContext';
 import { useSocket } from '../context/socketContext';
-
 
 const generateJSON = (userId, controlType, action, data) => {
   return {
@@ -15,19 +13,23 @@ const generateJSON = (userId, controlType, action, data) => {
   };
 };
 
-const Joystick = () => {
+const Joystick = ({styles}) => {
   const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ angle: 0, distance: 0 });
   const joystickRef = useRef(null);
   const [center, setCenter] = useState({ x: 0, y: 0 });
   const {user} = useContext(UserContext);
-  const socket = useSocket()
+  const socket = useSocket();
   
-  
+  console.log("styles", styles);
+
+  useEffect(() => {
+    console.log('Styles:', styles);
+  }, [styles]);
   // Constants
-  const OUTER_CIRCLE_SIZE = 120;
-  const INNER_CIRCLE_SIZE = 40;
-  const MAX_DISTANCE = (OUTER_CIRCLE_SIZE - INNER_CIRCLE_SIZE) / 2;
+  const OUTER_CIRCLE_SIZE = styles.outer_h;
+  const INNER_CIRCLE_SIZE = styles.inner_h;
+  const MAX_DISTANCE = OUTER_CIRCLE_SIZE / 2; // Constrain to outer circle radius
 
   useEffect(() => {
     if (joystickRef.current) {
@@ -44,21 +46,27 @@ const Joystick = () => {
     let dx = clientX - center.x;
     let dy = clientY - center.y;
 
-    // Calculate distance from center
+    // Calculate raw distance from center
     let distance = Math.sqrt(dx * dx + dy * dy);
 
-    // Normalize distance to a value between 0 and 1
-    distance = Math.min(distance, MAX_DISTANCE) / MAX_DISTANCE;
+    // Constrain distance to outer circle radius (midpoint constraint)
+    if (distance > MAX_DISTANCE) {
+      const scale = MAX_DISTANCE / distance;
+      dx *= scale;
+      dy *= scale;
+      distance = MAX_DISTANCE;
+    }
 
     // Calculate angle in degrees (0 to 360)
-    // atan2 returns angle in radians from -π to π
     let angle = Math.atan2(dy, dx) * (180 / Math.PI);
-    // Convert to 0-360 range
     angle = angle < 0 ? angle + 360 : angle;
 
+    // Normalize distance to 0-1 range relative to outer radius
+    distance = distance / MAX_DISTANCE;
+
     return {
-      angle: angle,
-      distance: distance
+      angle,
+      distance
     };
   };
 
@@ -122,18 +130,21 @@ const Joystick = () => {
   };
 
   useEffect(() => { 
-    if(!user) return
-    let JSON = generateJSON( user, "joystick", "mouseEvent", {angle: position.angle, distance: position.distance})
+    if(!user) return;
+    const JSON = generateJSON(
+      user, 
+      "joystick", 
+      "mouseEvent", 
+      {angle: position.angle, distance: position.distance}
+    );
     socket.emit('controls_data', JSON);
-
-   
   }, [user, position, socket]);
 
   // Calculate visual position of inner circle
   const visualPosition = pressed ? getPolarToCartesian(position.angle, position.distance) : { x: 0, y: 0 };
   
   return (
-    <div className="p-4">
+    <div className="p-4" style={{position: "absolute", left: styles.position.left, top: styles.position.top}}>
       <div
         ref={joystickRef}
         className="relative select-none touch-none"
@@ -151,10 +162,11 @@ const Joystick = () => {
       >
         {/* Outer circle */}
         <div
-          className="absolute rounded-full border-2 border-gray-400"
+          className="absolute rounded-full border-2"
           style={{
             width: OUTER_CIRCLE_SIZE,
-            height: OUTER_CIRCLE_SIZE
+            height: OUTER_CIRCLE_SIZE,
+            backgroundColor: styles.outer_color,
           }}
         />
         
@@ -168,7 +180,8 @@ const Joystick = () => {
               left: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.x,
               top: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.y,
               transform: 'translate(0, 0)',
-              transition: 'transform 0.1s ease-out'
+              transition: 'transform 0.1s ease-out',
+              backgroundColor: styles.inner_color,
             }}
           />
         )}
