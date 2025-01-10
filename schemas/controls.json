@@ -1,0 +1,68 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "Unique identifier for the user."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 formatted timestamp."
+    },
+    "controlType": {
+      "type": "string",
+      "enum": ["steeringWheel", "joystick", "button"],
+      "description": "Type of control component."
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the control schema."
+    },
+    "action": {
+      "type": "string",
+      "enum": ["orientation", "mouseEvent", "click"],
+      "description": "Type of action performed by the control."
+    },
+    "data": {
+      "type": "object",
+      "description": "Additional data related to the control's action.",
+      "oneOf": [
+        {
+          "properties": {
+            "orientation_beta": {
+              "type": "number",
+              "description": "The beta orientation value for steering wheel."
+            },
+            "orientation_gama": {
+              "type": "number",
+              "description": "The gamma orientation value for steering wheel."
+            }
+          },
+          "required": ["orientation_beta", "orientation_gama"]
+        },
+        {
+          "properties": {
+            "angle": {
+              "type": "number",
+              "description": "The angle of joystick movement."
+            },
+            "distance": {
+              "type": "string",
+              "pattern": "^\\d+%$",
+              "description": "The distance of joystick movement as a percentage."
+            }
+          },
+          "required": ["angle", "distance"]
+        },
+        {
+          "properties": {},
+          "description": "No data required for button actions."
+        }
+      ]
+    }
+  },
+  "required": ["userId", "timestamp", "controlType", "version", "action"],
+  "description": "Schema for control JSON data sent to the backend."
+}

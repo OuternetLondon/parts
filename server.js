@@ -3,20 +3,30 @@ const express = require('express');
 const path = require('path');
 const { createServer } = require('node:http');
 const {Server} = require("socket.io")
+//const controls = require('./controls.json');
+
 
 const app = express();
-const PORT = process.env.PORT || 5055;
+const PORT = process.env.PORT || 5056;
 // Middleware to parse JSON and URL-encoded data
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // Serve static files from the 'wwwroot' and 'public' directories
 //app.use(express.static(path.join(__dirname, 'wwwroot')));
 
+/*
+app.get('/api/controls', (req, res) => {
+  res.json(controls);
+});*/
+
 app.use(express.static(path.join(__dirname, './frontend_wheel/dist')));
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, './frontend_wheel/dist', 'index.html'));
 }); 
-app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+//app.use(express.static(path.join(__dirname, 'public')));
 const server = createServer(app);
 const io = new Server(server,{
   cors: {
@@ -25,17 +35,14 @@ const io = new Server(server,{
   }
 })
 
-const users = new Map()
+
 
 io.on('connection', (socket) => {
   console.log('A user connected:', socket.id);
-  users.set(socket.id, {acceleration: {x: 0, y: 0, z: 0}, rotationRate: {alpha: 0, beta: 0, gamma: 0}})
+ // wheel_users.set(socket.id, {acceleration: {x: 0, y: 0, z: 0}, rotationRate: {alpha: 0, beta: 0, gamma: 0}})
   // Handle a message from the client
-  socket.on('motion_data', (data, user) => {
-      //console.log('Message received:', data);
-      users.set(user, data)
-      console.log("users", users)
-     // io.emit('message', `Server: ${data}`); // Broadcast message to all clients
+  socket.on('controls_data', (JSON) => {
+     console.log('Message received:', JSON);
   });
 
   socket.on('disconnect', () => {

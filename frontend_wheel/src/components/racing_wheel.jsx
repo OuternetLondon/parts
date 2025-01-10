@@ -1,142 +1,74 @@
-import { useRef, useEffect } from "react";
+import { useState, useEffect, useContext } from 'react'
+import useWebSocket from 'react-use-websocket';
+import React from 'react';
+import useDeviceMotion from '../hooks/useMotion'
+import "../index.css"
+import RacingWheelDesign from './racing_wheel_design'
+import { v4 as uuidv4 } from 'uuid';
+import { io } from 'socket.io-client';
+//import useUser from '../hooks/useUser';
+import { UserContext } from '../context/userContext';
+import { useSocket } from '../context/socketContext';
 
-const RacingWheel = ({ rotation }) => {
-    const canvasRef = useRef(null);
-  
-    const drawWheel = (ctx) => {
-      const centerX = ctx.canvas.width / 2;
-      const centerY = ctx.canvas.height / 2;
-      const radius = Math.min(centerX, centerY) - 20;
-  
-      // Clear canvas
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-      
-      ctx.save();
-      ctx.translate(centerX, centerY);
-      ctx.rotate(rotation * Math.PI / 180);
-  
-      // Draw the main rim using straight lines
-      ctx.beginPath();
-      const segments = 32;
-      const startAngle = 0.3 * Math.PI;
-      const endAngle = 2.7 * Math.PI;
-      const angleRange = endAngle - startAngle;
-      
-      for (let i = 0; i <= segments; i++) {
-        const angle = startAngle + (angleRange * i / segments);
-        const x = Math.cos(angle) * (radius - 20);
-        const y = Math.sin(angle) * (radius - 20);
-        
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.lineWidth = 45;
-      ctx.lineCap = 'butt';
-      ctx.strokeStyle = '#1a1a1a';
-      ctx.stroke();
-  
-      // Draw yellow center marker
-      ctx.beginPath();
-      ctx.moveTo(-20, -radius + 10);
-      ctx.lineTo(20, -radius + 10);
-      ctx.lineTo(15, -radius + 30);
-      ctx.lineTo(-15, -radius + 30);
-      ctx.closePath();
-      ctx.fillStyle = '#FFD700';
-      ctx.fill();
-  
-      // Draw spokes
-      const drawSpoke = (angle) => {
-        ctx.save();
-        ctx.rotate(angle);
-        
-        ctx.beginPath();
-        ctx.moveTo(-15, -20);
-        ctx.lineTo(-20, -radius + 40);
-        ctx.lineTo(20, -radius + 40);
-        ctx.lineTo(15, -20);
-        ctx.closePath();
-        ctx.fillStyle = '#404040';
-        ctx.fill();
-        
-        ctx.restore();
-      };
-  
-      drawSpoke(0);
-      drawSpoke(2 * Math.PI / 3);
-      drawSpoke(-2 * Math.PI / 3);
-  
-      // Center hub (octagonal)
-      ctx.beginPath();
-      const hubSize = 40;
-      for (let i = 0; i < 8; i++) {
-        const angle = (i * Math.PI / 4);
-        const x = Math.cos(angle) * hubSize;
-        const y = Math.sin(angle) * hubSize;
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.closePath();
-      ctx.fillStyle = '#000000';
-      ctx.fill();
-  
-      // Inner hub (hexagonal)
-      ctx.beginPath();
-      const innerHubSize = 30;
-      for (let i = 0; i < 6; i++) {
-        const angle = (i * Math.PI / 3);
-        const x = Math.cos(angle) * innerHubSize;
-        const y = Math.sin(angle) * innerHubSize;
-        if (i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
-        }
-      }
-      ctx.closePath();
-      ctx.strokeStyle = '#333';
-      ctx.lineWidth = 3;
-      ctx.stroke();
-  
-      ctx.restore();
-    };
-  
-    useEffect(() => {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-  
-      canvas.width = 400;
-      canvas.height = 400;
-  
-      // Animation loop
-      let animationFrameId;
-      const render = () => {
-        drawWheel(ctx);
-        animationFrameId = window.requestAnimationFrame(render);
-      };
-      render();
-  
-      return () => {
-        window.cancelAnimationFrame(animationFrameId);
-      };
-    }, [rotation]);
-  
-    return (
-      <canvas
-        ref={canvasRef}
-        className="max-w-full max-h-full"
-        style={{
-          width: '400px',
-          height: '400px'
-        }}
-      />
-    );
+//const socket = io("https://tech.outernetglobal.com/testenv"); 
+//const socket = io("http://localhost:5057"); 
+
+const generateJSON = (userId, controlType, action, data) => {
+  return {
+    userId,
+    timestamp: new Date().toISOString(),
+    name: "default",
+    controlType,
+    action,
+    data,
   };
+};
+
+function RacingWheel() {
+  const {user} = useContext(UserContext);
+  const motion = useDeviceMotion();
+  const [rotation, setRotation] = useState(0); // Wheel rotation angle
+  const socket = useSocket()
+
+  useEffect(() => {
+    const { beta, gamma } = motion.orientation; // Beta (forward/backward), Gamma (side tilt)
+    let angle = 0;
   
-    export default RacingWheel;
+    // Determine if the phone is horizontal or vertical
+    const isHorizontal = Math.abs(beta) < 45; // Phone is horizontal if beta is small
+  
+    // Use beta for horizontal, gamma for vertical
+    const tilt = isHorizontal ? beta : gamma;
+  
+    // Adjust rotation range and sensitivity
+    const maxTilt = 80; // Maximum typical tilt value for full rotation
+    const minTilt = 5; // Minimum tilt threshold to ignore small movements
+    if (Math.abs(tilt) > minTilt) { // Apply dead zone for small tilts
+      // Map tilt to -45° to 45° rotation
+      angle = Math.max(-90, Math.min(90, (tilt / maxTilt) * 90));
+    }
+  
+    // Smooth rotation using weighted average
+    setRotation((prevRotation) => prevRotation * 0.8 + angle * 0.2);
+  }, [motion.orientation]);
+
+  
+
+useEffect(() => {
+  if (!user) return
+  if (!socket) return
+  let JSON = generateJSON( user, "steeringWheel", "orientation", {"orientation-gama": motion.orientation.gamma, "orientation-beta": motion.orientation.beta})
+  socket.emit('controls_data', JSON);  
+
+}, [user, motion, socket]);
+
+
+  return (
+    <>
+      <div>
+      <RacingWheelDesign rotation={rotation} />
+    </div>
+    </>
+  )
+}
+export default RacingWheel
