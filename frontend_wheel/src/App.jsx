@@ -9,19 +9,19 @@ const App = () => {
     timestamp: "2023-01-07T14:00:00Z",
     components: [
       {
-        id: "button1",
+        name: "button1",
         type: "button",
         position: { x: 100, y: 200 },
         size: { width: 100, height: 100 },
         style: {
-          color: "red",
+          color: "grey",
           border: "2px solid black",
           borderRadius: "50%",
         },
         mapping: "A",
       },
       {
-        id: "joystick1",
+        name: "joystickL",
         type: "joystick",
         position: { x: 300, y: 400 },
         size: { inner_height_width: 40, outer_height_width: 200 },
@@ -30,14 +30,32 @@ const App = () => {
           outer_color: "grey",
           border: "1px solid gray",
         },
-        mapping: "leftStick",
+        mapping: "joystickL",
+      },
+      {
+        name: "joystickR",
+        type: "joystick",
+        position: { x: 600, y: 400 },
+        size: { inner_height_width: 40, outer_height_width: 200 },
+        style: {
+          inner_color: "blue",
+          outer_color: "grey",
+          border: "1px solid gray",
+        },
+        mapping: "joystickR",
       },
       {
         id: "steeringWheel1",
         type: "steeringWheel",
         position: { x: 500, y: 600 },
         size: { width: 200, height: 200 },
-        style: { color: "gray", border: "3px solid black" },
+        style: {
+          outer_rim_color: "gray",
+          spoke_color: "red",
+          hub_color: "black",
+          center_marker_color: "orange",
+          border: "3px solid black",
+        },
         mapping: "rightStick",
       },
     ],
@@ -62,6 +80,7 @@ const App = () => {
             return (
               <Button
                 key={component.id}
+                name={component.name}
                 style={style}
                 component_mapping={component.mapping}
               ></Button>
@@ -77,7 +96,7 @@ const App = () => {
                 top: `${component.position.y}px`,
               },
             };
-            return <Joystick styles={styles}></Joystick>;
+            return <Joystick styles={styles} name={component.name}></Joystick>;
           } else if (component.type === "steeringWheel") {
             const style = {
               position: "absolute",
@@ -85,10 +104,14 @@ const App = () => {
               top: `${component.position.y}px`,
               width: `${component.size.width}px`,
               height: `${component.size.height}px`,
-              backgroundColor: component.style.color,
+              outer_rim_color: component.style.outer_rim_color,
+              spoke_color: component.style.spoke_color,
+              hub_color: component.style.hub_color,
               border: component.style.border,
             };
-            return <RacingWheel style={style}></RacingWheel>;
+            return (
+              <RacingWheel name={component.name} style={style}></RacingWheel>
+            );
           }
 
           return null;

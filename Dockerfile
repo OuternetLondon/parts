@@ -3,7 +3,7 @@ FROM node:22 AS frontend-builder
 # Set working directory for the Vite React app
 WORKDIR /app/frontend_wheel
 # Copy Vite app dependencies
-COPY frontend_wheel/package*.json ./
+COPY frontend_whcd eel/package*.json ./
 # Install Vite app dependencies
 RUN npm install
 # Copy the rest of the Vite app source code

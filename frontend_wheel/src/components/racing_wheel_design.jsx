@@ -1,23 +1,6 @@
 import { useRef, useEffect } from "react";
-
 const RacingWheelDesign = ({ rotation, style }) => {
   const canvasRef = useRef(null);
-
-  // Parse style properties with defaults
-  const wheelStyle = {
-    width: style?.width || 400,
-    height: style?.height || 400,
-    backgroundColor: style?.color || "#1a1a1a",
-    borderColor: style?.border ? style.border.split(" ")[2] : "#000000",
-    borderWidth: style?.border ? parseInt(style.border.split(" ")[0]) : 3,
-    position: style?.position || "static",
-    left: style?.left || "auto",
-    top: style?.top || "auto",
-    spokeColor: "#404040",
-    markerColor: "#FFD700",
-    hubColor: "#000000",
-    hubBorderColor: "#333",
-  };
 
   const drawWheel = (ctx) => {
     const centerX = ctx.canvas.width / 2;
@@ -51,7 +34,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
     }
     ctx.lineWidth = 45;
     ctx.lineCap = "butt";
-    ctx.strokeStyle = wheelStyle.backgroundColor;
+    ctx.strokeStyle = style.outer_rim_color;
     ctx.stroke();
 
     // Draw yellow center marker
@@ -61,7 +44,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
     ctx.lineTo(15, -radius + 30);
     ctx.lineTo(-15, -radius + 30);
     ctx.closePath();
-    ctx.fillStyle = wheelStyle.markerColor;
+    ctx.fillStyle = style.center_marker_color;
     ctx.fill();
 
     // Draw spokes
@@ -75,7 +58,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
       ctx.lineTo(20, -radius + 40);
       ctx.lineTo(15, -20);
       ctx.closePath();
-      ctx.fillStyle = wheelStyle.spokeColor;
+      ctx.fillStyle = style.spoke_color;
       ctx.fill();
 
       ctx.restore();
@@ -99,7 +82,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
       }
     }
     ctx.closePath();
-    ctx.fillStyle = wheelStyle.hubColor;
+    ctx.fillStyle = style.hub_color;
     ctx.fill();
 
     // Inner hub (hexagonal)
@@ -116,8 +99,8 @@ const RacingWheelDesign = ({ rotation, style }) => {
       }
     }
     ctx.closePath();
-    ctx.strokeStyle = wheelStyle.hubBorderColor;
-    ctx.lineWidth = wheelStyle.borderWidth;
+    ctx.strokeStyle = style.hub_color;
+    ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.restore();
@@ -125,14 +108,10 @@ const RacingWheelDesign = ({ rotation, style }) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
-    if (!ctx) return;
 
-    // Set canvas size based on style
-    canvas.width = wheelStyle.width;
-    canvas.height = wheelStyle.height;
+    canvas.width = 400;
+    canvas.height = 400;
 
     // Animation loop
     let animationFrameId;
@@ -145,34 +124,17 @@ const RacingWheelDesign = ({ rotation, style }) => {
     return () => {
       window.cancelAnimationFrame(animationFrameId);
     };
-  }, [
-    rotation,
-    wheelStyle.width,
-    wheelStyle.height,
-    wheelStyle.backgroundColor,
-  ]);
+  }, [rotation]);
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
+      className="max-w-full max-h-full"
       style={{
-        position: wheelStyle.position,
-        left: wheelStyle.left,
-        top: wheelStyle.top,
-        width: `${wheelStyle.width}px`,
-        height: `${wheelStyle.height}px`,
-        border:
-          style?.border ||
-          `${wheelStyle.borderWidth}px solid ${wheelStyle.borderColor}`,
+        width: "400px",
+        height: "400px",
       }}
-    >
-      <canvas
-        ref={canvasRef}
-        style={{
-          width: "100%",
-          height: "100%",
-        }}
-      />
-    </div>
+    />
   );
 };
 

@@ -13,18 +13,18 @@ import { useSocket } from "../context/socketContext";
 //const socket = io("https://tech.outernetglobal.com/testenv");
 //const socket = io("http://localhost:5057");
 
-const generateJSON = (userId, controlType, action, data) => {
+const generateJSON = (userId, name, controlType, action, data) => {
   return {
     userId,
     timestamp: new Date().toISOString(),
-    name: "default",
+    name,
     controlType,
     action,
     data,
   };
 };
 
-function RacingWheel({ style }) {
+function RacingWheel({ style, name }) {
   const { user } = useContext(UserContext);
   const motion = useDeviceMotion();
   const [rotation, setRotation] = useState(0); // Wheel rotation angle
@@ -56,7 +56,7 @@ function RacingWheel({ style }) {
   useEffect(() => {
     if (!user) return;
     if (!socket) return;
-    let JSON = generateJSON(user, "steeringWheel", "orientation", {
+    let JSON = generateJSON(user, name, "steeringWheel", "orientation", {
       "orientation-gama": motion.orientation.gamma,
       "orientation-beta": motion.orientation.beta,
     });
@@ -65,7 +65,7 @@ function RacingWheel({ style }) {
 
   return (
     <>
-      <div>
+      <div style={{ position: "absolute", left: style.left, top: style.top }}>
         <RacingWheelDesign style={style} rotation={rotation} />
       </div>
     </>
