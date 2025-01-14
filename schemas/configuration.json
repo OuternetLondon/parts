@@ -1,0 +1,110 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "Unique identifier for the user."
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Timestamp of the configuration."
+    },
+    "components": {
+      "type": "array",
+      "description": "List of components in the configuration.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the component."
+          },
+          "type": {
+            "type": "string",
+            "enum": ["button", "joystick", "steeringWheel"],
+            "description": "Type of the component."
+          },
+          "position": {
+            "type": "object",
+            "properties": {
+              "x": { "type": "number", "description": "X coordinate." },
+              "y": { "type": "number", "description": "Y coordinate." }
+            },
+            "required": ["x", "y"],
+            "description": "Position of the component."
+          },
+          "size": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "width": { "type": "number" },
+                  "height": { "type": "number" }
+                },
+                "required": ["width", "height"]
+              },
+              {
+                "properties": {
+                  "inner_height_width": { "type": "number" },
+                  "outer_height_width": { "type": "number" }
+                },
+                "required": ["inner_height_width", "outer_height_width"]
+              }
+            ],
+            "description": "Size of the component."
+          },
+          "style": {
+            "type": "object",
+            "oneOf": [
+              {
+                "properties": {
+                  "color": { "type": "string" },
+                  "border": { "type": "string" },
+                  "borderRadius": { "type": "string" }
+                },
+                "required": ["color", "border", "borderRadius"],
+                "description": "Style properties for a button."
+              },
+              {
+                "properties": {
+                  "inner_color": { "type": "string" },
+                  "outer_color": { "type": "string" },
+                  "border": { "type": "string" }
+                },
+                "required": ["inner_color", "outer_color", "border"],
+                "description": "Style properties for a joystick."
+              },
+              {
+                "properties": {
+                  "outer_rim_color": { "type": "string" },
+                  "spoke_color": { "type": "string" },
+                  "hub_color": { "type": "string" },
+                  "center_marker_color": { "type": "string" },
+                  "border": { "type": "string" }
+                },
+                "required": [
+                  "outer_rim_color",
+                  "spoke_color",
+                  "hub_color",
+                  "center_marker_color",
+                  "border"
+                ],
+                "description": "Style properties for a steering wheel."
+              }
+            ],
+            "description": "Style properties specific to the component type."
+          },
+          "mapping": {
+            "type": "string",
+            "description": "Mapping of the component."
+          }
+        },
+        "required": ["name", "type", "position", "size", "style", "mapping"],
+        "description": "Configuration for a single component."
+      }
+    }
+  },
+  "required": ["userId", "timestamp", "components"]
+}
