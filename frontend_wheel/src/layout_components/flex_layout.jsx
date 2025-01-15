@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import Loop_components from "./loop_components";
 
-const GridLayout = ({ tools, style }) => {
+const FlexLayout = ({ tools, style }) => {
   return (
     <>
       <div style={{ ...style }}>
@@ -11,4 +11,4 @@ const GridLayout = ({ tools, style }) => {
   );
 };
 
-export default GridLayout;
+export default FlexLayout;

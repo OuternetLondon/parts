@@ -8,6 +8,7 @@ import AbsolutePositionedContainer from "./layout_components/absolutePositioned"
 import GridLayout from "./layout_components/gridLayout";
 import ButtonJoystick from "./layout_components/ButtonJoystick";
 import JoystickButton from "./layout_components/joystickButton";
+import FlexLayout from "./layout_components/flex_layout";
 const App = () => {
   const CONFIG = {
     userId: "user123",
@@ -15,10 +16,12 @@ const App = () => {
     components: [
       {
         id: "MainSection",
-        type: "ButtonJoystick",
-        position: { position: "absolute", top: "10px", left: "300px" },
-        size: { width: "320px", height: "350px" },
-        distance: "0.27",
+        type: "FlexLayout",
+        style: {
+          gap: "10px",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        },
         children: [
           {
             name: "joystickL",
@@ -199,6 +202,14 @@ const App = () => {
               distance={component.distance}
               key={component.id}
             ></ButtonJoystick>
+          );
+        } else if (component.type === "FlexLayout") {
+          return (
+            <FlexLayout
+              tools={component.children}
+              style={component.style}
+              key={component.id}
+            ></FlexLayout>
           );
         }
       })}
