@@ -13,7 +13,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const Joystick = ({ styles, name }) => {
+const Joystick = ({ styles, positioning, name }) => {
   const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ angle: 0, distance: 0 }); // Start at center
   const joystickRef = useRef(null);
@@ -149,8 +149,10 @@ const Joystick = ({ styles, name }) => {
       className="p-4"
       style={{
         position: "absolute",
-        left: styles.position.left,
-        top: styles.position.top,
+        /*...(positioning && {
+          left: positioning.left,
+          top: positioning.top,
+        }),*/
       }}
     >
       <div

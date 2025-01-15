@@ -1,14 +1,17 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
+import Button from "../components/button";
+import Joystick from "../components/joystick";
+import RacingWheel from "../components/racing_wheel";
+import DPad from "../components/d_pad";
+import Touchpad from "../components/touchpad";
 
 const Loop_components = ({ component_array }) => {
   return (
     <>
-      {component_array.components.map((component) => {
+      {component_array.map((component) => {
         if (component.type === "button") {
           const style = {
-            position: "absolute",
-            left: `${component.position.x}px`,
-            top: `${component.position.y}px`,
+            ...component.position,
             width: `${component.size.width}px`,
             height: `${component.size.height}px`,
             backgroundColor: component.button_style.color,
@@ -41,12 +44,18 @@ const Loop_components = ({ component_array }) => {
             outer_h: component.size.outer_height_width,
             inner_color: component.style.inner_color,
             outer_color: component.style.outer_color,
-            position: {
-              left: `${component.position.x}px`,
-              top: `${component.position.y}px`,
-            },
           };
-          return <Joystick styles={styles} name={component.name}></Joystick>;
+          let positioning = {
+            ...component.position,
+          };
+          return (
+            <Joystick
+              key={component.name}
+              styles={styles}
+              positioning={positioning}
+              name={component.name}
+            ></Joystick>
+          );
         } else if (component.type === "steeringWheel") {
           const style = {
             position: "absolute",
@@ -67,9 +76,7 @@ const Loop_components = ({ component_array }) => {
         } else if (component.type === "touchpad") {
           const style = {
             ...component.style,
-            position: "absolute",
-            left: `${component.position.x}px`,
-            top: `${component.position.y}px`,
+            ...component.position,
           };
           return (
             <Touchpad

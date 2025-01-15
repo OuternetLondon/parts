@@ -5,7 +5,9 @@ import Button from "./components/button";
 import DPad from "./components/d_pad";
 import Touchpad from "./components/touchpad";
 import AbsolutePositionedContainer from "./layout_components/absolutePositioned";
-
+import GridLayout from "./layout_components/gridLayout";
+import ButtonJoystick from "./layout_components/ButtonJoystick";
+import JoystickButton from "./layout_components/joystickButton";
 const App = () => {
   const CONFIG = {
     userId: "user123",
@@ -13,14 +15,27 @@ const App = () => {
     components: [
       {
         id: "MainSection",
-        type: "AbsolutePositionedContainer",
-        style: { width: "50%", height: "100vh" },
+        type: "ButtonJoystick",
+        position: { position: "absolute", top: "10px", left: "300px" },
+        size: { width: "320px", height: "350px" },
+        distance: "0.27",
         children: [
+          {
+            name: "joystickL",
+            type: "joystick",
+            position: { z: 10 },
+            size: { inner_height_width: 60, outer_height_width: 120 },
+            style: {
+              inner_color: "#0D47A1",
+              outer_color: "#BBDEFB",
+              border: "1px solid gray",
+            },
+            mapping: "joystickL",
+          },
           {
             name: "buttonA",
             type: "button",
-            position: { x: 300, y: 320, z: 0 },
-            size: { width: 90, height: 90 },
+            size: { width: 70, height: 70 },
             button_style: {
               color: "#388E3C",
               border: "2px solid black",
@@ -40,8 +55,8 @@ const App = () => {
           {
             name: "buttonB",
             type: "button",
-            position: { x: 215, y: 420, z: 0 },
-            size: { width: 90, height: 90 },
+            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
+            size: { width: 70, height: 70 },
             button_style: {
               color: "#D32F2F",
               border: "2px solid black",
@@ -59,48 +74,135 @@ const App = () => {
             mapping: "Button B",
           },
           {
-            name: "joystickL",
-            type: "joystick",
-            position: { x: 300, y: 400, z: 0 },
-            size: { inner_height_width: 60, outer_height_width: 200 },
-            style: {
-              inner_color: "#0D47A1",
-              outer_color: "#BBDEFB",
-              border: "1px solid gray",
+            name: "buttonB",
+            type: "button",
+            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
+            size: { width: 70, height: 70 },
+            button_style: {
+              color: "#D32F2F",
+              border: "2px solid black",
+              borderRadius: "50%",
+              flashColor: "#FFCDD2",
+              padding: "0px",
             },
-            mapping: "joystickL",
+            font_style: {
+              fontSize: "1rem",
+              fontColor: "white",
+              fontFlashColor: "black",
+              fontWeight: "bold",
+              textWrap: "wrap",
+            },
+            mapping: "Button C",
           },
           {
+            name: "buttonB",
+            type: "button",
+            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
+            size: { width: 70, height: 70 },
+            button_style: {
+              color: "purple",
+              border: "",
+              borderRadius: "0%",
+              flashColor: "#FFCDD2",
+              padding: "10px",
+            },
+            font_style: {
+              fontSize: "1rem",
+              fontColor: "white",
+              fontFlashColor: "black",
+              fontWeight: "bold",
+              textWrap: "nowrap",
+            },
+            mapping: "Button D",
+          },
+          {
+            name: "buttonB",
+            type: "button",
+            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
+            size: { width: 70, height: 70 },
+            button_style: {
+              color: "purple",
+              border: "",
+              borderRadius: "0%",
+              flashColor: "#FFCDD2",
+              padding: "10px",
+            },
+            font_style: {
+              fontSize: "1rem",
+              fontColor: "white",
+              fontFlashColor: "black",
+              fontWeight: "bold",
+              textWrap: "nowrap",
+            },
+            mapping: "Button D",
+          },
+          {
+            name: "buttonB",
+            type: "button",
+            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
+            size: { width: 70, height: 70 },
+            button_style: {
+              color: "purple",
+              border: "",
+              borderRadius: "0%",
+              flashColor: "#FFCDD2",
+              padding: "10px",
+            },
+            font_style: {
+              fontSize: "1rem",
+              fontColor: "white",
+              fontFlashColor: "black",
+              fontWeight: "bold",
+              textWrap: "nowrap",
+            },
+            mapping: "Button D",
+          },
+          /*{
             id: "touchpad1",
             type: "touchpad",
-            position: { x: 300, y: 300, z: 0 },
+            position: { z: 0 },
             style: {
               width: "400px",
               height: "200px",
               backgroundColor: "lightBlue",
             },
-          },
+          },*/
         ],
       },
     ],
   };
-
   return (
     <>
       {CONFIG.components.map((component, index) => {
         console.log("component type", component.type);
         if (component.type === "AbsolutePositionedContainer") {
-          console.log("AbsolutePositionedContainer ran");
           return (
             <AbsolutePositionedContainer
               tools={component.children}
               style={component.style}
+              key={component.id}
             ></AbsolutePositionedContainer>
+          );
+        } else if (component.type === "GridLayout") {
+          return (
+            <GridLayout
+              tools={component.children}
+              style={component.style}
+              key={component.id}
+            ></GridLayout>
+          );
+        } else if (component.type === "ButtonJoystick") {
+          return (
+            <ButtonJoystick
+              tools={component.children}
+              size={component.size}
+              distance={component.distance}
+              key={component.id}
+            ></ButtonJoystick>
           );
         }
       })}
     </>
   );
 };
-
 export default App;

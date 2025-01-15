@@ -14,7 +14,15 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-function Button({ style, component_mapping, name, flashColor, fontStyle }) {
+function Button({
+  style,
+  component_mapping,
+  name,
+  flashColor,
+  fontStyle,
+  angle,
+  radius,
+}) {
   const { user } = useContext(UserContext);
   const socket = useSocket();
   const [isFlashing, setIsFlashing] = useState(false);
@@ -38,12 +46,22 @@ function Button({ style, component_mapping, name, flashColor, fontStyle }) {
     backgroundColor: isFlashing ? flashColor : style?.backgroundColor || "blue", // Flash color: yellow
     //transition: "background-color 0.3s ease",
   };
-
+  console.log("radius", radius);
   return (
     <>
       <button
         onClick={() => handleClick()}
-        style={buttonStyle}
+        style={{
+          ...buttonStyle,
+          ...(angle && {
+            transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s",
+          }),
+        }}
         //className="w-16 h-16 bg-blue-500 hover:bg-green-500 rounded-full transition-colors duration-200"
       >
         <p
