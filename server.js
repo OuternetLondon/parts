@@ -17,7 +17,7 @@ app.get('/api/controls', (req, res) => {
   res.json(controls); 
 });*/
 
-// test
+//testing commit
 app.use(express.static(path.join(__dirname, "./frontend_wheel/dist")));
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "./frontend_wheel/dist", "index.html"));
