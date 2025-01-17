@@ -5,39 +5,47 @@ import RacingWheel from "../components/racing_wheel";
 import DPad from "./d_pad";
 import Touchpad from "../components/touchpad";
 
-const Loop_components = ({ component_array }) => {
+const Loop_components = ({ component_array, customStyle, angle, radius }) => {
+ 
   return (
     <>
       {component_array.map((component) => {
         if (component.type === "button") {
-          const style = {
+            const style = {
             ...component.position,
+            ...(customStyle && { ...customStyle} ),
             width: `${component.size.width}px`,
             height: `${component.size.height}px`,
             backgroundColor: component.button_style.color,
             border: component.button_style.border,
             borderRadius: component.button_style.borderRadius,
             padding: component.button_style.padding,
-          };
-
-          const fontStyle = {
+            boxShadow: component.button_style.boxShadow,  
+            };
+            let fontStyle
+            
+           fontStyle = {
             fontSize: component.font_style.fontSize,
             fontColor: component.font_style.fontColor,
             fontFlashColor: component.font_style.fontFlashColor,
             fontWeight: component.font_style.fontWeight,
             textWrap: component.font_style.textWrap,
+            fontHoverColor: component.font_style.fontHoverColor,
           };
 
-          return (
+            return (
             <Button
               key={component.id}
               name={component.name}
               fontStyle={fontStyle}
               flashColor={component.button_style.flashColor}
+              hoverColor={component.button_style.hoverColor}
               style={style}
               component_mapping={component.mapping}
+              {...(angle && { angle })}
+              {...(radius && { radius })}
             ></Button>
-          );
+            );
         } else if (component.type === "joystick") {
           const styles = {
             inner_h: component.size.inner_height_width,

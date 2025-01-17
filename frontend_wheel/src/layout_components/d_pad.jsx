@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from "../components/button";
+import Loop_components from "./loop_components";
 
 const DPad = ({ buttons, style, distance }) => {
   // const [spacing, setSpacing] = useState(100);
@@ -59,6 +60,16 @@ const DPad = ({ buttons, style, distance }) => {
               transform: "translate(0, -50%)",
             };
           }
+
+         // {Loop_components( component_array = {[tool]}, customStyle)}
+          return (
+            <Loop_components
+              key={tool.id}
+              component_array={[tool]}
+              customStyle={customStyle}
+            />
+          );
+          /*
           const style = {
             ...customStyle,
             position: "absolute",
@@ -68,6 +79,8 @@ const DPad = ({ buttons, style, distance }) => {
             border: tool.button_style.border,
             borderRadius: tool.button_style.borderRadius,
             padding: tool.button_style.padding,
+            boxShadow: tool.button_style.boxShadow,
+
           };
 
           const fontStyle = {
@@ -76,6 +89,7 @@ const DPad = ({ buttons, style, distance }) => {
             fontFlashColor: tool.font_style.fontFlashColor,
             fontWeight: tool.font_style.fontWeight,
             textWrap: tool.font_style.textWrap,
+            fontHoverColor: component.font_style.fontHoverColor,
           };
           return (
             <Button
@@ -83,10 +97,11 @@ const DPad = ({ buttons, style, distance }) => {
               name={tool.name}
               fontStyle={fontStyle}
               flashColor={tool.button_style.flashColor}
+              hoverColor={component.button_style.hoverColor}
               style={style}
               component_mapping={tool.mapping}
             ></Button>
-          );
+          ); */
         })}
         {/*<button
           style={{

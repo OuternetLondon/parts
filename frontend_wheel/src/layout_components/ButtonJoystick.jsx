@@ -21,51 +21,27 @@ const ButtonJoystick = ({ tools, size, distance, position }) => {
           height: size.height,
         }}
       >
+
+
         {tools.map((tool, index) => {
           if (tool.type === "joystick") {
-            const styles = {
-              inner_h: tool.size.inner_height_width,
-              outer_h: tool.size.outer_height_width,
-              inner_color: tool.style.inner_color,
-              outer_color: tool.style.outer_color,
-            };
             return (
-              <Joystick
-                key={tool.name}
-                styles={styles}
-                name={tool.name}
-              ></Joystick>
+              <Loop_components
+                key={tool.id}
+                component_array={[tool]}
+              />
             );
           } else if (tool.type === "button") {
-            const style = {
-              width: `${tool.size.width}px`,
-              height: `${tool.size.height}px`,
-              backgroundColor: tool.button_style.color,
-              border: tool.button_style.border,
-              borderRadius: tool.button_style.borderRadius,
-              padding: tool.button_style.padding,
-            };
-
-            const fontStyle = {
-              fontSize: tool.font_style.fontSize,
-              fontColor: tool.font_style.fontColor,
-              fontFlashColor: tool.font_style.fontFlashColor,
-              fontWeight: tool.font_style.fontWeight,
-              textWrap: tool.font_style.textWrap,
-            };
-
+            
             const angle = (index / buttonCount) * 360;
+            const radius=`${parseInt(size.width) / distance / 10}px`
             return (
-              <Button
-                key={tool.name}
-                name={tool.name}
-                fontStyle={fontStyle}
-                flashColor={tool.button_style.flashColor}
-                style={style}
-                component_mapping={tool.mapping}
-                angle={angle}
-                radius={`${parseInt(size.width) / distance / 10}px`}
-              ></Button>
+              <Loop_components
+              key={tool.id}
+              component_array={[tool]}
+              angle={angle}
+              radius={radius}
+            />
             );
           }
         })}

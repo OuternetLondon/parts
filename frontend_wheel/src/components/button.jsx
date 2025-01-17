@@ -19,6 +19,7 @@ function Button({
   component_mapping,
   name,
   flashColor,
+  hoverColor,
   fontStyle,
   angle,
   radius,
@@ -26,7 +27,8 @@ function Button({
   const { user } = useContext(UserContext);
   const socket = useSocket();
   const [isFlashing, setIsFlashing] = useState(false);
-
+  const [isHovered, setIsHovered] = useState(false);
+  console.log("styling", style)
   function handleClick() {
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
@@ -39,6 +41,7 @@ function Button({
       const timeout = setTimeout(() => setIsFlashing(false), 300); // Flash duration (300ms)
       return () => clearTimeout(timeout);
     }
+    
   }, [isFlashing]);
 
   const buttonStyle = {
@@ -46,6 +49,8 @@ function Button({
     backgroundColor: isFlashing ? flashColor : style?.backgroundColor || "blue", // Flash color: yellow
     //transition: "background-color 0.3s ease",
   };
+
+
   return (
     <>
       <button
@@ -60,17 +65,22 @@ function Button({
             justifyContent: "center",
             transition: "transform 0.3s",
           }),
+          ... (isHovered && !isFlashing &&{ backgroundColor: hoverColor}),
         }}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        //className=" hover:bg-red-500 "
         //className="w-16 h-16 bg-blue-500 hover:bg-green-500 rounded-full transition-colors duration-200"
       >
         <p
           style={{
-            fontSize: fontStyle.fontSize || "1rem",
-            fontWeight: fontStyle.fontWeight || "normal",
+            fontSize: fontStyle.fontSize,
+            fontWeight: fontStyle.fontWeight,
             color: isFlashing
               ? fontStyle.fontFlashColor
               : fontStyle.fontColor || "black",
             textWrap: fontStyle.textWrap || "nowrap",
+            ... (isHovered && !isFlashing && { color: fontStyle.fontHoverColor }),
           }}
         >
           {component_mapping}
