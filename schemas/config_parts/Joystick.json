@@ -1,0 +1,85 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Joystick Schema",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "default": "joystickL",
+        "description": "Unique identifier for the joystick."
+      },
+      "type": {
+        "type": "string",
+        "const": "joystick",
+        "description": "Type of component."
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "string",
+            "default": "300px",
+            "description": "Left position (optional)."
+          },
+          "right": {
+            "type": "string",
+            "default": "300px",
+            "description": "Right position (optional)."
+          },
+          "zIndex": {
+            "type": "number",
+            "default": 0,
+            "description": "Z-index position."
+          }
+        },
+        "description": "Positioning of the joystick.",
+        "required": ["z"]
+      },
+      "size": {
+        "type": "object",
+        "properties": {
+          "inner_height_width": {
+            "type": "number",
+            "default": 60,
+            "description": "Inner circle size."
+          },
+          "outer_height_width": {
+            "type": "number",
+            "default": 200,
+            "description": "Outer circle size."
+          }
+        },
+        "required": ["inner_height_width", "outer_height_width"]
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "inner_color": {
+            "type": "string",
+            "default": "#0D47A1",
+            "description": "Inner joystick color.",
+            "format": "color"
+          },
+          "outer_color": {
+            "type": "string",
+            "default": "#BBDEFB",
+            "description": "Outer joystick color.",
+            "format": "color"
+          },
+          "border": {
+            "type": "string",
+            "default": "1px solid gray",
+            "description": "Border styling."
+          }
+        },
+        "required": ["inner_color", "outer_color", "border"]
+      },
+      "mapping": {
+        "type": "string",
+        "default": "joystickL",
+        "description": "Joystick input mapping."
+      }
+    },
+    "required": ["name", "type", "position", "size", "style", "mapping"]
+  }
+  

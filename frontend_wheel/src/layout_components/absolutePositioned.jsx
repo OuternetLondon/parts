@@ -6,7 +6,7 @@ const AbsolutePositionedContainer = ({ tools, style }) => {
   console.log("style", style);
   return (
     <>
-      <div style={{ ...style, position: "relative" }}>
+      <div style={{ ...style}}>
         {Loop_components({ component_array: tools })}
       </div>
     </>

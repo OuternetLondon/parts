@@ -1,0 +1,79 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "MainSection"
+      },
+      "type": {
+        "type": "string",
+        "default": "GridLayout"
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "string",
+            "default": "100vw"
+          },
+          "height": {
+            "type": "string",
+            "default": "100vh"
+          },
+          "display": {
+            "type": "string",
+            "default": "grid"
+          },
+          "gridTemplateColumns": {
+            "type": "string",
+            "default": "1fr 1fr"
+          },
+          "gridTemplateRows": {
+            "type": "string",
+            "default": "1fr 1fr"
+          },
+          "gap": {
+            "type": "string",
+            "default": "10px"
+          }
+        },
+        "required": [
+          "width",
+          "height",
+          "display",
+          "gridTemplateColumns",
+          "gridTemplateRows",
+          "gap"
+        ],
+        "default": {
+          "width": "100vw",
+          "height": "100vh",
+          "display": "grid",
+          "gridTemplateColumns": "1fr 1fr",
+          "gridTemplateRows": "1fr 1fr",
+          "gap": "10px"
+        }
+      },
+      "children": {
+        "type": "array",
+        "items": {},
+        "default": []
+      }
+    },
+    "required": ["id", "type", "style", "children"],
+    "default": {
+      "id": "MainSection",
+      "type": "GridLayout",
+      "style": {
+        "width": "100vw",
+        "height": "100vh",
+        "display": "grid",
+        "gridTemplateColumns": "1fr 1fr",
+        "gridTemplateRows": "1fr 1fr",
+        "gap": "10px"
+      },
+      "children": []
+    }
+  }
+  

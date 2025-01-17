@@ -1,68 +1,86 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Controller Action Schema",
   "type": "object",
   "properties": {
     "userId": {
       "type": "string",
+      "format": "uuid",
       "description": "Unique identifier for the user."
     },
     "timestamp": {
       "type": "string",
       "format": "date-time",
-      "description": "ISO 8601 formatted timestamp."
+      "description": "ISO 8601 timestamp when the action occurred."
+    },
+    "name": {
+      "type": ["string", "null"],
+      "description": "The name of the control if applicable (e.g., button name, joystick name)."
     },
     "controlType": {
       "type": "string",
-      "enum": ["steeringWheel", "joystick", "button"],
-      "description": "Type of control component."
-    },
-    "name": {
-      "type": "string",
-      "description": "Name of the control schema."
+      "enum": ["touchpad", "steeringWheel", "button", "joystick"],
+      "description": "Type of controller used."
     },
     "action": {
       "type": "string",
-      "enum": ["orientation", "mouseEvent", "click"],
-      "description": "Type of action performed by the control."
+      "enum": [
+        "swipeup",
+        "swipedown",
+        "swipeleft",
+        "swiperight",
+        "phoneorientation",
+        "mousedown",
+        "mouseevent"
+      ],
+      "description": "Type of action performed."
     },
     "data": {
-      "type": "object",
-      "description": "Additional data related to the control's action.",
       "oneOf": [
         {
-          "properties": {
-            "orientation_beta": {
-              "type": "number",
-              "description": "The beta orientation value for steering wheel."
-            },
-            "orientation_gama": {
-              "type": "number",
-              "description": "The gamma orientation value for steering wheel."
-            }
-          },
-          "required": ["orientation_beta", "orientation_gama"]
+          "type": "string",
+          "description": "String data for touchpad interactions.",
+          "pattern": "^position:(left|right)$"
         },
         {
+          "type": "object",
+          "properties": {
+            "orientation-gama": {
+              "type": "number",
+              "description": "Vertical tilting of the phone."
+            },
+            "orientation-beta": {
+              "type": "number",
+              "description": "Horizontal tilting of the phone."
+            }
+          },
+          "required": ["orientation-gama", "orientation-beta"],
+          "additionalProperties": false,
+          "description": "Orientation data for the steering wheel."
+        },
+        {
+          "type": "object",
           "properties": {
             "angle": {
               "type": "number",
-              "description": "The angle of joystick movement."
+              "description": "Joystick movement angle."
             },
             "distance": {
-              "type": "string",
-              "pattern": "^\\d+%$",
-              "description": "The distance of joystick movement as a percentage."
+              "type": "number",
+              "description": "Joystick movement distance."
             }
           },
-          "required": ["angle", "distance"]
+          "required": ["angle", "distance"],
+          "additionalProperties": false,
+          "description": "Joystick movement data."
         },
         {
-          "properties": {},
-          "description": "No data required for button actions."
+          "type": "null",
+          "description": "No data for controls like buttons."
         }
       ]
     }
   },
-  "required": ["userId", "timestamp", "controlType", "version", "action"],
-  "description": "Schema for control JSON data sent to the backend."
+  "required": ["userId", "timestamp", "controlType", "action", "data"],
+  "additionalProperties": false
 }

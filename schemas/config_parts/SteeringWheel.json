@@ -1,0 +1,97 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Steering Wheel Schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "steeringWheel1",
+        "description": "Unique identifier for the steering wheel."
+      },
+      "type": {
+        "type": "string",
+        "const": "steeringWheel",
+        "description": "Type of component."
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "string",
+            "default": "300px",
+            "description": "Left position (optional)."
+          },
+          "right": {
+            "type": "string",
+            "default": "300px",
+            "description": "Right position (optional)."
+          },
+          "zIndex": {
+            "type": "number",
+            "default": 0,
+            "description": "Z-index position."
+          }
+        },
+        "description": "Positioning of the steering wheel.",
+        "required": ["zIndex"]
+      },
+      "size": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "number",
+            "default": 200,
+            "description": "Steering wheel width."
+          },
+          "height": {
+            "type": "number",
+            "default": 200,
+            "description": "Steering wheel height."
+          }
+        },
+        "required": ["width", "height"]
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "outer_rim_color": {
+            "type": "string",
+            "format": "color",
+            "default": "gray",
+            "description": "Color of the outer rim."
+          },
+          "spoke_color": {
+            "type": "string",
+            "format": "color",
+            "default": "red",
+            "description": "Color of the spokes."
+          },
+          "hub_color": {
+            "type": "string",
+            "format": "color",
+            "default": "black",
+            "description": "Color of the central hub."
+          },
+          "center_marker_color": {
+            "type": "string",
+            "format": "color",
+            "default": "orange",
+            "description": "Color of the center marker."
+          },
+          "border": {
+            "type": "string",
+            "default": "3px solid black",
+            "description": "Border styling."
+          }
+        },
+        "required": ["outer_rim_color", "spoke_color", "hub_color", "center_marker_color", "border"]
+      },
+      "mapping": {
+        "type": "string",
+        "default": "rightStick",
+        "description": "Steering wheel input mapping."
+      }
+    },
+    "required": ["id", "type", "position", "size", "style", "mapping"]
+  }
+  

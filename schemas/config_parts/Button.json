@@ -1,0 +1,153 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Button Schema",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string",
+        "default": "buttonA",
+        "description": "Unique identifier for the button."
+      },
+      "type": {
+        "type": "string",
+        "const": "button",
+        "description": "Type of component."
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "top": {
+            "type": "string",
+            "default": "300px",
+            "description": "Top position (optional)."
+          },
+          "left": {
+            "type": "string",
+            "default": "320px",
+            "description": "Left position (optional)."
+          },
+          "zIndex": {
+            "type": "number",
+            "default": 0,
+            "description": "Z-index position."
+          }
+        },
+        "description": "Positioning of the button.",
+        "required": [
+          "z"
+        ]
+      },
+      "size": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "number",
+            "default": 90,
+            "description": "Button width."
+          },
+          "height": {
+            "type": "number",
+            "default": 90,
+            "description": "Button height."
+          }
+        },
+        "required": [
+          "width",
+          "height"
+        ]
+      },
+      "button_style": {
+        "type": "object",
+        "properties": {
+          "color": {
+            "type": "string",
+            "default": "#388E3C",
+            "description": "Button color.",
+            "format": "color"
+          },
+          "border": {
+            "type": "string",
+            "default": "2px solid black",
+            "description": "Button border style."
+          },
+          "borderRadius": {
+            "type": "string",
+            "default": "50%",
+            "description": "Border radius of the button."
+          },
+          "flashColor": {
+            "type": "string",
+            "default": "#C8E6C9",
+            "description": "Flash color on button press.",
+            "format": "color"
+          },
+          "padding": {
+            "type": "string",
+            "default": "0px",
+            "description": "Padding inside the button."
+          }
+        },
+        "required": [
+          "color",
+          "border",
+          "borderRadius",
+          "flashColor",
+          "padding"
+        ]
+      },
+      "font_style": {
+        "type": "object",
+        "properties": {
+          "fontSize": {
+            "type": "string",
+            "default": "1rem",
+            "description": "Font size of the button text."
+          },
+          "fontColor": {
+            "type": "string",
+            "default": "white",
+            "description": "Font color.",
+            "format": "color"
+          },
+          "fontFlashColor": {
+            "type": "string",
+            "default": "black",
+            "description": "Font color when pressed.",
+            "format": "color"
+          },
+          "fontWeight": {
+            "type": "string",
+            "default": "bold",
+            "description": "Font weight."
+          },
+          "textWrap": {
+            "type": "string",
+            "default": "wrap",
+            "description": "Text wrapping behavior."
+          }
+        },
+        "required": [
+          "fontSize",
+          "fontColor",
+          "fontFlashColor",
+          "fontWeight",
+          "textWrap"
+        ]
+      },
+      "mapping": {
+        "type": "string",
+        "default": "Button A",
+        "description": "Button input mapping."
+      }
+    },
+    "required": [
+      "name",
+      "type",
+      "position",
+      "size",
+      "button_style",
+      "font_style",
+      "mapping"
+    ]
+  }
+  

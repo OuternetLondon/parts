@@ -1,0 +1,81 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "MainSection"
+      },
+      "type": {
+        "type": "string",
+        "default": "ButtonJoystick"
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "string",
+            "default": "absolute"
+          },
+          "top": {
+            "type": "string",
+            "default": "10px"
+          },
+          "left": {
+            "type": "string",
+            "default": "300px"
+          }
+        },
+        "required": ["position", "top", "left"],
+        "default": {
+          "position": "absolute",
+          "top": "10px",
+          "left": "300px"
+        }
+      },
+      "size": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "string",
+            "default": "320px"
+          },
+          "height": {
+            "type": "string",
+            "default": "350px"
+          }
+        },
+        "required": ["width", "height"],
+        "default": {
+          "width": "320px",
+          "height": "350px"
+        }
+      },
+      "distance": {
+        "type": "string",
+        "default": "0.27"
+      },
+      "children": {
+        "type": "array",
+        "items": {},
+        "default": []
+      }
+    },
+    "required": ["id", "type", "position", "size", "distance", "children"],
+    "default": {
+      "id": "MainSection",
+      "type": "ButtonJoystick",
+      "position": {
+        "position": "absolute",
+        "top": "10px",
+        "left": "300px"
+      },
+      "size": {
+        "width": "320px",
+        "height": "350px"
+      },
+      "distance": "0.27",
+      "children": []
+    }
+  }
+  

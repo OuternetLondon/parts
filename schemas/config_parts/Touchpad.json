@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Touchpad Schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "touchpad1",
+        "description": "Unique identifier for the touchpad."
+      },
+      "type": {
+        "type": "string",
+        "const": "touchpad",
+        "description": "Type of component."
+      },
+      "position": {
+        "type": "object",
+        "properties": {
+          "left": {
+            "type": "string",
+            "default": "300px",
+            "description": "Left position (optional)."
+          },
+          "right": {
+            "type": "string",
+            "default": "300px",
+            "description": "Right position (optional)."
+          },
+          "zIndex": {
+            "type": "number",
+            "default": 0,
+            "description": "Z-index position."
+          }
+        },
+        "description": "Positioning of the touchpad.",
+        "required": ["z"]
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "string",
+            "default": "400px",
+            "description": "Touchpad width."
+          },
+          "height": {
+            "type": "string",
+            "default": "200px",
+            "description": "Touchpad height."
+          },
+          "backgroundColor": {
+            "type": "string",
+            "format": "color",
+            "default": "#ADD8E6",
+            "description": "Touchpad background color (Light Blue)."
+          }
+        },
+        "required": ["width", "height", "backgroundColor"]
+      }
+    },
+    "required": ["id", "type", "position", "style"]
+  }
+  

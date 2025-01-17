@@ -1,0 +1,80 @@
+
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "DPad Schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "MainSection",
+        "description": "Unique identifier for the DPad."
+      },
+      "type": {
+        "type": "string",
+        "const": "DPad",
+        "description": "Defines the type of component."
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "position": {
+            "type": "string",
+            "enum": [
+              "absolute"
+            ],
+            "default": "absolute",
+            "description": "Defines the CSS positioning."
+          },
+          "top": {
+            "type": "string",
+            "default": "30%",
+            "description": "Top position of the DPad."
+          },
+          "left": {
+            "type": "string",
+            "default": "30%",
+            "description": "Left position of the DPad."
+          },
+          "height": {
+            "type": "string",
+            "default": "300px",
+            "description": "Height of the DPad."
+          },
+          "width": {
+            "type": "string",
+            "default": "300px",
+            "description": "Width of the DPad."
+          }
+        },
+        "required": [
+          "position",
+          "top",
+          "left",
+          "height",
+          "width"
+        ]
+      },
+      "distance": {
+        "type": "number",
+        "default": 1,
+        "description": "Defines distance between the buttons."
+      },
+      "children": {
+        "type": "array",
+        "description": "List of child components inside the DPad.",
+        "items": {
+          "type": "object"
+        },
+        "default": []
+      }
+    },
+    "required": [
+      "id",
+      "type",
+      "style",
+      "distance",
+      "children"
+    ]
+  }
+  
+  

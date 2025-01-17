@@ -1,0 +1,48 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Absolute Positioned Container Schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "MainSection",
+        "description": "Unique identifier for the container."
+      },
+      "type": {
+        "type": "string",
+        "const": "AbsolutePositionedContainer",
+        "description": "Defines the type of layout."
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "width": {
+            "type": "string",
+            "default": "50%",
+            "description": "Width of the container."
+          },
+          "height": {
+            "type": "string",
+            "default": "100vh",
+            "description": "Height of the container."
+          }
+        },
+        "required": ["width", "height"]
+      },
+      "children": {
+        "type": "array",
+        "description": "List of child components inside the container.",
+        "items": {
+          "type": "object"
+        },
+        "default": []
+      }
+    },
+    "required": ["id", "type", "style", "children"]
+  }
+  
+  
+  
+  
+  
+  

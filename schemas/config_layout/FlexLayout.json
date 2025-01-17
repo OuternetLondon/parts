@@ -1,0 +1,66 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Flex Layout Schema",
+    "type": "object",
+    "properties": {
+      "id": {
+        "type": "string",
+        "default": "MainSection",
+        "description": "Unique identifier for the flex container."
+      },
+      "type": {
+        "type": "string",
+        "const": "FlexLayout",
+        "description": "Defines the type of layout."
+      },
+      "style": {
+        "type": "object",
+        "properties": {
+          "display": {
+            "type": "string",
+            "enum": ["flex"],
+            "default": "flex",
+            "description": "Defines the layout display."
+          },
+          "flexDirection": {
+            "type": "string",
+            "enum": ["row", "column"],
+            "default": "row",
+            "description": "Defines the flex direction."
+          },
+          "justifyContent": {
+            "type": "string",
+            "enum": ["space-around", "center", "flex-start", "flex-end", "space-between", "space-evenly"],
+            "default": "space-around",
+            "description": "Defines how flex items are positioned along the main axis."
+          },
+          "width": {
+            "type": "string",
+            "default": "100vw",
+            "description": "Width of the flex container."
+          },
+          "height": {
+            "type": "string",
+            "default": "100vh",
+            "description": "Height of the flex container."
+          },
+          "gap": {
+            "type": "string",
+            "default": "10px",
+            "description": "Gap between flex items."
+          }
+        },
+        "required": ["display", "flexDirection", "justifyContent", "width", "height"]
+      },
+      "children": {
+        "type": "array",
+        "description": "List of child components inside the flex container.",
+        "items": {
+          "type": "object"
+        },
+        "default": []
+      }
+    },
+    "required": ["id", "type", "style", "children"]
+  }
+  

@@ -16,6 +16,37 @@ const App = () => {
     timestamp: "2023-01-07T14:00:00Z",
     components: [
       {
+        id: "MainSection",
+        type: "AbsolutePositionedContainer",
+        style: { width: "50%", height: "100vh" },
+        children: [ 
+          {
+            id: "steeringWheel1",
+            type: "steeringWheel",
+             position: {position: "absolute", top: "300px", left: "300px" },
+            size: { width: 200, height: 200 },
+            style: {
+              outer_rim_color: "gray",
+              spoke_color: "red",
+              hub_color: "black",
+              center_marker_color: "orange",
+              border: "3px solid black",
+            },
+            mapping: "rightStick",
+          },
+          {
+            id: "touchpad1",
+            type: "touchpad",
+            position: {position: "absolute", top: "400px", left: "350px", z: 0 },
+            style: {
+              width: "400px",
+              height: "200px",
+              backgroundColor: "lightBlue",
+            },
+          },
+        ]
+      }, 
+      {
         id: "secondSection",
         type: "ButtonJoystick",
         position: { position: "absolute", top: "30%", left: "70%" },
@@ -243,7 +274,9 @@ const App = () => {
             },
           }, */
         ],
+        
       },
+      
     ],
   };
   return (
