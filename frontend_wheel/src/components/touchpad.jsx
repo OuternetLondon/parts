@@ -116,7 +116,7 @@ const VirtualTouchpad = ({ style, position }) => {
   };
 
   return (
-    <div className="w-full max-w-md mx-auto p-4">
+    <div className="">
       <div
         ref={touchpadRef}
         style={{

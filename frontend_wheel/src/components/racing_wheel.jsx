@@ -24,7 +24,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-function RacingWheel({ style, name }) {
+function RacingWheel({ style, positioning, name }) {
   const { user } = useContext(UserContext);
   const motion = useDeviceMotion();
   const [rotation, setRotation] = useState(0); // Wheel rotation angle
@@ -65,7 +65,7 @@ function RacingWheel({ style, name }) {
 
   return (
     <>
-      <div style={{ position: "absolute", left: style.left, top: style.top }}>
+      <div style={{ ...positioning }}>
         <RacingWheelDesign style={style} rotation={rotation} />
       </div>
     </>

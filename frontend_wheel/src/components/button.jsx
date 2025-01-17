@@ -46,7 +46,6 @@ function Button({
     backgroundColor: isFlashing ? flashColor : style?.backgroundColor || "blue", // Flash color: yellow
     //transition: "background-color 0.3s ease",
   };
-  console.log("radius", radius);
   return (
     <>
       <button

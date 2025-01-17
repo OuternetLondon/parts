@@ -1,110 +1,463 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Layout and Tool Schema",
   "type": "object",
   "properties": {
-    "userId": {
-      "type": "string",
-      "description": "Unique identifier for the user."
-    },
-    "timestamp": {
-      "type": "string",
-      "format": "date-time",
-      "description": "Timestamp of the configuration."
-    },
     "components": {
       "type": "array",
-      "description": "List of components in the configuration.",
       "items": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string",
-            "description": "Name of the component."
-          },
-          "type": {
-            "type": "string",
-            "enum": ["button", "joystick", "steeringWheel"],
-            "description": "Type of the component."
-          },
-          "position": {
-            "type": "object",
-            "properties": {
-              "x": { "type": "number", "description": "X coordinate." },
-              "y": { "type": "number", "description": "Y coordinate." }
-            },
-            "required": ["x", "y"],
-            "description": "Position of the component."
-          },
-          "size": {
-            "type": "object",
-            "oneOf": [
-              {
-                "properties": {
-                  "width": { "type": "number" },
-                  "height": { "type": "number" }
-                },
-                "required": ["width", "height"]
-              },
-              {
-                "properties": {
-                  "inner_height_width": { "type": "number" },
-                  "outer_height_width": { "type": "number" }
-                },
-                "required": ["inner_height_width", "outer_height_width"]
-              }
-            ],
-            "description": "Size of the component."
-          },
-          "style": {
-            "type": "object",
-            "oneOf": [
-              {
-                "properties": {
-                  "color": { "type": "string" },
-                  "border": { "type": "string" },
-                  "borderRadius": { "type": "string" }
-                },
-                "required": ["color", "border", "borderRadius"],
-                "description": "Style properties for a button."
-              },
-              {
-                "properties": {
-                  "inner_color": { "type": "string" },
-                  "outer_color": { "type": "string" },
-                  "border": { "type": "string" }
-                },
-                "required": ["inner_color", "outer_color", "border"],
-                "description": "Style properties for a joystick."
-              },
-              {
-                "properties": {
-                  "outer_rim_color": { "type": "string" },
-                  "spoke_color": { "type": "string" },
-                  "hub_color": { "type": "string" },
-                  "center_marker_color": { "type": "string" },
-                  "border": { "type": "string" }
-                },
-                "required": [
-                  "outer_rim_color",
-                  "spoke_color",
-                  "hub_color",
-                  "center_marker_color",
-                  "border"
-                ],
-                "description": "Style properties for a steering wheel."
-              }
-            ],
-            "description": "Style properties specific to the component type."
-          },
-          "mapping": {
-            "type": "string",
-            "description": "Mapping of the component."
-          }
-        },
-        "required": ["name", "type", "position", "size", "style", "mapping"],
-        "description": "Configuration for a single component."
+        "$ref": "#/definitions/layout"
       }
     }
   },
-  "required": ["userId", "timestamp", "components"]
+  "definitions": {
+    "layout": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier for the layout."
+        },
+        "type": {
+          "type": "string",
+          "enum": [
+            "AbsolutePositionedContainer",
+            "FlexLayout",
+            "GridLayout",
+            "DPad",
+            "ButtonJoystick"
+          ],
+          "description": "Defines the type of layout."
+        },
+        "style": {
+          "oneOf": [
+            {
+              "title": "AbsolutePositionedContainer",
+              "properties": {
+                "width": {
+                  "type": "string",
+                  "default": "50%"
+                },
+                "height": {
+                  "type": "string",
+                  "default": "100vh"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "#f0f0f0",
+                  "format": "color"
+                }
+              },
+              "required": ["width", "height"]
+            },
+            {
+              "title": "FlexLayout",
+              "properties": {
+                "display": {
+                  "type": "string",
+                  "enum": ["flex"],
+                  "default": "flex"
+                },
+                "flexDirection": {
+                  "type": "string",
+                  "enum": ["row", "column"],
+                  "default": "row"
+                },
+                "justifyContent": {
+                  "type": "string",
+                  "enum": ["space-around", "center"],
+                  "default": "space-around"
+                },
+                "width": {
+                  "type": "string",
+                  "default": "100vw"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "#e0e0e0",
+                  "format": "color"
+                }
+              },
+              "required": ["display", "flexDirection", "width"]
+            },
+            {
+              "title": "GridLayout",
+              "properties": {
+                "display": {
+                  "type": "string",
+                  "enum": ["grid"],
+                  "default": "grid"
+                },
+                "width": {
+                  "type": "string",
+                  "default": "100vw"
+                },
+                "height": {
+                  "type": "string",
+                  "default": "100vh"
+                },
+                "gridTemplateColumns": {
+                  "type": "string",
+                  "default": "1fr 1fr"
+                },
+                "gridTemplateRows": {
+                  "type": "string",
+                  "default": "1fr 1fr"
+                },
+                "gap": {
+                  "type": "string",
+                  "default": "10px"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "#d0d0d0",
+                  "format": "color"
+                }
+              },
+              "required": ["display", "width", "height"]
+            },
+            {
+              "title": "DPad",
+              "properties": {
+                "position": {
+                  "type": "string",
+                  "enum": ["absolute"],
+                  "default": "absolute"
+                },
+                "top": {
+                  "type": "string",
+                  "default": "30%"
+                },
+                "left": {
+                  "type": "string",
+                  "default": "30%"
+                },
+                "width": {
+                  "type": "string",
+                  "default": "300px"
+                },
+                "height": {
+                  "type": "string",
+                  "default": "300px"
+                },
+                "distance": {
+                  "type": "number",
+                  "default": 1
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "#c0c0c0",
+                  "format": "color"
+                }
+              },
+              "required": [
+                "position",
+                "top",
+                "left",
+                "width",
+                "height",
+                "distance"
+              ]
+            },
+            {
+              "title": "ButtonJoystick",
+              "properties": {
+                "position": {
+                  "type": "string",
+                  "enum": ["absolute"],
+                  "default": "absolute"
+                },
+                "top": {
+                  "type": "string",
+                  "default": "30%"
+                },
+                "left": {
+                  "type": "string",
+                  "default": "70%"
+                },
+                "width": {
+                  "type": "string",
+                  "default": "320px"
+                },
+                "height": {
+                  "type": "string",
+                  "default": "350px"
+                },
+                "distance": {
+                  "type": "string",
+                  "default": "0.27"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "#b0b0b0",
+                  "format": "color"
+                }
+              },
+              "required": [
+                "position",
+                "top",
+                "left",
+                "width",
+                "height",
+                "distance"
+              ]
+            }
+          ]
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/tool"
+          }
+        }
+      },
+      "required": ["id", "type", "children"]
+    },
+    "tool": {
+      "type": "object",
+      "oneOf": [
+        {
+          "title": "Joystick",
+          "properties": {
+            "name": {
+              "type": "string",
+              "default": "joystickL"
+            },
+            "type": {
+              "const": "joystick"
+            },
+            "position": {
+              "type": "object",
+              "properties": {
+                "z": {
+                  "type": "number",
+                  "default": 10
+                }
+              }
+            },
+            "size": {
+              "type": "object",
+              "properties": {
+                "inner_height_width": {
+                  "type": "number",
+                  "default": 60
+                },
+                "outer_height_width": {
+                  "type": "number",
+                  "default": 120
+                }
+              }
+            },
+            "style": {
+              "type": "object",
+              "properties": {
+                "inner_color": {
+                  "type": "string",
+                  "default": "#0D47A1",
+                  "format": "color"
+                },
+                "outer_color": {
+                  "type": "string",
+                  "default": "#BBDEFB",
+                  "format": "color"
+                },
+                "border": {
+                  "type": "string",
+                  "default": "1px solid gray"
+                }
+              }
+            },
+            "mapping": {
+              "type": "string",
+              "default": "joystickL"
+            }
+          },
+          "required": ["name", "position", "size", "style", "mapping"]
+        },
+        {
+          "title": "Button",
+          "properties": {
+            "name": {
+              "type": "string",
+              "default": "buttonA"
+            },
+            "type": {
+              "const": "button"
+            },
+            "size": {
+              "type": "object",
+              "properties": {
+                "width": {
+                  "type": "number",
+                  "default": 70
+                },
+                "height": {
+                  "type": "number",
+                  "default": 70
+                }
+              }
+            },
+            "button_style": {
+              "type": "object",
+              "properties": {
+                "color": {
+                  "type": "string",
+                  "default": "#388E3C",
+                  "format": "color"
+                },
+                "border": {
+                  "type": "string",
+                  "default": "2px solid black"
+                },
+                "borderRadius": {
+                  "type": "string",
+                  "default": "50%"
+                },
+                "flashColor": {
+                  "type": "string",
+                  "default": "#C8E6C9",
+                  "format": "color"
+                },
+                "padding": {
+                  "type": "string",
+                  "default": "0px"
+                }
+              }
+            },
+            "font_style": {
+              "type": "object",
+              "properties": {
+                "fontSize": {
+                  "type": "string",
+                  "default": "1rem"
+                },
+                "fontColor": {
+                  "type": "string",
+                  "default": "white",
+                  "format": "color"
+                },
+                "fontFlashColor": {
+                  "type": "string",
+                  "default": "black",
+                  "format": "color"
+                },
+                "fontWeight": {
+                  "type": "string",
+                  "default": "bold"
+                },
+                "textWrap": {
+                  "type": "string",
+                  "default": "wrap"
+                }
+              }
+            },
+            "mapping": {
+              "type": "string",
+              "default": "Button A"
+            }
+          },
+          "required": ["name", "size", "button_style", "font_style", "mapping"]
+        },
+        {
+          "title": "Steering Wheel",
+          "properties": {
+            "id": {
+              "type": "string",
+              "default": "steeringWheel1"
+            },
+            "type": {
+              "const": "steeringWheel"
+            },
+            "size": {
+              "type": "object",
+              "properties": {
+                "width": {
+                  "type": "number",
+                  "default": 200
+                },
+                "height": {
+                  "type": "number",
+                  "default": 200
+                }
+              }
+            },
+            "style": {
+              "type": "object",
+              "properties": {
+                "outer_rim_color": {
+                  "type": "string",
+                  "default": "gray",
+                  "format": "color"
+                },
+                "spoke_color": {
+                  "type": "string",
+                  "default": "red",
+                  "format": "color"
+                },
+                "hub_color": {
+                  "type": "string",
+                  "default": "black",
+                  "format": "color"
+                },
+                "center_marker_color": {
+                  "type": "string",
+                  "default": "orange",
+                  "format": "color"
+                },
+                "border": {
+                  "type": "string",
+                  "default": "3px solid black"
+                }
+              }
+            },
+            "mapping": {
+              "type": "string",
+              "default": "rightStick"
+            }
+          },
+          "required": ["id", "size", "style", "mapping"]
+        },
+        {
+          "title": "Touchpad",
+          "properties": {
+            "id": {
+              "type": "string",
+              "default": "touchpad1"
+            },
+            "type": {
+              "const": "touchpad"
+            },
+            "position": {
+              "type": "object",
+              "properties": {
+                "z": {
+                  "type": "number",
+                  "default": 0
+                }
+              }
+            },
+            "style": {
+              "type": "object",
+              "properties": {
+                "width": {
+                  "type": "string",
+                  "default": "400px"
+                },
+                "height": {
+                  "type": "string",
+                  "default": "300px"
+                },
+                "backgroundColor": {
+                  "type": "string",
+                  "default": "lightBlue",
+                  "format": "color"
+                }
+              }
+            }
+          },
+          "required": ["id", "position", "style"]
+        }
+      ]
+    }
+  }
 }

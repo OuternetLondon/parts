@@ -129,7 +129,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
   return (
     <canvas
       ref={canvasRef}
-      className="max-w-full max-h-full"
+      className=""
       style={{
         width: "400px",
         height: "400px",

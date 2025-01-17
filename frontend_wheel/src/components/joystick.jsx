@@ -148,11 +148,7 @@ const Joystick = ({ styles, positioning, name }) => {
     <div
       className="p-4"
       style={{
-        position: "absolute",
-        /*...(positioning && {
-          left: positioning.left,
-          top: positioning.top,
-        }),*/
+        ...positioning,
       }}
     >
       <div

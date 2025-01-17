@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import Button from "../components/button";
 import Joystick from "../components/joystick";
 import RacingWheel from "../components/racing_wheel";
-import DPad from "../components/d_pad";
+import DPad from "./d_pad";
 import Touchpad from "../components/touchpad";
 
 const Loop_components = ({ component_array }) => {
@@ -58,9 +58,6 @@ const Loop_components = ({ component_array }) => {
           );
         } else if (component.type === "steeringWheel") {
           const style = {
-            position: "absolute",
-            left: `${component.position.x}px`,
-            top: `${component.position.y}px`,
             width: `${component.size.width}px`,
             height: `${component.size.height}px`,
             outer_rim_color: component.style.outer_rim_color,
@@ -68,8 +65,15 @@ const Loop_components = ({ component_array }) => {
             hub_color: component.style.hub_color,
             border: component.style.border,
           };
+          let positioning = {
+            ...component.position,
+          };
           return (
-            <RacingWheel name={component.name} style={style}></RacingWheel>
+            <RacingWheel
+              name={component.name}
+              positioning={positioning}
+              style={style}
+            ></RacingWheel>
           );
         } else if (component.type === "dPad") {
           return <DPad position={component.position}></DPad>;
