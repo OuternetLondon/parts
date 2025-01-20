@@ -28,7 +28,6 @@ function Button({
   const socket = useSocket();
   const [isFlashing, setIsFlashing] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  console.log("styling", style)
   function handleClick() {
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
@@ -81,6 +80,9 @@ function Button({
               : fontStyle.fontColor || "black",
             textWrap: fontStyle.textWrap || "nowrap",
             ... (isHovered && !isFlashing && { color: fontStyle.fontHoverColor }),
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
           {component_mapping}

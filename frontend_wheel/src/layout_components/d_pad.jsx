@@ -5,6 +5,7 @@ import Loop_components from "./loop_components";
 const DPad = ({ buttons, style, distance }) => {
   // const [spacing, setSpacing] = useState(100);
   let spacing = parseInt(style.width) * distance;
+  console.log("spacing", spacing);
   const adjustSpacing = (event) => {
     setSpacing(event.target.value);
   };
@@ -40,24 +41,28 @@ const DPad = ({ buttons, style, distance }) => {
               top: `${spacing}px`,
               left: "50%",
               transform: "translate(-50%, 0)",
+              position: "absolute",
             };
           } else if (index === 1) {
             customStyle = {
               bottom: `${spacing}px`,
               left: "50%",
               transform: "translate(-50%, 0)",
+              position: "absolute",
             };
           } else if (index === 2) {
             customStyle = {
               left: `${spacing}px`,
               top: "50%",
               transform: "translate(0, -50%)",
+              position: "absolute",
             };
           } else if (index === 3) {
             customStyle = {
               right: `${spacing}px`,
               top: "50%",
               transform: "translate(0, -50%)",
+              position: "absolute",
             };
           }
 

@@ -4,11 +4,13 @@ import Joystick from "./components/joystick";
 import Button from "./components/button";
 import DPad from "./layout_components/d_pad";
 import Touchpad from "./components/touchpad";
+import ToggleButton from "./components/toggleButton";
 import AbsolutePositionedContainer from "./layout_components/absolutePositioned";
 import GridLayout from "./layout_components/gridLayout";
 import ButtonJoystick from "./layout_components/ButtonJoystick";
 import JoystickButton from "./layout_components/joystickButton";
 import FlexLayout from "./layout_components/flex_layout";
+import { on } from "ws";
 
 const App = () => {
   const CONFIG = {
@@ -17,9 +19,115 @@ const App = () => {
     components: [
       {
         id: "MainSection",
+        type: "DPad",
+        style: {
+          position: "absolute",
+          top: "30%",
+          left: "70%",
+          height: "400px",
+          width: "400px",
+        },
+        distance: 0.166,
+        children: [
+          {
+            name: "buttonA",
+            type: "button",
+            position: { zIndex: 1 },
+            size: { width: 90, height: 90 },
+            button_style: {
+              color: "#388E3C",
+              border: "2px solid black",
+              borderRadius: "0px",
+              flashColor: "#C8E6C9",
+              hoverColor: "#2E7D32",
+              padding: "0px",
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+            },
+            font_style: {
+              fontColor: "red",
+              fontFlashColor: "black",
+              fontHoverColor: "purple",
+              fontWeight: "bold",
+            },
+            svg: "top_arrow",
+            svg_styling: { className: "size-12", strokeWidth: 5 },
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: { zIndex: 1 },
+            size: { width: 90, height: 90 },
+            button_style: {
+              color: "#388E3C",
+              border: "2px solid black",
+              borderRadius: "0px",
+              flashColor: "#C8E6C9",
+              hoverColor: "#2E7D32",
+              padding: "0px",
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+            },
+            font_style: {
+              fontColor: "red",
+              fontFlashColor: "black",
+              fontHoverColor: "purple",
+              fontWeight: "bold",
+            },
+            svg: "bottom_arrow",
+            svg_styling: { className: "size-12", strokeWidth: 5 },
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: { zIndex: 1 },
+            size: { width: 90, height: 90 },
+            button_style: {
+              color: "#388E3C",
+              border: "2px solid black",
+              borderRadius: "0px",
+              flashColor: "#C8E6C9",
+              hoverColor: "#2E7D32",
+              padding: "0px",
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+            },
+            font_style: {
+              fontColor: "red",
+              fontFlashColor: "black",
+              fontHoverColor: "purple",
+              fontWeight: "bold",
+            },
+            svg: "left_arrow",
+            svg_styling: { className: "size-12", strokeWidth: 5 },
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: { zIndex: 1 },
+            size: { width: 90, height: 90 },
+            button_style: {
+              color: "#388E3C",
+              border: "2px solid black",
+              borderRadius: "0px",
+              flashColor: "#C8E6C9",
+              hoverColor: "#2E7D32",
+              padding: "0px",
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
+            },
+            font_style: {
+              fontColor: "red",
+              fontFlashColor: "black",
+              fontHoverColor: "purple",
+              fontWeight: "bold",
+            },
+            svg: "right_arrow",
+            svg_styling: { className: "size-12", strokeWidth: 5 },
+          },
+        ],
+      },
+      {
+        id: "MainSection",
         type: "ButtonJoystick",
-        position: { position: "absolute", top: "10px", left: "300px" },
-        size: { width: "320px", height: "350px" },
+        position: { position: "absolute", top: "30%", left: "10%" },
+        size: { width: "350px", height: "350px" },
         distance: "0.27",
         children: [
           {
@@ -37,7 +145,7 @@ const App = () => {
           {
             name: "buttonA",
             type: "button",
-            position: {  zIndex: 1 },
+            position: { zIndex: 1 },
             size: { width: 90, height: 90 },
             button_style: {
               color: "#388E3C",
@@ -46,48 +154,46 @@ const App = () => {
               flashColor: "#C8E6C9",
               hoverColor: "#2E7D32",
               padding: "0px",
-              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)"
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
             },
-            display: "text",
             font_style: {
-              fontSize: "1rem",
-              fontColor: "white",
+              fontColor: "red",
               fontFlashColor: "black",
               fontHoverColor: "purple",
               fontWeight: "bold",
-              textWrap: "wrap",
             },
-            mapping: "Button A",
+            svg: "top_arrow",
+            svg_styling: { className: "size-12", strokeWidth: 5 },
           },
           {
             name: "buttonA",
             type: "button",
-            position: {  zIndex: 1 },
+            position: { zIndex: 1 },
             size: { width: 90, height: 90 },
             button_style: {
               color: "#388E3C",
               border: "2px solid black",
               borderRadius: "50%",
               flashColor: "#C8E6C9",
-              hoverColor: "#2E7D32",
+              hoverColor: "pink",
               padding: "0px",
-              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)"
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
             },
             display: "text",
             font_style: {
-              fontSize: "1rem",
+              fontSize: "3rem",
               fontColor: "white",
               fontFlashColor: "black",
-              fontHoverColor: "purple",
+              fontHoverColor: "blue",
               fontWeight: "bold",
               textWrap: "wrap",
             },
-            mapping: "Button A",
+            mapping: "A",
           },
           {
             name: "buttonA",
             type: "button",
-            position: {  zIndex: 1 },
+            position: { zIndex: 1 },
             size: { width: 90, height: 90 },
             button_style: {
               color: "#388E3C",
@@ -96,7 +202,7 @@ const App = () => {
               flashColor: "#C8E6C9",
               hoverColor: "#2E7D32",
               padding: "0px",
-              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)"
+              boxShadow: "0 6px 12px rgba(0, 0, 0, 0.2)",
             },
             display: "text",
             font_style: {
@@ -109,9 +215,8 @@ const App = () => {
             },
             mapping: "Button A",
           },
-        ] 
-        
-        },
+        ],
+      },
       /*
       {
         id: "MainSection",
@@ -159,11 +264,32 @@ const App = () => {
             mapping: "Button A",
           },
         ]} */
+
       {
-        id: "MainSection",
+        id: "section",
         type: "AbsolutePositionedContainer",
-        style: { width: "50%", height: "100vh" },
-        children: [ 
+        style: {
+          width: "200px",
+          height: "200px",
+          top: "50%",
+          left: "50%",
+          position: "absolute",
+        },
+        children: [
+          {
+            name: "toggleButton1",
+            id: "toggleButton1",
+            type: "toggle_button",
+            style: {
+              width: 90,
+              height: 48,
+              onColor: "blue",
+              offColor: "grey",
+              toggle_color: "lightBlue",
+            },
+            mapping: "toggleButton1",
+          },
+          /*
           {
             id: "steeringWheel1",
             type: "steeringWheel",
@@ -237,9 +363,9 @@ const App = () => {
               textWrap: "wrap",
             },
             mapping: "Button B",
-          },
-        ]
-      }, 
+          }, */
+        ],
+      },
     ],
   };
   return (
