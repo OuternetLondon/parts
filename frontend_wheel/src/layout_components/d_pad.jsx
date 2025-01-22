@@ -10,15 +10,6 @@ const DPad = ({ buttons, style, distance }) => {
     setSpacing(event.target.value);
   };
   console.log("style", style.width);
-  const containerStyle = {
-    /*width: "200px",
-    height: "200px",
-    position: "relative",*/
-    ...style,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  };
 
   const buttonStyle = {
     width: "50px",
@@ -31,7 +22,7 @@ const DPad = ({ buttons, style, distance }) => {
 
   return (
     <div>
-      <div style={containerStyle}>
+      <div className={style}>
         {buttons.map((tool, index) => {
           let customStyle;
           //let spacing = parseInt(style.width);
@@ -66,7 +57,7 @@ const DPad = ({ buttons, style, distance }) => {
             };
           }
 
-         // {Loop_components( component_array = {[tool]}, customStyle)}
+          // {Loop_components( component_array = {[tool]}, customStyle)}
           return (
             <Loop_components
               key={tool.id}

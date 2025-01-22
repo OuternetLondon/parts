@@ -162,7 +162,7 @@ const Joystick = ({ styles, positioning, name }) => {
         onTouchStart={handleTouchStart}
       >
         <div
-          className="absolute rounded-full border-2"
+          className="absolute rounded-full border-2 "
           style={{
             width: OUTER_CIRCLE_SIZE,
             height: OUTER_CIRCLE_SIZE,

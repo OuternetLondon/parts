@@ -21,27 +21,19 @@ const ButtonJoystick = ({ tools, size, distance, position }) => {
           height: size.height,
         }}
       >
-
-
         {tools.map((tool, index) => {
           if (tool.type === "joystick") {
+            return <Loop_components key={tool.id} component_array={[tool]} />;
+          } else if (tool.type === "button") {
+            const angle = (index / buttonCount) * 360;
+            const radius = `${parseInt(size.width) / distance / 10}px`;
             return (
               <Loop_components
                 key={tool.id}
                 component_array={[tool]}
+                angle={angle}
+                radius={radius}
               />
-            );
-          } else if (tool.type === "button") {
-            
-            const angle = (index / buttonCount) * 360;
-            const radius=`${parseInt(size.width) / distance / 10}px`
-            return (
-              <Loop_components
-              key={tool.id}
-              component_array={[tool]}
-              angle={angle}
-              radius={radius}
-            />
             );
           }
         })}
