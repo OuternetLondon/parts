@@ -24,13 +24,15 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           //const style =
         } else if (component.type === "button") {
           console.log("component", component.position);
-          let style = customStyle && component.style;
+          //   let style = `${customStyle} ${component.style}`;
           return (
             <Button
               key={component.id}
               name={component.name}
               position={component.position}
-              style={style}
+              style={component.style}
+              text_style={component.text_style}
+              customStyle={customStyle}
               text_display={component.text_display}
               {...(angle && { angle })}
               {...(radius && { radius })}

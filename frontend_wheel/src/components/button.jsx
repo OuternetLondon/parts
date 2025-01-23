@@ -22,9 +22,12 @@ function Button({
   fontStyle,*/
   position,
   style,
+  text_style,
+  customStyle,
   angle,
   radius,
 }) {
+  console.log("text style", text_style);
   const { user } = useContext(UserContext);
   const socket = useSocket();
   /*const [isFlashing, setIsFlashing] = useState(false);
@@ -52,27 +55,13 @@ function Button({
     <>
       <button
         onClick={() => handleClick()}
-        className={`${position} ${style}`}
-        style={
-          {
-            //  ...buttonStyle,
-            /* ...(angle && {
-            transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "transform 0.3s",
-          }),*/
-            //  ...(isHovered && !isFlashing && { backgroundColor: hoverColor }),
-          }
-        }
-        // onMouseEnter={() => setIsHovered(true)}
-        //onMouseLeave={() => setIsHovered(false)}
-        //className=" hover:bg-red-500 "
-        //className="w-16 h-16 bg-blue-500 hover:bg-green-500 rounded-full transition-colors duration-200"
+        className={`${position} ${style}   `}
+        /* style={{
+            boxShadow: "inset 0 0 10px 0 #333",
+          }}*/
+        style={customStyle ? customStyle : {}}
       >
-        {text_display}
+        <p className={text_style}> {text_display}</p>
       </button>
     </>
   );

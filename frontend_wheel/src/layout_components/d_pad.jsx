@@ -4,25 +4,15 @@ import Loop_components from "./loop_components";
 
 const DPad = ({ buttons, style, distance, width }) => {
   // const [spacing, setSpacing] = useState(100);
-  let spacing = parseInt(style.width) * distance;
+  console.log("style", style);
+  let widthInt = parseInt(width.replace(/\D/g, ""), 10);
+  console.log("widthInt", widthInt);
+  let spacing = parseInt(widthInt) * distance;
   console.log("spacing", spacing);
-  const adjustSpacing = (event) => {
-    setSpacing(event.target.value);
-  };
-  console.log("style", style.width);
-
-  const buttonStyle = {
-    width: "50px",
-    height: "50px",
-    backgroundColor: "gray",
-    border: "none",
-    position: "absolute",
-    cursor: "pointer",
-  };
 
   return (
     <div>
-      <div className={style}>
+      <div className={`${style} ${width}`}>
         {buttons.map((tool, index) => {
           let customStyle;
           //let spacing = parseInt(style.width);
