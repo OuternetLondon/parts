@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../components/button";
 import Loop_components from "./loop_components";
 
-const DPad = ({ buttons, style, distance }) => {
+const DPad = ({ buttons, style, distance, width }) => {
   // const [spacing, setSpacing] = useState(100);
   let spacing = parseInt(style.width) * distance;
   console.log("spacing", spacing);

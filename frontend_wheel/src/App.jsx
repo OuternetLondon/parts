@@ -13,6 +13,7 @@ import FlexLayout from "./layout_components/flex_layout";
 import { on } from "ws";
 
 const App = () => {
+  document.documentElement.style.setProperty("--color-primary", "red");
   const CONFIG = {
     userId: "user123",
     timestamp: "2023-01-07T14:00:00Z",
@@ -21,7 +22,8 @@ const App = () => {
         id: "dpad",
         type: "DPad",
         style:
-          "flex items-center justify-center absolute h-50 w-[50vw] top-50 left-50 z-0 ",
+          "flex items-center justify-center absolute h-50 top-50 left-50 z-0 ",
+        width: "w-50",
         distance: 0.166,
         children: [
           {
@@ -120,6 +122,7 @@ const App = () => {
             <DPad
               buttons={component.children}
               style={component.style}
+              width={component.width}
               distance={component.distance}
               key={component.id}
             ></DPad>
