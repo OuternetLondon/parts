@@ -27,12 +27,93 @@ const App = () => {
     ],
     components: [
       {
+        id: "SectionOne",
+        type: "GridLayout",
+        style: "grid grid-cols-3 grid-rows-3 gap-10 h-100 w-100",
+
+        children: [
+          {
+            name: "buttonA",
+            type: "button",
+            position: " z-0",
+            style:
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)]   bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+            text_style:
+              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
+            text_display: " A",
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: " z-0",
+            style:
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+            text_style:
+              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
+            text_display: " A",
+          },
+          {
+            id: "steeringWheel1",
+            type: "steeringWheel",
+            size: { width: 100, height: 200 },
+            style: {
+              outer_rim_color: "gray",
+              spoke_color: "red",
+              hub_color: "black",
+              center_marker_color: "orange",
+              border: "3px solid black",
+            },
+            mapping: "rightStick",
+          },
+          {
+            id: "touchpad1",
+            type: "touchpad",
+            /*position: {
+              position: "absolute",
+              top: "400px",
+              left: "350px",
+              z: 0,
+            },*/
+            style: "w-400 h-100 bg-blue-200 border-2 border-black",
+          },
+        ],
+      },
+      /*
+      {
+        id: "MainSection",
+        type: "FlexLayout",
+        style: "flex relative space-around top-0 left-50 w-[100vw] z-0 gap-10 ",
+        children: [
+          {
+            name: "buttonA",
+            type: "button",
+            position: " z-0",
+            style:
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+            text_style:
+              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
+            text_display: " A",
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: " z-0",
+            style:
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+            text_style:
+              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
+            text_display: " A",
+          },
+        ],
+      }, */
+      {
         /*id: "MainSection",
         type: "ButtonJoystick",
         position: { position: "absolute", top: "10px", left: "900px" },
         size: { width: "500px", height: "500px" },
         distance: "0.3",*/
-        id: "MainSection",
+
+        id: "SectionTwo",
         type: "ButtonJoystick",
         style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
         size: "size-200",
@@ -55,18 +136,18 @@ const App = () => {
             type: "button",
             position: " z-0",
             style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover active:scale-99 group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
             text_style:
               "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
+            text_display: " B",
           },
           {
-            name: "buttonA",
+            name: "buttonZ",
             type: "button",
             position: " z-0",
             style:
-              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md h-25 w-25 ",
-            radial: "primary",
+              "group active:scale-99 transition-transform  active:bg-red-300 duration-150 active:shadow-inner  justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md h-25 w-25 ",
+            radial: "secondary",
             text_style:
               "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
             text_display: (
@@ -114,7 +195,7 @@ const App = () => {
         ],
       },
       {
-        id: "dpad",
+        id: "sectionThree",
         type: "DPad",
         style:
           "flex relative items-center justify-center h-150 top-0 left-50 z-0 ",
@@ -126,10 +207,10 @@ const App = () => {
             type: "button",
             position: " z-0",
             style:
-              "group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
+              "group [box-shadow:inset_0_0_5px_0_#333]  cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
             text_style:
               "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
+            text_display: "A",
           },
           {
             name: "buttonA",
@@ -185,32 +266,11 @@ const App = () => {
             name: "buttonA",
             type: "button",
             position: " z-0",
-            style: `h-25 w-25 btn btn-circle btn-primary btn-lg drop-shadow-lg`,
+            style: ` active:scale-99 active:bg-red-300 duration-150 active:shadow-inner h-25 w-25 btn btn-circle btn-primary btn-lg drop-shadow-lg`,
             text_display: "Button A",
           },
         ],
       },
-      /*{
-        id: "section",
-        type: "AbsolutePositionedContainer",
-        style: "relative h-50 w-[50vw] top-50 left-50 z-0",
-        children: [
-          {
-            name: "buttonA",
-            type: "button",
-            position: "absolute top-0 left-50 z-0",
-            style: "h-25 w-25 btn btn-circle btn-primary btn-lg",
-            text_display: "Button A",
-          },
-          {
-            name: "buttonB",
-            type: "button",
-            position: "absolute top-0 left-80 z-0",
-            style: "h-25 w-25 btn btn-circle btn-secondary btn-lg",
-            text_display: "Button B",
-          },
-        ],
-      },*/
     ],
   };
 
@@ -218,7 +278,6 @@ const App = () => {
     <>
       {useSetColors(CONFIG.colors)}
       {CONFIG.components.map((component, index) => {
-        console.log("component type", component.type);
         if (component.type === "AbsolutePositionedContainer") {
           return (
             <AbsolutePositionedContainer

@@ -5,7 +5,6 @@ import Button from "../components/button";
 
 const ButtonJoystick = ({ tools, distance, style, size }) => {
   const buttonCount = tools.filter((tool) => tool.type === "button").length;
-  console.log("tools", parseInt(size.replace(/\D/g, ""), 10));
   return (
     <>
       <div

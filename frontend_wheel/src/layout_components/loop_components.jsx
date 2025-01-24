@@ -21,13 +21,10 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               {" "}
             </ToggleButton>
           );
-          //const style =
         } else if (component.type === "button") {
-          console.log("component", component.position);
-          //   let style = `${customStyle} ${component.style}`;
           return (
             <Button
-              key={component.id}
+              key={component.name}
               name={component.name}
               position={component.position}
               style={component.style}
@@ -80,15 +77,11 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
         } else if (component.type === "dPad") {
           return <DPad position={component.position}></DPad>;
         } else if (component.type === "touchpad") {
-          const style = {
-            ...component.style,
-            ...component.position,
-          };
           return (
             <Touchpad
               key={component.id}
               name={component.name}
-              style={style}
+              style={component.style}
               position={component.position}
             ></Touchpad>
           );

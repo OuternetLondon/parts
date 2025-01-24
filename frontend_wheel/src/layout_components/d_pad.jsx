@@ -3,17 +3,13 @@ import Button from "../components/button";
 import Loop_components from "./loop_components";
 
 const DPad = ({ buttons, style, distance, width }) => {
-  console.log("style", style);
   let widthInt = parseInt(width.replace(/\D/g, ""), 10);
-  console.log("widthInt", widthInt);
   let spacing = parseInt(widthInt) * distance;
-  console.log("spacing", spacing);
 
   return (
     <div className={`${style} ${width}`}>
       {buttons.map((tool, index) => {
         let customStyle;
-        console.log("index", index);
         if (index === 0) {
           customStyle = {
             top: `${spacing}px`,

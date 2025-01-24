@@ -46,7 +46,6 @@ function Button({
       .toRgbString()
       .replace(/,/g, "_")
       .replace(/\s+/g, "");
-    console.log("lightColor", lightColor);
     color = tinycolor(color)
       .toRgbString()
       .replace(/,/g, "_")
@@ -65,10 +64,10 @@ function Button({
     <>
       <button
         onClick={() => handleClick()}
-        className={`${position} ${style} ${
+        className={` ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
-        } `}
+        } ${position} ${style} `}
         style={{
           ...customStyle,
           ...(angle && {
