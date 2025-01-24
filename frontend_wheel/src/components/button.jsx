@@ -2,6 +2,7 @@ import { useState, useEffect, useContext } from "react";
 import { io } from "socket.io-client";
 import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
+import tinycolor from "tinycolor2";
 
 const generateJSON = (userId, name, controlType, action, data) => {
   return {
@@ -20,6 +21,7 @@ function Button({
   /* flashColor,
   hoverColor,
   fontStyle,*/
+  radial,
   position,
   style,
   text_style,
@@ -27,39 +29,57 @@ function Button({
   angle,
   radius,
 }) {
-  console.log("text style", text_style);
+  let color;
+  let lightColor;
+  let darkColor;
+  if (radial) {
+    color = getComputedStyle(document.documentElement)
+      .getPropertyValue(`--color-${radial}`)
+      .trim();
+    lightColor = tinycolor(color)
+      .lighten(70)
+      .toRgbString()
+      .replace(/,/g, "_")
+      .replace(/\s+/g, "");
+    darkColor = tinycolor(color)
+      .darken(70)
+      .toRgbString()
+      .replace(/,/g, "_")
+      .replace(/\s+/g, "");
+    console.log("lightColor", lightColor);
+    color = tinycolor(color)
+      .toRgbString()
+      .replace(/,/g, "_")
+      .replace(/\s+/g, "");
+  }
+
   const { user } = useContext(UserContext);
   const socket = useSocket();
-  /*const [isFlashing, setIsFlashing] = useState(false);
-  const [isHovered, setIsHovered] = useState(false);*/
 
   function handleClick() {
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
   }
 
-  /*useEffect(() => {
-    if (isFlashing) {
-      const timeout = setTimeout(() => setIsFlashing(false), 300); // Flash duration (300ms)
-      return () => clearTimeout(timeout);
-    }
-  }, [isFlashing]);*/
-
-  /*const buttonStyle = {
-    ...style,
-    backgroundColor: isFlashing ? flashColor : style?.backgroundColor || "blue", // Flash color: yellow
-    //transition: "background-color 0.3s ease",
-  };*/
-
   return (
     <>
       <button
         onClick={() => handleClick()}
-        className={`${position} ${style}   `}
-        /* style={{
-            boxShadow: "inset 0 0 10px 0 #333",
-          }}*/
-        style={customStyle ? customStyle : {}}
+        className={`${position} ${style} ${
+          radial &&
+          `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
+        } `}
+        style={{
+          ...customStyle,
+          ...(angle && {
+            transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s",
+          }),
+        }}
       >
         <p className={text_style}> {text_display}</p>
       </button>

@@ -11,72 +11,105 @@ import ButtonJoystick from "./layout_components/ButtonJoystick";
 import JoystickButton from "./layout_components/joystickButton";
 import FlexLayout from "./layout_components/flex_layout";
 import { on } from "ws";
+import tinycolor from "tinycolor2";
+import useSetColors from "./hooks/useSetColors";
 
 const App = () => {
-  document.documentElement.style.setProperty("--color-primary", "blue");
   const CONFIG = {
     userId: "user123",
     timestamp: "2023-01-07T14:00:00Z",
+    colors: [
+      { name: "primary", value: "#422ad5" },
+      { name: "secondary", value: "#f43098" },
+      { name: "accent", value: "#00d3bb" },
+      { name: "neutral", value: "#09090b" },
+      { name: "info", value: "#00bafe" },
+    ],
     components: [
       {
+        /*id: "MainSection",
+        type: "ButtonJoystick",
+        position: { position: "absolute", top: "10px", left: "900px" },
+        size: { width: "500px", height: "500px" },
+        distance: "0.3",*/
         id: "MainSection",
         type: "ButtonJoystick",
-        position: { position: "absolute", top: "10px", left: "300px" },
-        size: { width: "320px", height: "350px" },
-        distance: "0.27",
+        style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
+        size: "size-200",
+        distance: 0.1,
         children: [
           {
             name: "joystickL",
             type: "joystick",
-            position: { z: 10 },
-            size: { inner_height_width: 60, outer_height_width: 120 },
+            position: "z-0",
+            size: { inner_height_width: 60, outer_height_width: 130 },
             style: {
-              inner_color: "#0D47A1",
-              outer_color: "#BBDEFB",
-              border: "1px solid gray",
+              inner_color: "bg-primary",
+              outer_color: "bg-sky-200",
+              border: "border-2 black",
             },
             mapping: "joystickL",
           },
           {
             name: "buttonA",
             type: "button",
-            size: { width: 70, height: 70 },
-            button_style: {
-              color: "#388E3C",
-              border: "2px solid black",
-              borderRadius: "50%",
-              flashColor: "#C8E6C9",
-              padding: "0px",
-            },
-            font_style: {
-              fontSize: "1rem",
-              fontColor: "white",
-              fontFlashColor: "black",
-              fontWeight: "bold",
-              textWrap: "wrap",
-            },
-            mapping: "Button A",
+            position: " z-0",
+            style:
+              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
+            text_style:
+              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
+            text_display: " A",
           },
           {
-            name: "buttonB",
+            name: "buttonA",
             type: "button",
-            //position: { justifySelf: "center", alignSelf: "center", z: 0 },
-            size: { width: 70, height: 70 },
-            button_style: {
-              color: "#D32F2F",
-              border: "2px solid black",
-              borderRadius: "50%",
-              flashColor: "#FFCDD2",
-              padding: "0px",
-            },
-            font_style: {
-              fontSize: "1rem",
-              fontColor: "white",
-              fontFlashColor: "black",
-              fontWeight: "bold",
-              textWrap: "wrap",
-            },
-            mapping: "Button B",
+            position: " z-0",
+            style:
+              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md h-25 w-25 ",
+            radial: "primary",
+            text_style:
+              "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
+            text_display: (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="4"
+                stroke="currentColor"
+                class="size-13"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+                />
+              </svg>
+            ),
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            position: " z-0",
+            style:
+              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
+            text_style:
+              "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
+            text_display: (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="4"
+                stroke="currentColor"
+                class="size-13"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
+                />
+              </svg>
+            ),
           },
         ],
       },
@@ -84,7 +117,7 @@ const App = () => {
         id: "dpad",
         type: "DPad",
         style:
-          "flex relative items-center justify-center h-150 top-50 left-50 z-0 ",
+          "flex relative items-center justify-center h-150 top-0 left-50 z-0 ",
         width: "w-150",
         distance: 0.7,
         children: [
@@ -128,7 +161,7 @@ const App = () => {
             type: "button",
             position: " z-0",
             style:
-              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
+              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-[radial-gradient(ellipse_at_50%_75%,_rgb(255_255_255),_rgb(66_42_213),_rgb(0_0_0))] h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
             text_style:
               "group-hover:text-purple-900  hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
             text_display: (
@@ -152,7 +185,7 @@ const App = () => {
             name: "buttonA",
             type: "button",
             position: " z-0",
-            style: "h-25 w-25 btn btn-circle btn-primary btn-lg drop-shadow-lg",
+            style: `h-25 w-25 btn btn-circle btn-primary btn-lg drop-shadow-lg`,
             text_display: "Button A",
           },
         ],
@@ -180,8 +213,10 @@ const App = () => {
       },*/
     ],
   };
+
   return (
     <>
+      {useSetColors(CONFIG.colors)}
       {CONFIG.components.map((component, index) => {
         console.log("component type", component.type);
         if (component.type === "AbsolutePositionedContainer") {
@@ -203,8 +238,8 @@ const App = () => {
         } else if (component.type === "ButtonJoystick") {
           return (
             <ButtonJoystick
-              position={component.position}
               tools={component.children}
+              style={component.style}
               size={component.size}
               distance={component.distance}
               key={component.id}

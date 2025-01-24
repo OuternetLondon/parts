@@ -3,22 +3,16 @@ import Loop_components from "./loop_components";
 import Joystick from "../components/joystick";
 import Button from "../components/button";
 
-const ButtonJoystick = ({ tools, size, distance, position }) => {
+const ButtonJoystick = ({ tools, distance, style, size }) => {
   const buttonCount = tools.filter((tool) => tool.type === "button").length;
-  console.log("tools", parseInt(size.width));
+  console.log("tools", parseInt(size.replace(/\D/g, ""), 10));
   return (
     <>
       <div
+        className={`${style} ${size}`}
         style={{
-          ...position,
           borderRadius: "50%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
           overflow: "hidden",
-          // position: "relative",
-          width: size.width,
-          height: size.height,
         }}
       >
         {tools.map((tool, index) => {
@@ -26,7 +20,9 @@ const ButtonJoystick = ({ tools, size, distance, position }) => {
             return <Loop_components key={tool.id} component_array={[tool]} />;
           } else if (tool.type === "button") {
             const angle = (index / buttonCount) * 360;
-            const radius = `${parseInt(size.width) / distance / 10}px`;
+            const radius = `${
+              parseInt(size.replace(/\D/g, ""), 10) / distance / 10
+            }px`;
             return (
               <Loop_components
                 key={tool.id}

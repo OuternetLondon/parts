@@ -34,6 +34,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               text_style={component.text_style}
               customStyle={customStyle}
               text_display={component.text_display}
+              radial={component.radial}
               {...(angle && { angle })}
               {...(radius && { radius })}
             ></Button>
@@ -42,6 +43,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           const styles = {
             inner_h: component.size.inner_height_width,
             outer_h: component.size.outer_height_width,
+            border: component.style.border,
             inner_color: component.style.inner_color,
             outer_color: component.style.outer_color,
           };
