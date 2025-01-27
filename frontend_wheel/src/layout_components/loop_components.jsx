@@ -4,7 +4,7 @@ import Joystick from "../components/joystick";
 import RacingWheel from "../components/racing_wheel";
 import DPad from "./d_pad";
 import Touchpad from "../components/touchpad";
-import ToggleButton from "../components/toggleButton";
+import ToggleButton from "../components/toggleSwitch";
 
 const Loop_components = ({ component_array, customStyle, angle, radius }) => {
   return (
@@ -22,16 +22,58 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             </ToggleButton>
           );
         } else if (component.type === "button") {
+          let tailwindStyles = "";
+          let inlineStyles = {};
+          let radial;
+          console.log("height", component.height);
+          if (component.height) {
+            inlineStyles["height"] = component.height;
+            //inlineStyles = `h-${component.height}`;
+          }
+          if (component.width) {
+            inlineStyles["width"] = component.width;
+          }
+          if (component.hover_color) {
+            tailwindStyles += ` hover:bg-${component.hover_color}`;
+          }
+          if (component.color) {
+            tailwindStyles += ` btn-${component.color}`;
+          }
+
+          if (component.classes === "radial") {
+            radial = getComputedStyle(
+              document.documentElement
+            ).getPropertyValue(`--color-${component.color}`);
+          } else {
+            radial = false;
+          }
+
+          let fontStyle = {};
+          console.log("font styless", component.font_style.color);
+          if (component.font_style.size) {
+            fontStyle["fontSize"] = component.font_style.size;
+          }
+          if (component.font_style.fontWeight) {
+            fontStyle["fontWeight"] = component.font_style.fontWeight;
+          }
+          if (component.font_style.color) {
+            fontStyle["color"] = component.font_style.color;
+          }
+          // styles = `h-30 w-30 btn btn-circle btn-info btn-lg`;
+          //  console.log("overideStyles loop", styles);
           return (
             <Button
               key={component.name}
               name={component.name}
               position={component.position}
-              style={component.style}
-              text_style={component.text_style}
+              classes={component.classes}
+              fontClass={component.font_style.classes}
+              tailwindStyles={tailwindStyles}
+              inlineStyles={inlineStyles}
+              font_style={component.font_style}
               customStyle={customStyle}
               text_display={component.text_display}
-              radial={component.radial}
+              radial={radial}
               {...(angle && { angle })}
               {...(radius && { radius })}
             ></Button>

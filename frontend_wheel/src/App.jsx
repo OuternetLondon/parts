@@ -4,7 +4,7 @@ import Joystick from "./components/joystick";
 import Button from "./components/button";
 import DPad from "./layout_components/d_pad";
 import Touchpad from "./components/touchpad";
-import ToggleButton from "./components/toggleButton";
+import ToggleSwitch from "./components/toggleSwitch";
 import AbsolutePositionedContainer from "./layout_components/absolutePositioned";
 import GridLayout from "./layout_components/gridLayout";
 import ButtonJoystick from "./layout_components/ButtonJoystick";
@@ -13,6 +13,7 @@ import FlexLayout from "./layout_components/flex_layout";
 import { on } from "ws";
 import tinycolor from "tinycolor2";
 import useSetColors from "./hooks/useSetColors";
+import ToggleButton from "./components/toggleButton";
 
 const App = () => {
   const CONFIG = {
@@ -27,92 +28,91 @@ const App = () => {
     ],
     components: [
       {
-        id: "SectionOne",
-        type: "GridLayout",
-        style: "grid grid-cols-3 grid-rows-3 gap-10 h-100 w-100",
-
+        id: "section",
+        type: "AbsolutePositionedContainer",
+        style: "relative h-30 w-[50vw] top-30 left-50 z-0",
         children: [
           {
             name: "buttonA",
             type: "button",
-            position: " z-0",
-            style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)]   bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
-          },
-          {
-            name: "buttonA",
-            type: "button",
-            position: " z-0",
-            style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
-          },
-          {
-            id: "steeringWheel1",
-            type: "steeringWheel",
-            size: { width: 100, height: 200 },
-            style: {
-              outer_rim_color: "gray",
-              spoke_color: "red",
-              hub_color: "black",
-              center_marker_color: "orange",
-              border: "3px solid black",
+            position: "absolute top-0 left-1/2 z-0",
+            classes: "circular-button",
+            height: "100px",
+            width: "100px",
+            color: "primary",
+            hover_color: "blue-500",
+            font_style: {
+              classes: "button-text",
+              size: "1rem",
+              fontWeight: 800,
+              color: "orange",
             },
-            mapping: "rightStick",
+            text_display: "Button B",
           },
           {
-            id: "touchpad1",
-            type: "touchpad",
-            /*position: {
-              position: "absolute",
-              top: "400px",
-              left: "350px",
-              z: 0,
-            },*/
-            style: "w-400 h-100 bg-blue-200 border-2 border-black",
+            name: "buttonB",
+            type: "button",
+            position: "absolute top-0 left-2/3 z-0",
+            classes: "square-button",
+            height: "120px",
+            width: "120px",
+            color: "primary",
+            hover_color: "red-500",
+            font_style: {
+              classes: "button-text",
+              size: "1rem",
+              fontWeight: 800,
+              color: "black",
+            },
+            text_display: "Button B",
           },
+          {
+            name: "buttonC",
+            type: "button",
+            position: "absolute top-0 left-5/6 z-0",
+            classes: "radial",
+            height: "120px",
+            width: "120px",
+            color: "primary",
+            text_display: "Button B",
+            hover_color: "info",
+            font_style: {
+              classes: "button-text",
+              size: "2rem",
+              fontWeight: 800,
+              color: "white",
+            },
+          },
+          {
+            name: "buttonC",
+            type: "button",
+            position: "absolute top-0 left-full z-0",
+            classes: "image-button",
+            height: "120px",
+            width: "120px",
+            color: "primary",
+            image:
+              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
+            hover_color: "info",
+            text_display: "Button B",
+            font_style: {
+              classes: "button-text",
+              size: "2rem",
+              fontWeight: 800,
+              color: "white",
+              hover_color: "neutral",
+            },
+          },
+          /* {
+            name: "buttonB",
+            type: "button",
+            position: "absolute top-0 left-80 z-0",
+            style: "h-25 w-25 btn btn-circle btn-secondary btn-lg",
+            text_display: "Button B",
+          },*/
         ],
       },
-      /*
-      {
-        id: "MainSection",
-        type: "FlexLayout",
-        style: "flex relative space-around top-0 left-50 w-[100vw] z-0 gap-10 ",
-        children: [
-          {
-            name: "buttonA",
-            type: "button",
-            position: " z-0",
-            style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
-          },
-          {
-            name: "buttonA",
-            type: "button",
-            position: " z-0",
-            style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " A",
-          },
-        ],
-      }, */
-      {
-        /*id: "MainSection",
-        type: "ButtonJoystick",
-        position: { position: "absolute", top: "10px", left: "900px" },
-        size: { width: "500px", height: "500px" },
-        distance: "0.3",*/
-
+      /*{
         id: "SectionTwo",
         type: "ButtonJoystick",
         style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
@@ -193,8 +193,8 @@ const App = () => {
             ),
           },
         ],
-      },
-      {
+      },*/
+      /*{
         id: "sectionThree",
         type: "DPad",
         style:
@@ -270,12 +270,13 @@ const App = () => {
             text_display: "Button A",
           },
         ],
-      },
+      },*/
     ],
   };
 
   return (
     <>
+      <button className="circular-button">test</button>
       {useSetColors(CONFIG.colors)}
       {CONFIG.components.map((component, index) => {
         if (component.type === "AbsolutePositionedContainer") {

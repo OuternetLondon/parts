@@ -3,6 +3,7 @@ import { io } from "socket.io-client";
 import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
 import tinycolor from "tinycolor2";
+import clsx from "clsx";
 
 const generateJSON = (userId, name, controlType, action, data) => {
   return {
@@ -23,8 +24,11 @@ function Button({
   fontStyle,*/
   radial,
   position,
-  style,
-  text_style,
+  classes,
+  fontClass,
+  tailwindStyles,
+  inlineStyles,
+  font_style,
   customStyle,
   angle,
   radius,
@@ -33,9 +37,7 @@ function Button({
   let lightColor;
   let darkColor;
   if (radial) {
-    color = getComputedStyle(document.documentElement)
-      .getPropertyValue(`--color-${radial}`)
-      .trim();
+    color = radial.trim();
     lightColor = tinycolor(color)
       .lighten(70)
       .toRgbString()
@@ -59,16 +61,16 @@ function Button({
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
   }
-
   return (
     <>
       <button
         onClick={() => handleClick()}
-        className={` ${
+        className={`${classes} ${position} ${tailwindStyles} group ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
-        } ${position} ${style} `}
+        } `}
         style={{
+          ...inlineStyles,
           ...customStyle,
           ...(angle && {
             transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
@@ -80,7 +82,9 @@ function Button({
           }),
         }}
       >
-        <p className={text_style}> {text_display}</p>
+        <p className={`${fontClass}`} style={{ ...font_style }}>
+          {text_display}
+        </p>
       </button>
     </>
   );
