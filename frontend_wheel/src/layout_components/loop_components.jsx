@@ -37,8 +37,10 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             tailwindStyles += ` hover:bg-${component.hover_color}`;
           }
           if (component.color) {
-            tailwindStyles += ` btn-${component.color}`;
+            tailwindStyles += ` bg-${component.color}`;
           }
+
+          //tailwindStyles = "hover:bg-sky-300 bg-orange-300";
 
           if (component.classes === "radial") {
             radial = getComputedStyle(
@@ -50,15 +52,20 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
 
           let fontStyle = {};
           console.log("font styless", component.font_style.color);
-          if (component.font_style.size) {
-            fontStyle["fontSize"] = component.font_style.size;
-          }
           if (component.font_style.fontWeight) {
             fontStyle["fontWeight"] = component.font_style.fontWeight;
           }
-          if (component.font_style.color) {
-            fontStyle["color"] = component.font_style.color;
+          if (component.font_style.size) {
+            fontStyle["fontSize"] = component.font_style.size;
           }
+
+          let fontTailwind = "";
+          if (component.font_style.color) {
+            fontTailwind += `text-${component.font_style.color}`;
+          }
+          console.log("fontstyle", fontStyle);
+          //console.log("tailwindstyles!!", tailwindStyles);
+          //  tailwindStyles = `hover:bg-sky-300 bg-orange-300`;
           // styles = `h-30 w-30 btn btn-circle btn-info btn-lg`;
           //  console.log("overideStyles loop", styles);
           return (
@@ -71,6 +78,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               tailwindStyles={tailwindStyles}
               inlineStyles={inlineStyles}
               font_style={component.font_style}
+              fontTailwind={fontTailwind}
               customStyle={customStyle}
               text_display={component.text_display}
               radial={radial}

@@ -29,10 +29,12 @@ function Button({
   tailwindStyles,
   inlineStyles,
   font_style,
+  fontTailwind,
   customStyle,
   angle,
   radius,
 }) {
+  console.log("fontstyle button", font_style);
   let color;
   let lightColor;
   let darkColor;
@@ -65,13 +67,14 @@ function Button({
     <>
       <button
         onClick={() => handleClick()}
-        className={`${classes} ${position} ${tailwindStyles} group ${
+        className={`${classes}  ${tailwindStyles}  group ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
         } `}
         style={{
           ...inlineStyles,
           ...customStyle,
+          ...position,
           ...(angle && {
             transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
             position: "absolute",
@@ -82,7 +85,7 @@ function Button({
           }),
         }}
       >
-        <p className={`${fontClass}`} style={{ ...font_style }}>
+        <p className={`${fontClass} ${fontTailwind}`} style={{ ...font_style }}>
           {text_display}
         </p>
       </button>

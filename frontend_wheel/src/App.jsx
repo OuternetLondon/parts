@@ -14,8 +14,11 @@ import { on } from "ws";
 import tinycolor from "tinycolor2";
 import useSetColors from "./hooks/useSetColors";
 import ToggleButton from "./components/toggleButton";
+import { useStyles } from "./hooks/useStyles";
 
+import "./index.css";
 const App = () => {
+  const styles = useStyles();
   const CONFIG = {
     userId: "user123",
     timestamp: "2023-01-07T14:00:00Z",
@@ -25,51 +28,84 @@ const App = () => {
       { name: "accent", value: "#00d3bb" },
       { name: "neutral", value: "#09090b" },
       { name: "info", value: "#00bafe" },
+      { name: "success", value: "#00d390" },
+      { name: "warning", value: "#fcb700" },
+      { name: "error", value: "#ff637d" },
+      { name: "black", value: "#000000" },
+      { name: "white", value: "#ffffff" },
+      { name: "blue-500", value: "#0000ff" },
+      { name: "red-500", value: "#ff0000" },
+      { name: "green-500", value: "#00ff00" },
+      { name: "yellow-500", value: "#ffff00" },
+      { name: "orange-500", value: "#ffa500" },
+      { name: "purple-500", value: "#800080" },
     ],
     components: [
       {
         id: "section",
         type: "AbsolutePositionedContainer",
-        style: "relative h-30 w-[50vw] top-30 left-50 z-0",
+        //   style: "relative h-30 w-[50vw] top-30 left-50 z-0",
+        position: {
+          top: "100px",
+          left: "100px",
+          height: "400px",
+          width: "50vw",
+        },
         children: [
           {
             name: "buttonA",
             type: "button",
-            position: "absolute top-0 left-1/2 z-0",
+            //position: "absolute top-0 left-1/2 z-0",
             classes: "circular-button",
             height: "100px",
             width: "100px",
-            color: "primary",
-            hover_color: "blue-500",
+            color: "green-500",
+            hover_color: "yellow-500",
+            text_display: "Button B",
             font_style: {
               classes: "button-text",
-              size: "1rem",
-              fontWeight: 800,
-              color: "orange",
+              fontSize: "1.2rem",
+              fontWeight: 900,
+              color: "blue-500",
             },
-            text_display: "Button B",
+            position: {
+              position: "absolute",
+              top: "0",
+              left: "30%",
+              zIndex: "0",
+            },
           },
           {
             name: "buttonB",
             type: "button",
-            position: "absolute top-0 left-2/3 z-0",
+            position: {
+              position: "absolute",
+              top: "0",
+              left: "50%",
+              zIndex: "0",
+            },
             classes: "square-button",
             height: "120px",
             width: "120px",
-            color: "primary",
-            hover_color: "red-500",
+            color: "warning",
+            hover_color: "info",
             font_style: {
               classes: "button-text",
-              size: "1rem",
+              fontSize: "1rem",
               fontWeight: 800,
-              color: "black",
+              color: "red",
             },
             text_display: "Button B",
           },
           {
             name: "buttonC",
             type: "button",
-            position: "absolute top-0 left-5/6 z-0",
+            position: {
+              position: "absolute",
+              top: "0",
+              left: "70%",
+              zIndex: "0",
+            },
             classes: "radial",
             height: "120px",
             width: "120px",
@@ -78,7 +114,7 @@ const App = () => {
             hover_color: "info",
             font_style: {
               classes: "button-text",
-              size: "2rem",
+              fontSize: "2rem",
               fontWeight: 800,
               color: "white",
             },
@@ -86,7 +122,12 @@ const App = () => {
           {
             name: "buttonC",
             type: "button",
-            position: "absolute top-0 left-full z-0",
+            position: {
+              position: "absolute",
+              top: "0",
+              left: "90%",
+              zIndex: "0",
+            },
             classes: "image-button",
             height: "120px",
             width: "120px",
@@ -103,13 +144,47 @@ const App = () => {
               hover_color: "neutral",
             },
           },
-          /* {
-            name: "buttonB",
+        ],
+      },
+      {
+        id: "SectionTwo",
+        type: "ButtonJoystick",
+        style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
+        size: "size-200",
+        distance: 0.12,
+        children: [
+          {
+            name: "joystickL",
+            type: "joystick",
+            position: "z-0",
+            size: { inner_height_width: 60, outer_height_width: 130 },
+            style: {
+              inner_color: "bg-primary",
+              outer_color: "bg-sky-200",
+              border: "border-2 black",
+            },
+            mapping: "joystickL",
+          },
+          {
+            name: "buttonA",
             type: "button",
-            position: "absolute top-0 left-80 z-0",
-            style: "h-25 w-25 btn btn-circle btn-secondary btn-lg",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "circular-button",
+            height: "100px",
+            width: "100px",
+            color: "green-500",
+            hover_color: "yellow-500",
             text_display: "Button B",
-          },*/
+            font_style: {
+              classes: "button-text",
+              fontSize: "1.2rem",
+              fontWeight: 900,
+              color: "blue-500",
+            },
+            position: {
+              zIndex: "0",
+            },
+          },
         ],
       },
       /*{
@@ -276,14 +351,13 @@ const App = () => {
 
   return (
     <>
-      <button className="circular-button">test</button>
       {useSetColors(CONFIG.colors)}
       {CONFIG.components.map((component, index) => {
         if (component.type === "AbsolutePositionedContainer") {
           return (
             <AbsolutePositionedContainer
               tools={component.children}
-              style={component.style}
+              positioning={component.position}
               key={component.id}
             ></AbsolutePositionedContainer>
           );

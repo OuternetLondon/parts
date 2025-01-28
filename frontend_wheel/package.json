@@ -10,6 +10,7 @@
   },
   "proxy": "https://tech.outernetglobal.com/testenv",
   "dependencies": {
+    "@tailwindcss/cli": "^4.0.0",
     "@tailwindcss/vite": "^4.0.0",
     "clsx": "^2.1.1",
     "postcss-cli": "^11.0.0",
