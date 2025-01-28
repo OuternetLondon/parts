@@ -7,7 +7,7 @@ export const useStyles = () => {
   let color_styles =
     "bg-black, bg-white, bg-blue-500 bg-red-500 bg-yellow-500 bg-orange-500 bg-green-500 bg-purple-500 hover:bg-black, hover:bg-white, hover:bg-blue-500 hover:bg-red-500 hover:bg-yellow-500 hover:bg-orange-500 hover:bg-green-500 hover:bg-purple-500 hover:bg-black, hover:bg-white, text-black, text-white, hover:text-black, hover:text-white,";
   let font =
-    "text-blue-500 text-red-500 text-yellow-500 text-orange-500 text-green-500 text-purple-500 text-black text-white text text-primary, text-secondary, text-accent, text-neutral, text-info, text-success, text-warning, text-error,";
+    "text-blue-500 text-red-500 text-yellow-500 text-orange-500 text-green-500 text-purple-500 text-black text-white text text-primary, text-secondary, text-accent, text-neutral, text-info, text-success, text-warning, text-error, bg-[]";
   return {
     color_styles,
     borders,

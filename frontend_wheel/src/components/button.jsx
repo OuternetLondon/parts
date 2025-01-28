@@ -67,7 +67,7 @@ function Button({
     <>
       <button
         onClick={() => handleClick()}
-        className={`${classes}  ${tailwindStyles}  group ${
+        className={`${classes}  ${tailwindStyles}  sgroup ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
         } `}

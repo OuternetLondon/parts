@@ -39,7 +39,9 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.color) {
             tailwindStyles += ` bg-${component.color}`;
           }
-
+          if (component.image_url) {
+            tailwindStyles += `bg-[url(${component.image_url})] bg-cover bg-center`;
+          }
           //tailwindStyles = "hover:bg-sky-300 bg-orange-300";
 
           if (component.classes === "radial") {
@@ -51,7 +53,6 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           }
 
           let fontStyle = {};
-          console.log("font styless", component.font_style.color);
           if (component.font_style.fontWeight) {
             fontStyle["fontWeight"] = component.font_style.fontWeight;
           }
