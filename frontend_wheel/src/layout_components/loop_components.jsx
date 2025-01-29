@@ -39,11 +39,27 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.color) {
             tailwindStyles += ` bg-${component.color}`;
           }
-          if (component.image_url) {
-            tailwindStyles += `bg-[url(${component.image_url})] bg-cover bg-center`;
+          if (component.img_url) {
+            tailwindStyles += ` bg-[url(${component.img_url})] bg-cover bg-center`;
+          }
+          if (component.size) {
+            tailwindStyles += ` btn-${component.size}`;
+          }
+          if (component.border) {
+            if (component.border === "large") {
+              tailwindStyles += ` border-8`;
+            } else if (component.border === "medium") {
+              tailwindStyles += ` border-4`;
+            } else {
+              tailwindStyles += ` border-2`;
+            }
+          }
+          if (component.border_color) {
+            tailwindStyles += ` border-${component.border_color}`;
           }
           //tailwindStyles = "hover:bg-sky-300 bg-orange-300";
 
+          console.log("image url", component.image_url);
           if (component.classes === "radial") {
             radial = getComputedStyle(
               document.documentElement
@@ -64,8 +80,11 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.font_style.color) {
             fontTailwind += `text-${component.font_style.color}`;
           }
-          console.log("fontstyle", fontStyle);
-          //console.log("tailwindstyles!!", tailwindStyles);
+          if (component.font_style.hover_color) {
+            fontTailwind += ` group-hover:text-${component.font_style.hover_color}`;
+          }
+          // console.log("fontstyle", fontStyle);
+          console.log("tailwindstyles!!", tailwindStyles);
           //  tailwindStyles = `hover:bg-sky-300 bg-orange-300`;
           // styles = `h-30 w-30 btn btn-circle btn-info btn-lg`;
           //  console.log("overideStyles loop", styles);
@@ -88,10 +107,35 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             ></Button>
           );
         } else if (component.type === "joystick") {
+          let border_style = "";
+          if (component.style.border) {
+            if (component.style.border === "large") {
+              border_style = "border-8";
+            } else if (component.style.border === "medium") {
+              border_style = "border-4";
+            } else {
+              border_style = "border-2";
+            }
+          }
+          if (component.style.border_color) {
+            border_style += ` border-${component.style.border_color}`;
+          }
+          let inner_size;
+          let outer_size;
+          if (!component.size || !component.size.inner_height_width) {
+            inner_size = 60;
+          } else {
+            inner_size = component.size.inner_height_width;
+          }
+          if (!component.size || !component.size.outer_height_width) {
+            outer_size = 120;
+          } else {
+            outer_size = component.size.outer_height_width;
+          }
           const styles = {
-            inner_h: component.size.inner_height_width,
-            outer_h: component.size.outer_height_width,
-            border: component.style.border,
+            inner_h: inner_size,
+            outer_h: outer_size,
+            border: border_style,
             inner_color: component.style.inner_color,
             outer_color: component.style.outer_color,
           };

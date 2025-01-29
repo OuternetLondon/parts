@@ -3,13 +3,17 @@ import Loop_components from "./loop_components";
 import Joystick from "../components/joystick";
 import Button from "../components/button";
 
-const ButtonJoystick = ({ tools, distance, style, size }) => {
+const ButtonJoystick = ({ tools, distance, size, position }) => {
   const buttonCount = tools.filter((tool) => tool.type === "button").length;
   return (
     <>
       <div
-        className={`${style} ${size}`}
+        className={` z-0 justify-center items-center flex`}
         style={{
+          ...position,
+          width: `${size}`,
+          height: `${size}`,
+          position: "absolute",
           borderRadius: "50%",
           overflow: "hidden",
         }}

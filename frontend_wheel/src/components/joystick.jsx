@@ -21,8 +21,9 @@ const Joystick = ({ styles, positioning, name }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
 
-  const OUTER_CIRCLE_SIZE = styles.outer_h;
-  const INNER_CIRCLE_SIZE = styles.inner_h;
+  let OUTER_CIRCLE_SIZE = styles.outer_h;
+  let INNER_CIRCLE_SIZE = styles.inner_h;
+
   const MAX_DISTANCE = OUTER_CIRCLE_SIZE / 2;
 
   useEffect(() => {
@@ -157,15 +158,14 @@ const Joystick = ({ styles, positioning, name }) => {
         onTouchStart={handleTouchStart}
       >
         <div
-          className={`absolute rounded-full ${styles.border} ${styles.outer_color} `}
+          className={`absolute rounded-full ${styles.border} bg-${styles.outer_color} `}
           style={{
             width: OUTER_CIRCLE_SIZE,
             height: OUTER_CIRCLE_SIZE,
           }}
         />
-
         <div
-          className={`absolute rounded-full ${styles.inner_color}`}
+          className={`absolute flex items-center justify-center rounded-full bg-${styles.inner_color}`}
           style={{
             width: INNER_CIRCLE_SIZE,
             height: INNER_CIRCLE_SIZE,
@@ -178,7 +178,23 @@ const Joystick = ({ styles, positioning, name }) => {
             // backgroundColor: styles.inner_color,
             opacity: pressed ? 1 : 0.8,
           }}
-        />
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="3.5"
+            stroke="currentColor"
+            class="size-12"
+            color="black"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="m19.5 19.5-15-15m0 0v11.25m0-11.25h11.25"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );

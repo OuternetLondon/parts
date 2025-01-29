@@ -48,7 +48,7 @@ const App = () => {
         position: {
           top: "100px",
           left: "100px",
-          height: "400px",
+          height: "100px",
           width: "50vw",
         },
         children: [
@@ -56,17 +56,22 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "circular-button standard-button",
-            height: "100px",
-            width: "100px",
-            color: "green-500",
-            hover_color: "yellow-500",
-            text_display: "Button B",
+            classes: "standard-button clip-spiked circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "large",
+            border_color: "black",
+            text_display: "test",
             font_style: {
               classes: "button-text",
-              fontSize: "1.2rem",
-              fontWeight: 900,
-              color: "blue-500",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
             },
             position: {
               position: "absolute",
@@ -75,28 +80,7 @@ const App = () => {
               zIndex: "0",
             },
           },
-          {
-            name: "buttonB",
-            type: "button",
-            position: {
-              position: "absolute",
-              top: "0",
-              left: "50%",
-              zIndex: "0",
-            },
-            classes: "circular-button standard-button",
-            height: "120px",
-            width: "120px",
-            color: "warning",
-            hover_color: "info",
-            font_style: {
-              classes: "button-text",
-              fontSize: "1rem",
-              fontWeight: 800,
-              color: "red",
-            },
-            text_display: "Button B",
-          },
+          /*
           {
             name: "buttonC",
             type: "button",
@@ -109,7 +93,7 @@ const App = () => {
             classes: "radial",
             height: "120px",
             width: "120px",
-            color: "warning",
+            color: "secondary",
             text_display: "Button B",
             hover_color: "info",
             font_style: {
@@ -117,6 +101,7 @@ const App = () => {
               fontSize: "2rem",
               fontWeight: 800,
               color: "white",
+              hover_color: "primary",
             },
           },
           {
@@ -128,7 +113,7 @@ const App = () => {
               left: "90%",
               zIndex: "0",
             },
-            classes: "image-button",
+            classes: "image-button square-button standard-button",
             img_url:
               "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
             height: "120px",
@@ -143,25 +128,30 @@ const App = () => {
               color: "white",
               hover_color: "neutral",
             },
-          },
+          },*/
         ],
       },
       {
         id: "SectionTwo",
         type: "ButtonJoystick",
-        style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
-        size: "size-200",
-        distance: 0.12,
+        position: {
+          top: "200px",
+          left: "100px",
+        },
+        //style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
+        size: "400px",
+        distance: 0.25,
         children: [
           {
             name: "joystickL",
             type: "joystick",
             position: "z-0",
-            size: { inner_height_width: 60, outer_height_width: 130 },
+            size: { inner_height_width: 70, outer_height_width: 130 },
             style: {
-              inner_color: "bg-primary",
-              outer_color: "bg-sky-200",
-              border: "border-2 black",
+              inner_color: "secondary",
+              outer_color: "blue-500",
+              border: "large",
+              border_color: "warning",
             },
             mapping: "joystickL",
           },
@@ -169,17 +159,48 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "circular-button",
-            height: "70px",
-            width: "70px",
-            color: "green-500",
-            hover_color: "yellow-500",
-            text_display: "Button B",
+            classes: " standard-button circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "medium",
+            border_color: "red-500",
+            text_display: "B",
             font_style: {
               classes: "button-text",
-              fontSize: "1.2rem",
-              fontWeight: 900,
-              color: "blue-500",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              zIndex: "0",
+            },
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "standard-button circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url:
+              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
+            color: "purple-500",
+            hover_color: "white",
+            border: "medium",
+            border_color: "red-500",
+            text_display: "B",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
             },
             position: {
               zIndex: "0",
@@ -351,6 +372,9 @@ const App = () => {
 
   return (
     <>
+      <button className="btn btn-primary btn-lg group ">
+        <p className="group-hover:text-red-500">test</p>
+      </button>
       {useSetColors(CONFIG.colors)}
       {CONFIG.components.map((component, index) => {
         if (component.type === "AbsolutePositionedContainer") {
@@ -373,7 +397,7 @@ const App = () => {
           return (
             <ButtonJoystick
               tools={component.children}
-              style={component.style}
+              position={component.position}
               size={component.size}
               distance={component.distance}
               key={component.id}

@@ -63,11 +63,12 @@ function Button({
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
   }
+  let radial_color = "red-500";
   return (
     <>
       <button
         onClick={() => handleClick()}
-        className={`${classes}  ${tailwindStyles}  sgroup ${
+        className={`${classes}  ${tailwindStyles} bg-radial-[at_50%_75%] from-white via-${radial_color} to-black to-90% group ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
         } `}
