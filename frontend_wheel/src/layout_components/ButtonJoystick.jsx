@@ -3,8 +3,20 @@ import Loop_components from "./loop_components";
 import Joystick from "../components/joystick";
 import Button from "../components/button";
 
-const ButtonJoystick = ({ tools, distance, size, position }) => {
+const ButtonJoystick = ({
+  tools,
+  distance,
+  size,
+  position,
+  border,
+  outerborderColor,
+}) => {
   const buttonCount = tools.filter((tool) => tool.type === "button").length;
+
+  let borderSize;
+  if (border) {
+    borderSize = border;
+  }
   return (
     <>
       <div
@@ -18,6 +30,20 @@ const ButtonJoystick = ({ tools, distance, size, position }) => {
           overflow: "hidden",
         }}
       >
+        {border && (
+          <div
+            className={`absolute border-4 border-${outerborderColor}`}
+            style={{
+              top: "50%",
+              left: "50%",
+              width: `${borderSize}`, // Adjust to make the circular border smaller
+              height: `${borderSize}`, // Adjust to make the circular border smaller
+              borderRadius: "50%", // Make it circular
+              // Circular border style
+              transform: "translate(-50%, -50%)", // Center it within the parent container
+            }}
+          ></div>
+        )}
         {tools.map((tool, index) => {
           if (tool.type === "joystick") {
             return <Loop_components key={tool.id} component_array={[tool]} />;

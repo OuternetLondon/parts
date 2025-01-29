@@ -21,7 +21,10 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               {" "}
             </ToggleButton>
           );
-        } else if (component.type === "button") {
+        } else if (
+          component.type === "button" ||
+          component.type === "inner_joystick"
+        ) {
           let tailwindStyles = "";
           let inlineStyles = {};
           let radial;
@@ -44,6 +47,9 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           }
           if (component.size) {
             tailwindStyles += ` btn-${component.size}`;
+          }
+          if (component.type === "inner_joystick") {
+            tailwindStyles += `no-animation`;
           }
           if (component.border) {
             if (component.border === "large") {
@@ -92,6 +98,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             <Button
               key={component.name}
               name={component.name}
+              type={component.type}
               position={component.position}
               classes={component.classes}
               fontClass={component.font_style.classes}
@@ -147,6 +154,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               key={component.name}
               styles={styles}
               positioning={positioning}
+              inner_joystick={component.inner_joystick}
               name={component.name}
             ></Joystick>
           );

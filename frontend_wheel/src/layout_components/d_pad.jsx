@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import Button from "../components/button";
 import Loop_components from "./loop_components";
 
-const DPad = ({ buttons, style, distance, width }) => {
-  let widthInt = parseInt(width.replace(/\D/g, ""), 10);
+const DPad = ({ buttons, style, distance, size, position }) => {
+  let widthInt = parseInt(size.width, 10);
   let spacing = parseInt(widthInt) * distance;
 
   return (
-    <div className={`${style} ${width}`}>
+    <div
+      className={`flex relative items-center justify-center `}
+      style={{ ...position, width: size.width, height: size.height }}
+    >
       {buttons.map((tool, index) => {
         let customStyle;
         if (index === 0) {

@@ -19,6 +19,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
 function Button({
   text_display,
   name,
+  type,
   /* flashColor,
   hoverColor,
   fontStyle,*/
@@ -60,6 +61,9 @@ function Button({
   const socket = useSocket();
 
   function handleClick() {
+    if (type === "inner_joystick") {
+      return;
+    }
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
   }
@@ -68,7 +72,7 @@ function Button({
     <>
       <button
         onClick={() => handleClick()}
-        className={`${classes}  ${tailwindStyles} bg-radial-[at_50%_75%] from-white via-${radial_color} to-black to-90% group ${
+        className={`${classes}  ${tailwindStyles}  group ${
           radial &&
           `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
         } `}

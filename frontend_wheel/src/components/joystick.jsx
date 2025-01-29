@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
+import Loop_components from "../layout_components/loop_components";
 
 const generateJSON = (userId, name, controlType, action, data) => {
   return {
@@ -13,7 +14,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const Joystick = ({ styles, positioning, name }) => {
+const Joystick = ({ styles, positioning, name, inner_joystick }) => {
   const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ angle: 0, distance: 0 }); // Start at center
   const joystickRef = useRef(null);
@@ -145,6 +146,14 @@ const Joystick = ({ styles, positioning, name }) => {
 
   const visualPosition = getPolarToCartesian(position.angle, position.distance);
 
+  let customStyle = {
+    width: INNER_CIRCLE_SIZE,
+    height: INNER_CIRCLE_SIZE,
+    left: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.x,
+    top: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.y,
+    transform: "translate(0, 0)",
+    transition: pressed ? "none" : "all 0.2s ease-out",
+  };
   return (
     <div className={`p-4 ${positioning}  `}>
       <div
@@ -164,6 +173,7 @@ const Joystick = ({ styles, positioning, name }) => {
             height: OUTER_CIRCLE_SIZE,
           }}
         />
+
         <div
           className={`absolute flex items-center justify-center rounded-full bg-${styles.inner_color}`}
           style={{
@@ -179,21 +189,11 @@ const Joystick = ({ styles, positioning, name }) => {
             opacity: pressed ? 1 : 0.8,
           }}
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="3.5"
-            stroke="currentColor"
-            class="size-12"
-            color="black"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m19.5 19.5-15-15m0 0v11.25m0-11.25h11.25"
-            />
-          </svg>
+          <Loop_components
+            key={inner_joystick.name}
+            component_array={[inner_joystick]}
+            customStyle={customStyle}
+          ></Loop_components>
         </div>
       </div>
     </div>

@@ -23,8 +23,8 @@ const App = () => {
     userId: "user123",
     timestamp: "2023-01-07T14:00:00Z",
     colors: [
-      { name: "primary", value: "#422ad5" },
-      { name: "secondary", value: "#f43098" },
+      { name: "primary", value: "#1790db" },
+      { name: "secondary", value: "#820aa8" },
       { name: "accent", value: "#00d3bb" },
       { name: "neutral", value: "#09090b" },
       { name: "info", value: "#00bafe" },
@@ -41,6 +41,35 @@ const App = () => {
       { name: "purple-500", value: "#800080" },
     ],
     components: [
+      /*{
+        id: "flex_section",
+        type: "FlexLayout",
+        position: {
+          top: "100px",
+          left: "20px",
+        },
+        size: { height: "200px", width: "200px" },
+        style: {
+          gap: "20px",
+          direction: "horizontal", //or vertical
+        },
+        children: [],
+      },*/
+      /* {
+        id: "GridSection",
+        type: "GridLayout",
+        style: {
+          column_number: 2,
+          row_number: 2,
+          gap: "10px",
+        },
+        size: { height: "200px", width: "200px" },
+        position: {
+          top: "50px",
+          left: "20px",
+        },
+        children: [],
+      },*/
       {
         id: "section",
         type: "AbsolutePositionedContainer",
@@ -136,22 +165,61 @@ const App = () => {
         type: "ButtonJoystick",
         position: {
           top: "200px",
-          left: "100px",
+          left: "20px",
         },
         //style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
         size: "400px",
-        distance: 0.25,
+        distance: 0.3,
+        outerborderWidth: "70%",
+        outerborderColor: "primary",
         children: [
           {
             name: "joystickL",
             type: "joystick",
             position: "z-0",
-            size: { inner_height_width: 70, outer_height_width: 130 },
+            size: { inner_height_width: 80, outer_height_width: 130 },
+            inner_joystick: {
+              name: "innerJoystick",
+              type: "inner_joystick",
+              //position: "absolute top-0 left-1/2 z-0",
+              classes: "standard-button circular-button",
+              height: "",
+              width: "100px",
+              size: "xl",
+              img_url:
+                "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
+              color: "primary",
+              hover_color: "white",
+              border: "medium",
+              border_color: "primary",
+              text_display: (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="4"
+                  stroke="currentColor"
+                  class="size-12"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m19.5 19.5-15-15m0 0v11.25m0-11.25h11.25"
+                  />
+                </svg>
+              ),
+              font_style: {
+                classes: "button-text",
+                fontSize: "",
+                fontWeight: "",
+                color: "primary",
+                hover_color: "primary",
+              },
+            },
             style: {
-              inner_color: "secondary",
-              outer_color: "blue-500",
+              outer_color: "secondary",
               border: "large",
-              border_color: "warning",
+              border_color: "primary",
             },
             mapping: "joystickL",
           },
@@ -159,16 +227,17 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: " standard-button circular-button",
+            classes: "image-tint clip-spiked standard-button circular-button",
             height: "",
             width: "",
             size: "xl",
-            img_url: "",
-            color: "",
+            img_url:
+              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
+            color: "secondary",
             hover_color: "white",
-            border: "medium",
-            border_color: "red-500",
-            text_display: "B",
+            border: "large",
+            border_color: "",
+            text_display: "",
             font_style: {
               classes: "button-text",
               fontSize: "",
@@ -184,17 +253,43 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button circular-button",
+            classes: "image-tint clip-spiked standard-button circular-button",
             height: "",
             width: "",
             size: "xl",
             img_url:
               "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-            color: "purple-500",
+            color: "secondary",
             hover_color: "white",
-            border: "medium",
-            border_color: "red-500",
-            text_display: "B",
+            border: "large",
+            border_color: "",
+            text_display: "",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              zIndex: "0",
+            },
+          },
+          {
+            name: "buttonA",
+            type: "button",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "image-tint clip-spiked standard-button circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url:
+              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
+            color: "secondary",
+            hover_color: "white",
+            border: "large",
+            border_color: "",
+            text_display: "",
             font_style: {
               classes: "button-text",
               fontSize: "",
@@ -208,165 +303,119 @@ const App = () => {
           },
         ],
       },
-      /*{
-        id: "SectionTwo",
-        type: "ButtonJoystick",
-        style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
-        size: "size-200",
-        distance: 0.1,
-        children: [
-          {
-            name: "joystickL",
-            type: "joystick",
-            position: "z-0",
-            size: { inner_height_width: 60, outer_height_width: 130 },
-            style: {
-              inner_color: "bg-primary",
-              outer_color: "bg-sky-200",
-              border: "border-2 black",
-            },
-            mapping: "joystickL",
-          },
-          {
-            name: "buttonA",
-            type: "button",
-            position: " z-0",
-            style:
-              "bg-[url(https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg)] bg-cover active:scale-99 group [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-square btn-lg drop-shadow-md  h-25 w-25",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: " B",
-          },
-          {
-            name: "buttonZ",
-            type: "button",
-            position: " z-0",
-            style:
-              "group active:scale-99 transition-transform  active:bg-red-300 duration-150 active:shadow-inner  justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md h-25 w-25 ",
-            radial: "secondary",
-            text_style:
-              "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
-            text_display: (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="4"
-                stroke="currentColor"
-                class="size-13"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-                />
-              </svg>
-            ),
-          },
-          {
-            name: "buttonA",
-            type: "button",
-            position: " z-0",
-            style:
-              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-md bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
-            text_style:
-              "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
-            text_display: (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="4"
-                stroke="currentColor"
-                class="size-13"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-                />
-              </svg>
-            ),
-          },
-        ],
-      },*/
-      /*{
+      {
         id: "sectionThree",
         type: "DPad",
-        style:
-          "flex relative items-center justify-center h-150 top-0 left-50 z-0 ",
-        width: "w-150",
-        distance: 0.7,
+        position: {
+          top: "100px",
+          left: "80%",
+        },
+        size: { height: "100px", width: "100px" },
+        distance: 1,
         children: [
           {
             name: "buttonA",
             type: "button",
-            position: " z-0",
-            style:
-              "group [box-shadow:inset_0_0_5px_0_#333]  cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
-            text_style:
-              "group-hover:text-purple-900 text-5xl font-bold text-black drop-shadow-xl ",
-            text_display: "A",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "standard-button clip-spiked circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "large",
+            border_color: "black",
+            text_display: "test",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              position: "absolute",
+            },
           },
           {
             name: "buttonA",
             type: "button",
-            position: " z-0",
-            style:
-              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-indigo-900 to-90% h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
-            text_style:
-              "group-hover:text-purple-900 hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
-            text_display: (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="4"
-                stroke="currentColor"
-                class="size-13"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M19.5 13.5 12 21m0 0-7.5-7.5M12 21V3"
-                />
-              </svg>
-            ),
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "standard-button clip-spiked circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "large",
+            border_color: "black",
+            text_display: "test",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              position: "absolute",
+            },
           },
           {
             name: "buttonA",
             type: "button",
-            position: " z-0",
-            style:
-              "group justify-center items-center flex [box-shadow:inset_0_0_5px_0_#333] cursor-pointer btn-circle btn-lg drop-shadow-2xl bg-[radial-gradient(ellipse_at_50%_75%,_rgb(255_255_255),_rgb(66_42_213),_rgb(0_0_0))] h-25 w-25  hover:bg-[radial-gradient(ellipse_at_50%_75%,_rgb(219_234_254),_rgb(96_165_250),_rgb(59_130_246))] ",
-            text_style:
-              "group-hover:text-purple-900  hover:color-grey-500 text-6xl font-bold text-black drop-shadow-xl ",
-            text_display: (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={4}
-                stroke="currentColor"
-                className="size-13"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18"
-                />
-              </svg>
-            ),
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "standard-button clip-spiked circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "large",
+            border_color: "black",
+            text_display: "test",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              position: "absolute",
+            },
           },
           {
             name: "buttonA",
             type: "button",
-            position: " z-0",
-            style: ` active:scale-99 active:bg-red-300 duration-150 active:shadow-inner h-25 w-25 btn btn-circle btn-primary btn-lg drop-shadow-lg`,
-            text_display: "Button A",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: "standard-button clip-spiked circular-button",
+            height: "",
+            width: "",
+            size: "xl",
+            img_url: "",
+            color: "",
+            hover_color: "white",
+            border: "large",
+            border_color: "black",
+            text_display: "test",
+            font_style: {
+              classes: "button-text",
+              fontSize: "",
+              fontWeight: "",
+              color: "orange-500",
+              hover_color: "black",
+            },
+            position: {
+              position: "absolute",
+            },
           },
         ],
-      },*/
+      },
+      /**/
     ],
   };
 
@@ -390,6 +439,8 @@ const App = () => {
             <GridLayout
               tools={component.children}
               style={component.style}
+              size={component.size}
+              position={component.position}
               key={component.id}
             ></GridLayout>
           );
@@ -398,6 +449,8 @@ const App = () => {
             <ButtonJoystick
               tools={component.children}
               position={component.position}
+              border={component.outerborderWidth}
+              outerborderColor={component.outerborderColor}
               size={component.size}
               distance={component.distance}
               key={component.id}
@@ -408,6 +461,8 @@ const App = () => {
             <FlexLayout
               tools={component.children}
               style={component.style}
+              position={component.position}
+              size={component.size}
               key={component.id}
             ></FlexLayout>
           );
@@ -415,8 +470,9 @@ const App = () => {
           return (
             <DPad
               buttons={component.children}
-              style={component.style}
-              width={component.width}
+              position={component.position}
+              size={component.size}
+              // width={component.width}
               distance={component.distance}
               key={component.id}
             ></DPad>
