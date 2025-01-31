@@ -4,6 +4,7 @@ import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
 import tinycolor from "tinycolor2";
 import clsx from "clsx";
+import "../index.css";
 
 const generateJSON = (userId, name, controlType, action, data) => {
   return {
@@ -18,6 +19,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
 
 function Button({
   text_display,
+  container_text,
   name,
   type,
   /* flashColor,
@@ -40,21 +42,12 @@ function Button({
   let lightColor;
   let darkColor;
   if (radial) {
-    color = radial.trim();
-    lightColor = tinycolor(color)
-      .lighten(70)
-      .toRgbString()
-      .replace(/,/g, "_")
-      .replace(/\s+/g, "");
-    darkColor = tinycolor(color)
-      .darken(70)
-      .toRgbString()
-      .replace(/,/g, "_")
-      .replace(/\s+/g, "");
-    color = tinycolor(color)
-      .toRgbString()
-      .replace(/,/g, "_")
-      .replace(/\s+/g, "");
+    color = tinycolor(radial.trim()).toHexString();
+    console.log("color radial", color);
+    lightColor = tinycolor(color).lighten(45).toHexString();
+    darkColor = tinycolor(color).darken(40).toHexString();
+    console.log("darkColor", darkColor);
+    color = tinycolor(color).toHexString();
   }
 
   const { user } = useContext(UserContext);
@@ -67,33 +60,72 @@ function Button({
     const JSON = generateJSON(user, name, "button", "click", null);
     socket.emit("controls_data", JSON);
   }
-  let radial_color = "red-500";
   return (
     <>
-      <button
-        onClick={() => handleClick()}
-        className={`${classes}  ${tailwindStyles}  group ${
-          radial &&
-          `bg-[radial-gradient(ellipse_at_50%_75%,_${lightColor},_${color},_${darkColor})]   `
-        } `}
-        style={{
-          ...inlineStyles,
-          ...customStyle,
-          ...position,
-          ...(angle && {
-            transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
-            position: "absolute",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            transition: "transform 0.3s",
-          }),
-        }}
-      >
-        <p className={`${fontClass} ${fontTailwind}`} style={{ ...font_style }}>
-          {text_display}
-        </p>
-      </button>
+      {type === "inner_joystick" && (
+        <button
+          onClick={() => handleClick()}
+          className={`${classes}  ${tailwindStyles}   `}
+          style={{
+            ...(radial && {
+              background: `radial-gradient(circle at 50% 75%, ${lightColor}, ${color} 50%, ${darkColor} 90%)`,
+            }),
+            ...inlineStyles,
+            ...position,
+          }}
+        >
+          <p
+            className={`${fontClass} ${fontTailwind}`}
+            style={{ ...font_style }}
+          >
+            {text_display}
+          </p>
+        </button>
+      )}
+      {type === "button" && (
+        <div
+          style={{
+            ...(angle && {
+              transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
+              position: "absolute",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              transition: "transform 0.3s",
+            }),
+            ...customStyle,
+          }}
+          id="outer-btn-container"
+          className="outer-btn-container"
+        >
+          <div id="middle-btn-container" className="middle-btn-container">
+            <button
+              onClick={() => handleClick()}
+              className={`${classes}  ${tailwindStyles}   `}
+              style={{
+                ...(radial && {
+                  background: `radial-gradient(circle at 50% 75%, ${lightColor}, ${color} 50%, ${darkColor} 90%)`,
+                }),
+                ...inlineStyles,
+                ...position,
+              }}
+            >
+              <p
+                className={`${fontClass} ${fontTailwind}`}
+                style={{ ...font_style }}
+              >
+                {text_display}
+              </p>
+            </button>
+            <span id="middle-btn-container-text">
+              {container_text.middleContainerText}
+            </span>
+          </div>
+          <span id="outer-btn-container-text">
+            {container_text.outerContainerText}
+          </span>
+        </div>
+      )}
     </>
   );
 }

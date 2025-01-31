@@ -4,19 +4,45 @@ import Joystick from "../components/joystick";
 import RacingWheel from "../components/racing_wheel";
 import DPad from "./d_pad";
 import Touchpad from "../components/touchpad";
-import ToggleButton from "../components/toggleSwitch";
+import ToggleButton from "../components/toggleButton";
 
 const Loop_components = ({ component_array, customStyle, angle, radius }) => {
   return (
     <>
       {component_array.map((component) => {
         if (component.type === "toggle_button") {
+          const classes = {
+            toggleon: component.toggle_on.classes,
+            toggleoff: component.toggle_off.classes,
+          };
+          const text = {
+            toggleon: component.toggle_on.text_display,
+            toggleoff: component.toggle_off.text_display,
+          };
+          let toggle_on = "";
+          if (component.toggle_on.color) {
+            toggle_on = `bg-${component.toggle_on.color}`;
+          }
+          if (component.toggle_on.hover_color) {
+            toggle_on += ` hover:bg-${component.toggle_on.hover_color}`;
+          }
+
+          let toggle_off = "";
+          if (component.toggle_off.color) {
+            toggle_off = `bg-${component.toggle_off.color}`;
+          }
+          if (component.toggle_off.hover_color) {
+            toggle_off += ` hover:bg-${component.toggle_off.hover_color}`;
+          }
           const toggle_style = component.style;
           return (
             <ToggleButton
               key={component.id}
               name={component.name}
-              toggle_style={toggle_style}
+              classes={classes}
+              text={text}
+              toggle_on_style={toggle_on}
+              toggle_off_style={toggle_off}
             >
               {" "}
             </ToggleButton>
@@ -25,25 +51,36 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           component.type === "button" ||
           component.type === "inner_joystick"
         ) {
-          let tailwindStyles = "";
+          //set inline styles for button
           let inlineStyles = {};
           let radial;
-          console.log("height", component.height);
           if (component.height) {
             inlineStyles["height"] = component.height;
-            //inlineStyles = `h-${component.height}`;
           }
           if (component.width) {
             inlineStyles["width"] = component.width;
           }
+          //inline styles for button
+          let tailwindStyles = "";
           if (component.hover_color) {
             tailwindStyles += ` hover:bg-${component.hover_color}`;
           }
           if (component.color) {
             tailwindStyles += ` bg-${component.color}`;
           }
+
           if (component.img_url) {
-            tailwindStyles += ` bg-[url(${component.img_url})] bg-cover bg-center`;
+            tailwindStyles += ` bg-cover bg-center`;
+            inlineStyles["backgroundImage"] = `url(${component.img_url})`;
+          }
+          if (component.opacity) {
+            if (component.opacity === "high") {
+              tailwindStyles += ` opacity-25`;
+            } else if (component.opacity === "medium") {
+              tailwindStyles += ` opacity-50`;
+            } else {
+              tailwindStyles += ` opacity-75`;
+            }
           }
           if (component.size) {
             tailwindStyles += ` btn-${component.size}`;
@@ -63,24 +100,22 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.border_color) {
             tailwindStyles += ` border-${component.border_color}`;
           }
-          //tailwindStyles = "hover:bg-sky-300 bg-orange-300";
 
-          console.log("image url", component.image_url);
-          if (component.classes === "radial") {
+          if (component.radial) {
             radial = getComputedStyle(
               document.documentElement
-            ).getPropertyValue(`--color-${component.color}`);
+            ).getPropertyValue(`--color-${component.radial}`);
+            console.log("yes radial", radial);
           } else {
+            console.log("no radial");
             radial = false;
           }
 
           let fontStyle = {};
-          if (component.font_style.fontWeight) {
-            fontStyle["fontWeight"] = component.font_style.fontWeight;
-          }
-          if (component.font_style.size) {
+
+          /* if (component.font_style.size) {
             fontStyle["fontSize"] = component.font_style.size;
-          }
+          }*/
 
           let fontTailwind = "";
           if (component.font_style.color) {
@@ -89,11 +124,21 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.font_style.hover_color) {
             fontTailwind += ` group-hover:text-${component.font_style.hover_color}`;
           }
+          if (component.font_style.fontSize) {
+            fontTailwind += ` text-${component.font_style.fontSize}`;
+          }
+          if (component.font_style.fontWeight) {
+            fontTailwind += ` font-${component.font_style.fontWeight}`;
+          }
           // console.log("fontstyle", fontStyle);
           console.log("tailwindstyles!!", tailwindStyles);
           //  tailwindStyles = `hover:bg-sky-300 bg-orange-300`;
           // styles = `h-30 w-30 btn btn-circle btn-info btn-lg`;
           //  console.log("overideStyles loop", styles);
+          let container_text = {
+            outerContainerText: component.outer_container_text,
+            middleContainerText: component.middle_container_text,
+          };
           return (
             <Button
               key={component.name}
@@ -107,7 +152,8 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               font_style={component.font_style}
               fontTailwind={fontTailwind}
               customStyle={customStyle}
-              text_display={component.text_display}
+              text_display={component.button_text_display}
+              container_text={container_text}
               radial={radial}
               {...(angle && { angle })}
               {...(radius && { radius })}

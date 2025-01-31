@@ -5,9 +5,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   // content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   // safelist: ["bg-red-300"],
-  // theme: {
-  //   extend: {},
-  // },
+  theme: {},
   //plugins: [require("daisyui"), tailwindcss()],
   plugins: [tailwindcss()],
 });

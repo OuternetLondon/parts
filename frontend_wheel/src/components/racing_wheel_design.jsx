@@ -2,6 +2,19 @@ import { useRef, useEffect } from "react";
 const RacingWheelDesign = ({ rotation, style }) => {
   const canvasRef = useRef(null);
 
+  let outer_rim_color = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue(`--color-${style.outer_rim_color}`);
+
+  let spoke_color = getComputedStyle(document.documentElement).getPropertyValue(
+    `--color-${style.spoke_color}`
+  );
+  let hub_color = getComputedStyle(document.documentElement).getPropertyValue(
+    `--color-${style.hub_color}`
+  );
+  let center_marker_color = getComputedStyle(
+    document.documentElement
+  ).getPropertyValue(`--color-${style.center_marker_color}`);
   const drawWheel = (ctx) => {
     const centerX = ctx.canvas.width / 2;
     const centerY = ctx.canvas.height / 2;
@@ -34,7 +47,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
     }
     ctx.lineWidth = 45;
     ctx.lineCap = "butt";
-    ctx.strokeStyle = style.outer_rim_color;
+    ctx.strokeStyle = outer_rim_color;
     ctx.stroke();
 
     // Draw yellow center marker
@@ -44,7 +57,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
     ctx.lineTo(15, -radius + 30);
     ctx.lineTo(-15, -radius + 30);
     ctx.closePath();
-    ctx.fillStyle = style.center_marker_color;
+    ctx.fillStyle = center_marker_color;
     ctx.fill();
 
     // Draw spokes
@@ -58,7 +71,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
       ctx.lineTo(20, -radius + 40);
       ctx.lineTo(15, -20);
       ctx.closePath();
-      ctx.fillStyle = style.spoke_color;
+      ctx.fillStyle = spoke_color;
       ctx.fill();
 
       ctx.restore();
@@ -82,7 +95,7 @@ const RacingWheelDesign = ({ rotation, style }) => {
       }
     }
     ctx.closePath();
-    ctx.fillStyle = style.hub_color;
+    ctx.fillStyle = hub_color;
     ctx.fill();
 
     // Inner hub (hexagonal)
@@ -131,8 +144,8 @@ const RacingWheelDesign = ({ rotation, style }) => {
       ref={canvasRef}
       className=""
       style={{
-        width: "400px",
-        height: "400px",
+        width: `${style.width}`,
+        height: `${style.height}`,
       }}
     />
   );

@@ -13,7 +13,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const VirtualTouchpad = ({ style, position }) => {
+const VirtualTouchpad = ({ name, style, position }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
 
@@ -118,7 +118,13 @@ const VirtualTouchpad = ({ style, position }) => {
   return (
     <div
       ref={touchpadRef}
-      className={`${style} w-full h-64 rounded-lg ${
+      style={{
+        ...position,
+        height: style.height,
+        width: style.width,
+        zIndex: position.zIndex,
+      }}
+      className={` w-full h-64 bg-${style.backgroundColor} rounded-lg ${
         isPressed ? "border-blue-500" : "border-gray-300"
       } touch-none select-none flex items-center justify-center cursor-pointer`}
       onMouseDown={handleMouseDown}

@@ -11,17 +11,20 @@ import ButtonJoystick from "./layout_components/ButtonJoystick";
 import JoystickButton from "./layout_components/joystickButton";
 import FlexLayout from "./layout_components/flex_layout";
 import { on } from "ws";
-import tinycolor from "tinycolor2";
 import useSetColors from "./hooks/useSetColors";
 import ToggleButton from "./components/toggleButton";
 import { useStyles } from "./hooks/useStyles";
 
 import "./index.css";
+import { use } from "react";
 const App = () => {
+  const [valuesSet, setValuesSet] = useState(false);
   const styles = useStyles();
   const CONFIG = {
     userId: "user123",
     timestamp: "2023-01-07T14:00:00Z",
+    customCSS:
+      "#middle-btn-container {display: flex; flex-direction: column; gap: 20px; } #middle-btn-container-text {font-weight: bold; font-size: 1.2rem; text-wrap: nowrap; }",
     colors: [
       { name: "primary", value: "#1790db" },
       { name: "secondary", value: "#820aa8" },
@@ -40,6 +43,16 @@ const App = () => {
       { name: "orange-500", value: "#ffa500" },
       { name: "purple-500", value: "#800080" },
     ],
+    button_size_default: 1, // 1 = normal size, 2 = double size..etc
+    font_size_default: 1, // 1 = normal size, 2 = double size..etc
+    border_thickness: 1, // 1 = normal size, 2 = double size..etc
+    font_weight: 1,
+    default_grid_layout: {
+      columns: 2,
+      rows: 1,
+      gap: "10px",
+      cell_size: "1fr",
+    },
     components: [
       /*{
         id: "flex_section",
@@ -55,144 +68,40 @@ const App = () => {
         },
         children: [],
       },*/
-      /* {
-        id: "GridSection",
-        type: "GridLayout",
-        style: {
-          column_number: 2,
-          row_number: 2,
-          gap: "10px",
-        },
-        size: { height: "200px", width: "200px" },
-        position: {
-          top: "50px",
-          left: "20px",
-        },
-        children: [],
-      },*/
-      {
-        id: "section",
-        type: "AbsolutePositionedContainer",
-        //   style: "relative h-30 w-[50vw] top-30 left-50 z-0",
-        position: {
-          top: "100px",
-          left: "100px",
-          height: "100px",
-          width: "50vw",
-        },
-        children: [
-          {
-            name: "buttonA",
-            type: "button",
-            //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button clip-spiked circular-button",
-            height: "",
-            width: "",
-            size: "xl",
-            img_url: "",
-            color: "",
-            hover_color: "white",
-            border: "large",
-            border_color: "black",
-            text_display: "test",
-            font_style: {
-              classes: "button-text",
-              fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
-            },
-            position: {
-              position: "absolute",
-              top: "0",
-              left: "30%",
-              zIndex: "0",
-            },
-          },
-          /*
-          {
-            name: "buttonC",
-            type: "button",
-            position: {
-              position: "absolute",
-              top: "0",
-              left: "70%",
-              zIndex: "0",
-            },
-            classes: "radial",
-            height: "120px",
-            width: "120px",
-            color: "secondary",
-            text_display: "Button B",
-            hover_color: "info",
-            font_style: {
-              classes: "button-text",
-              fontSize: "2rem",
-              fontWeight: 800,
-              color: "white",
-              hover_color: "primary",
-            },
-          },
-          {
-            name: "buttonC",
-            type: "button",
-            position: {
-              position: "absolute",
-              top: "0",
-              left: "90%",
-              zIndex: "0",
-            },
-            classes: "image-button square-button standard-button",
-            img_url:
-              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-            height: "120px",
-            width: "120px",
-            color: "primary",
-            hover_color: "info",
-            text_display: "Button image",
-            font_style: {
-              classes: "button-text",
-              size: "2rem",
-              fontWeight: 800,
-              color: "white",
-              hover_color: "neutral",
-            },
-          },*/
-        ],
-      },
       {
         id: "SectionTwo",
         type: "ButtonJoystick",
         position: {
-          top: "200px",
-          left: "20px",
+          top: "0%",
+          left: "0%",
         },
         //style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
-        size: "400px",
+        size: "200px",
         distance: 0.3,
-        outerborderWidth: "70%",
-        outerborderColor: "primary",
+        // outerborderWidth: "70%",
+        //outerborderColor: "secondary",
         children: [
           {
             name: "joystickL",
             type: "joystick",
             position: "z-0",
-            size: { inner_height_width: 80, outer_height_width: 130 },
+            size: { inner_height_width: 90, outer_height_width: 100 },
             inner_joystick: {
               name: "innerJoystick",
               type: "inner_joystick",
               //position: "absolute top-0 left-1/2 z-0",
               classes: "standard-button circular-button",
               height: "",
-              width: "100px",
-              size: "xl",
+              width: "",
+              size: "",
+              opacity: "low",
               img_url:
                 "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-              color: "primary",
+              color: "neutral",
               hover_color: "white",
               border: "medium",
               border_color: "primary",
-              text_display: (
+              button_text_display: (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -212,38 +121,56 @@ const App = () => {
                 classes: "button-text",
                 fontSize: "",
                 fontWeight: "",
-                color: "primary",
+                color: "secondary",
                 hover_color: "primary",
               },
             },
             style: {
-              outer_color: "secondary",
+              outer_color: "white",
               border: "large",
               border_color: "primary",
             },
             mapping: "joystickL",
           },
+        ],
+      },
+      {
+        id: "GridSection",
+        type: "GridLayout",
+        style: {
+          //     column_number: 2,
+          //   row_number: 2,
+          //gap: "10px",
+          //cell_size: "1fr",
+        },
+        size: { width: "300px" },
+        position: {
+          left: "5%",
+          bottom: "10%",
+        },
+        children: [
           {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "image-tint clip-spiked standard-button circular-button",
+            classes: "standard-button circular-button",
             height: "",
             width: "",
-            size: "xl",
-            img_url:
-              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-            color: "secondary",
+            size: "xl", //sm md lg xl
+            img_url: "",
+            color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "",
-            text_display: "",
+            border: "small",
+            border_color: "black",
+            outer_container_text: "",
+            middle_container_text: "Button One",
+            button_text_display: "test 3",
             font_style: {
-              classes: "button-text",
-              fontSize: "",
+              classes: "",
+              fontSize: "base", // xs sm base lg xl..etc.
               fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
+              color: "",
+              hover_color: "",
             },
             position: {
               zIndex: "0",
@@ -253,49 +180,24 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "image-tint clip-spiked standard-button circular-button",
+            classes: "standard-button circular-button",
             height: "",
             width: "",
-            size: "xl",
-            img_url:
-              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-            color: "secondary",
+            size: "xl", //sm md lg xl
+            img_url: "",
+            color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "",
-            text_display: "",
+            border: "small",
+            border_color: "black",
+            outer_container_text: "",
+            middle_container_text: "Button Two",
+            button_text_display: "test 3",
             font_style: {
-              classes: "button-text",
-              fontSize: "",
+              classes: "",
+              fontSize: "xl", // xs sm base lg xl..etc.
               fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
-            },
-            position: {
-              zIndex: "0",
-            },
-          },
-          {
-            name: "buttonA",
-            type: "button",
-            //position: "absolute top-0 left-1/2 z-0",
-            classes: "image-tint clip-spiked standard-button circular-button",
-            height: "",
-            width: "",
-            size: "xl",
-            img_url:
-              "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-            color: "secondary",
-            hover_color: "white",
-            border: "large",
-            border_color: "",
-            text_display: "",
-            font_style: {
-              classes: "button-text",
-              fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
+              color: "",
+              hover_color: "",
             },
             position: {
               zIndex: "0",
@@ -307,32 +209,33 @@ const App = () => {
         id: "sectionThree",
         type: "DPad",
         position: {
-          top: "100px",
-          left: "80%",
+          left: "75%",
+          bottom: "8%",
         },
-        size: { height: "100px", width: "100px" },
-        distance: 1,
+        size: { height: "200px", width: "200px" },
+        distance: 0.6,
         children: [
           {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button clip-spiked circular-button",
+            classes: " standard-button circular-button",
             height: "",
             width: "",
             size: "xl",
             img_url: "",
             color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "black",
-            text_display: "test",
+            border: "",
+            border_color: "",
+            button_text_display: "radial",
+            radial: "primary",
             font_style: {
               classes: "button-text",
               fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
+              fontWeight: "medium", //light, normal, medium, bold, extrabold
+              color: "black",
+              hover_color: "",
             },
             position: {
               position: "absolute",
@@ -342,22 +245,23 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button clip-spiked circular-button",
+            classes: "standard-button  circular-button",
             height: "",
             width: "",
             size: "xl",
             img_url: "",
             color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "black",
-            text_display: "test",
+            border: "",
+            border_color: "",
+            button_text_display: "a",
+            radial: "red-500",
             font_style: {
               classes: "button-text",
-              fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
+              fontSize: "xl",
+              fontWeight: "medium",
+              color: "black",
+              hover_color: "",
             },
             position: {
               position: "absolute",
@@ -367,22 +271,23 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button clip-spiked circular-button",
+            classes: "standard-button  circular-button",
             height: "",
             width: "",
             size: "xl",
             img_url: "",
             color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "black",
-            text_display: "test",
+            border: "",
+            border_color: "",
+            button_text_display: "test",
+            radial: "blue-500",
             font_style: {
               classes: "button-text",
               fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
-              hover_color: "black",
+              fontWeight: "medium",
+              color: "black",
+              hover_color: "",
             },
             position: {
               position: "absolute",
@@ -392,21 +297,22 @@ const App = () => {
             name: "buttonA",
             type: "button",
             //position: "absolute top-0 left-1/2 z-0",
-            classes: "standard-button clip-spiked circular-button",
+            classes: "standard-button circular-button",
             height: "",
             width: "",
             size: "xl",
             img_url: "",
             color: "",
             hover_color: "white",
-            border: "large",
-            border_color: "black",
-            text_display: "test",
+            border: "",
+            border_color: "",
+            button_text_display: "D",
+            radial: "yellow-500",
             font_style: {
               classes: "button-text",
-              fontSize: "",
-              fontWeight: "",
-              color: "orange-500",
+              fontSize: "2xl",
+              fontWeight: "medium",
+              color: "black",
               hover_color: "black",
             },
             position: {
@@ -419,66 +325,85 @@ const App = () => {
     ],
   };
 
+  useEffect(() => {
+    const styleElement = document.createElement("style");
+    styleElement.innerHTML = CONFIG.customCSS;
+    document.head.appendChild(styleElement);
+
+    return () => {
+      document.head.removeChild(styleElement);
+    };
+  }, [CONFIG]);
+
+  useEffect(() => {
+    useSetColors(
+      CONFIG.colors,
+      CONFIG.button_size_default,
+      CONFIG.font_size_default,
+      CONFIG.border_thickness,
+      CONFIG.font_weight,
+      CONFIG.customCSS
+    );
+    setValuesSet(true);
+  }, [CONFIG]);
   return (
     <>
-      <button className="btn btn-primary btn-lg group ">
-        <p className="group-hover:text-red-500">test</p>
-      </button>
-      {useSetColors(CONFIG.colors)}
-      {CONFIG.components.map((component, index) => {
-        if (component.type === "AbsolutePositionedContainer") {
-          return (
-            <AbsolutePositionedContainer
-              tools={component.children}
-              positioning={component.position}
-              key={component.id}
-            ></AbsolutePositionedContainer>
-          );
-        } else if (component.type === "GridLayout") {
-          return (
-            <GridLayout
-              tools={component.children}
-              style={component.style}
-              size={component.size}
-              position={component.position}
-              key={component.id}
-            ></GridLayout>
-          );
-        } else if (component.type === "ButtonJoystick") {
-          return (
-            <ButtonJoystick
-              tools={component.children}
-              position={component.position}
-              border={component.outerborderWidth}
-              outerborderColor={component.outerborderColor}
-              size={component.size}
-              distance={component.distance}
-              key={component.id}
-            ></ButtonJoystick>
-          );
-        } else if (component.type === "FlexLayout") {
-          return (
-            <FlexLayout
-              tools={component.children}
-              style={component.style}
-              position={component.position}
-              size={component.size}
-              key={component.id}
-            ></FlexLayout>
-          );
-        } else if (component.type === "DPad") {
-          return (
-            <DPad
-              buttons={component.children}
-              position={component.position}
-              size={component.size}
-              // width={component.width}
-              distance={component.distance}
-              key={component.id}
-            ></DPad>
-          );
-        }
-      })}
+      {valuesSet &&
+        CONFIG.components.map((component, index) => {
+          if (component.type === "AbsolutePositionedContainer") {
+            return (
+              <AbsolutePositionedContainer
+                tools={component.children}
+                positioning={component.position}
+                key={component.id}
+              ></AbsolutePositionedContainer>
+            );
+          } else if (component.type === "GridLayout") {
+            return (
+              <GridLayout
+                tools={component.children}
+                style={component.style}
+                size={component.size}
+                position={component.position}
+                default_grid_layout={CONFIG.default_grid_layout}
+                key={component.id}
+              ></GridLayout>
+            );
+          } else if (component.type === "ButtonJoystick") {
+            return (
+              <ButtonJoystick
+                tools={component.children}
+                position={component.position}
+                border={component.outerborderWidth}
+                outerborderColor={component.outerborderColor}
+                size={component.size}
+                distance={component.distance}
+                key={component.id}
+              ></ButtonJoystick>
+            );
+          } else if (component.type === "FlexLayout") {
+            return (
+              <FlexLayout
+                tools={component.children}
+                style={component.style}
+                position={component.position}
+                size={component.size}
+                key={component.id}
+              ></FlexLayout>
+            );
+          } else if (component.type === "DPad") {
+            return (
+              <DPad
+                buttons={component.children}
+                position={component.position}
+                size={component.size}
+                // width={component.width}
+                distance={component.distance}
+                key={component.id}
+              ></DPad>
+            );
+          }
+        })}
     </>
   );
 };

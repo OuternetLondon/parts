@@ -5,7 +5,13 @@ import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
 import usegenerateJSON from "../hooks/usegenerateJSON";
 
-const ToggleButton = ({}) => {
+const ToggleButton = ({
+  name,
+  classes,
+  text,
+  toggle_on_style,
+  toggle_off_style,
+}) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
   const [isOn, setIsOn] = useState(false);
@@ -23,10 +29,9 @@ const ToggleButton = ({}) => {
     setIsFlashing(true);
   }
 
-  let toggle_on_style = "btn btn-secondary";
+  let toggle_on = classes.toggleon;
 
-  let toggleoff_style = "btn btn-neutral";
-
+  let toggleoff = classes.toggleoff;
   return (
     <>
       <button
@@ -34,9 +39,13 @@ const ToggleButton = ({}) => {
           setIsOn(!isOn);
           handleClick();
         }}
-        className={isOn ? toggle_on_style : toggleoff_style}
+        className={
+          isOn
+            ? `${toggle_on} ${toggle_on_style}`
+            : `${toggleoff} ${toggle_off_style}`
+        }
       >
-        Toggle
+        {isOn ? text.toggleon : text.toggleoff}
       </button>
     </>
   );
