@@ -5,16 +5,17 @@ const DPad = ({ buttons, style, distance, size, position }) => {
   let widthInt = parseInt(size.width, 10);
   let spacing = parseInt(widthInt) * distance;
   return (
-    <div id="dpad-outer-container">
-      <div
-        className={`flex relative items-center justify-center `}
-        style={{
-          ...position,
-          position: "absolute",
-          width: size.width,
-          height: size.height,
-        }}
-      >
+    <div
+      className={`flex relative items-center justify-center `}
+      style={{
+        ...position,
+        position: "absolute",
+        width: size.width,
+        height: size.height,
+      }}
+      id="dpad-outer-container"
+    >
+      <div id="dpad-inner-container">
         {buttons.map((tool, index) => {
           let customStyle;
           if (index === 0) {

@@ -11,6 +11,8 @@ const ToggleButton = ({
   text,
   toggle_on_style,
   toggle_off_style,
+  toggle_on_inline,
+  toggle_off_inline,
 }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
@@ -34,19 +36,24 @@ const ToggleButton = ({
   let toggleoff = classes.toggleoff;
   return (
     <>
-      <button
-        onClick={() => {
-          setIsOn(!isOn);
-          handleClick();
-        }}
-        className={
-          isOn
-            ? `${toggle_on} ${toggle_on_style}`
-            : `${toggleoff} ${toggle_off_style}`
-        }
-      >
-        {isOn ? text.toggleon : text.toggleoff}
-      </button>
+      <div id="toggle-outer-container">
+        <div id="toggle-inner-container">
+          <button
+            onClick={() => {
+              setIsOn(!isOn);
+              handleClick();
+            }}
+            className={
+              isOn
+                ? `${toggle_on} ${toggle_on_style}`
+                : `${toggleoff} ${toggle_off_style}`
+            }
+            style={isOn ? { ...toggle_on_inline } : { ...toggle_off_inline }}
+          >
+            <p> {isOn ? text.toggleon : text.toggleoff}</p>
+          </button>
+        </div>
+      </div>
     </>
   );
 };

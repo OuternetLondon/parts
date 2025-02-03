@@ -144,8 +144,8 @@ const RacingWheelDesign = ({ rotation, style }) => {
       ref={canvasRef}
       className=""
       style={{
-        width: `${style.width}`,
-        height: `${style.height}`,
+        width: style.width ? `${style.width}` : "250px",
+        height: style.width ? `${style.height}` : "250px",
       }}
     />
   );

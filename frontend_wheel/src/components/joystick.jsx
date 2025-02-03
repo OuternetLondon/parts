@@ -151,7 +151,7 @@ const Joystick = ({
   const visualPosition = getPolarToCartesian(position.angle, position.distance);
 
   return (
-    <div className={`p-4 ${positioning}  `}>
+    <div id="joystick-container" className={`p-4 ${positioning}  `}>
       <div
         ref={joystickRef}
         className="relative select-none touch-none"
@@ -163,7 +163,8 @@ const Joystick = ({
         onTouchStart={handleTouchStart}
       >
         <div
-          className={`${outer_classes} absolute rounded-full ${styles.border} ${styles.outer_color}    `}
+          className={`${outer_classes} absolute rounded-full ${styles.border} ${styles.outer_color} `}
+          id="outer-joystick"
           style={{
             width: OUTER_CIRCLE_SIZE,
             height: OUTER_CIRCLE_SIZE,
@@ -172,6 +173,7 @@ const Joystick = ({
 
         <div
           className={`${inner_classes} absolute rounded-full ${styles.inner_color} `}
+          id="inner-joystick"
           style={{
             /*background:
               "radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0) 40%), radial-gradient(circle at center,  #18181b 0%,  #000 100%)",*/

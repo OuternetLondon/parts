@@ -26,6 +26,28 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.toggle_on.hover_color) {
             toggle_on += ` hover:bg-${component.toggle_on.hover_color}`;
           }
+          if (component.toggle_on.border) {
+            let border = component.toggle_on.border;
+            if (border === "large") {
+              toggle_on += ` border-8`;
+            } else if (border === "medium") {
+              toggle_on += ` border-4`;
+            } else if (border === "small") {
+              toggle_on += ` border-2`;
+            } else {
+              toggle_on += ` border-0`;
+            }
+          }
+          if (component.toggle_on.border_color) {
+            toggle_on += ` border-${component.toggle_on.border_color}`;
+          }
+          let toggle_on_inline = {};
+          if (component.toggle_on.size && component.toggle_on.size.height) {
+            toggle_on_inline["height"] = component.toggle_on.size.height;
+          }
+          if (component.toggle_on.size && component.toggle_on.size.width) {
+            toggle_on_inline["width"] = component.toggle_on.size.width;
+          }
 
           let toggle_off = "";
           if (component.toggle_off.color) {
@@ -34,7 +56,28 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.toggle_off.hover_color) {
             toggle_off += ` hover:bg-${component.toggle_off.hover_color}`;
           }
-          const toggle_style = component.style;
+          if (component.toggle_off.border) {
+            let border = component.toggle_off.border;
+            if (border === "large") {
+              toggle_off += ` border-8`;
+            } else if (border === "medium") {
+              toggle_off += ` border-4`;
+            } else if (border === "small") {
+              toggle_off += ` border-2`;
+            } else {
+              toggle_off += ` border-0`;
+            }
+          }
+          if (component.toggle_off.border_color) {
+            toggle_off += ` border-${component.toggle_off.border_color}`;
+          }
+          let toggle_off_inline = {};
+          if (component.toggle_off.size && component.toggle_off.size.height) {
+            toggle_off_inline["height"] = component.toggle_off.size.height;
+          }
+          if (component.toggle_off.size && component.toggle_off.size.width) {
+            toggle_off_inline["width"] = component.toggle_off.size.width;
+          }
           return (
             <ToggleButton
               key={component.id}
@@ -43,9 +86,9 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               text={text}
               toggle_on_style={toggle_on}
               toggle_off_style={toggle_off}
-            >
-              {" "}
-            </ToggleButton>
+              toggle_on_inline={toggle_on_inline}
+              toggle_off_inline={toggle_off_inline}
+            ></ToggleButton>
           );
         } else if (component.type === "button") {
           //set inline styles for button
@@ -206,14 +249,25 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             ></Joystick>
           );
         } else if (component.type === "steeringWheel") {
-          const style = {
-            width: `${component.size.width}px`,
-            height: `${component.size.height}px`,
-            outer_rim_color: component.style.outer_rim_color,
-            spoke_color: component.style.spoke_color,
-            hub_color: component.style.hub_color,
-            border: component.style.border,
-          };
+          const style = {};
+          if (component.size && component.size.width) {
+            style.width = component.size.width;
+          }
+          if (component.size && component.size.height) {
+            style.height = component.size.height;
+          }
+          if (component.style.outer_rim_color) {
+            style.outer_rim_color = component.style.outer_rim_color;
+          }
+          if (component.style.spoke_color) {
+            style.spoke_color = component.style.spoke_color;
+          }
+          if (component.style.hub_color) {
+            style.hub_color = component.style.hub_color;
+          }
+          if (component.style.border) {
+            style.border = component.style.border;
+          }
           let positioning = {
             ...component.position,
           };

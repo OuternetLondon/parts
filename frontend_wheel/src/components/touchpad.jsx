@@ -116,26 +116,28 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
   };
 
   return (
-    <div
-      ref={touchpadRef}
-      style={{
-        ...position,
-        height: style.height ? style.height : "100px",
-        width: style.width ? style.width : "200px",
-        zIndex: position.zIndex,
-      }}
-      className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg  touch-none select-none flex items-center justify-center cursor-pointer`}
-      onMouseDown={handleMouseDown}
-      onMouseMove={handleMouseMove}
-      onMouseUp={handleMouseUp}
-      onMouseLeave={handleMouseUp}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-    >
-      <div className="text-center space-y-2">
-        <p className="text-lg font-medium"></p>
-        <div className="text-sm text-gray-600"></div>
+    <div id="touchpad-outer-container">
+      <div
+        ref={touchpadRef}
+        style={{
+          ...position,
+          height: style.height ? style.height : "100px",
+          width: style.width ? style.width : "200px",
+          zIndex: position.zIndex,
+        }}
+        className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg  touch-none select-none flex items-center justify-center cursor-pointer`}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseUp}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+        <div className="text-center space-y-2">
+          <p className="text-lg font-medium"></p>
+          <div className="text-sm text-gray-600"></div>
+        </div>
       </div>
     </div>
   );

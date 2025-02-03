@@ -65,8 +65,10 @@ function RacingWheel({ style, positioning, name }) {
 
   return (
     <>
-      <div style={{ ...positioning }}>
-        <RacingWheelDesign style={style} rotation={rotation} />
+      <div id="wheel-outer-container" style={{ ...positioning }}>
+        <div id="wheel-inner-container">
+          <RacingWheelDesign style={style} rotation={rotation} />
+        </div>
       </div>
     </>
   );

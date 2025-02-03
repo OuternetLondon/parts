@@ -11,17 +11,20 @@ const FlexLayout = ({ tools, style, size, position }) => {
 
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: direction,
-          justifyContent: "space-around",
-          ...size,
-          ...position,
-          position: "absolute",
-        }}
-      >
-        {Loop_components({ component_array: tools })}
+      <div id="flex-outer-container">
+        <div
+          style={{
+            display: "flex",
+            flexDirection: direction,
+            justifyContent: "space-around",
+            ...size,
+            ...position,
+            position: "absolute",
+          }}
+          id="flex-inner-container"
+        >
+          {Loop_components({ component_array: tools })}
+        </div>
       </div>
     </>
   );

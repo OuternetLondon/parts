@@ -28,19 +28,22 @@ const GridLayout = ({ tools, style, position, size, default_grid_layout }) => {
   }
   return (
     <>
-      <div
-        style={{
-          gap: gap,
-          display: "grid",
-          ...position,
-          ...size,
-          position: "absolute",
-          gridTemplateColumns: `repeat(${columns}, ${cell_size})`,
-          gridTemplateRows: `repeat(${rows}, ${cell_size})`,
-          placeItems: "center",
-        }}
-      >
-        {Loop_components({ component_array: tools })}
+      <div id="grid-outer-container" style={{}}>
+        <div
+          style={{
+            gap: gap,
+            display: "grid",
+            ...position,
+            ...size,
+            position: "absolute",
+            gridTemplateColumns: `repeat(${columns}, ${cell_size})`,
+            gridTemplateRows: `repeat(${rows}, ${cell_size})`,
+            placeItems: "center",
+          }}
+          id="grid-inner-container"
+        >
+          {Loop_components({ component_array: tools })}
+        </div>
       </div>
     </>
   );

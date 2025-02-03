@@ -21,6 +21,7 @@ const ButtonJoystick = ({
     <>
       <div
         className={` z-0 justify-center items-center flex`}
+        id="button-joystick-outer-container"
         style={{
           ...position,
           width: `${size}`,
