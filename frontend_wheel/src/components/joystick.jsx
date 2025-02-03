@@ -1,7 +1,6 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import { UserContext } from "../context/userContext";
 import { useSocket } from "../context/socketContext";
-import Loop_components from "../layout_components/loop_components";
 
 const generateJSON = (userId, name, controlType, action, data) => {
   return {
@@ -14,7 +13,13 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const Joystick = ({ styles, positioning, name, inner_joystick }) => {
+const Joystick = ({
+  styles,
+  positioning,
+  name,
+  inner_classes,
+  outer_classes,
+}) => {
   const [pressed, setPressed] = useState(false);
   const [position, setPosition] = useState({ angle: 0, distance: 0 }); // Start at center
   const joystickRef = useRef(null);
@@ -22,9 +27,8 @@ const Joystick = ({ styles, positioning, name, inner_joystick }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
 
-  let OUTER_CIRCLE_SIZE = styles.outer_h;
-  let INNER_CIRCLE_SIZE = styles.inner_h;
-
+  const OUTER_CIRCLE_SIZE = styles.outer_h;
+  const INNER_CIRCLE_SIZE = styles.inner_h;
   const MAX_DISTANCE = OUTER_CIRCLE_SIZE / 2;
 
   useEffect(() => {
@@ -146,14 +150,6 @@ const Joystick = ({ styles, positioning, name, inner_joystick }) => {
 
   const visualPosition = getPolarToCartesian(position.angle, position.distance);
 
-  let customStyle = {
-    width: INNER_CIRCLE_SIZE,
-    height: INNER_CIRCLE_SIZE,
-    left: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.x,
-    top: OUTER_CIRCLE_SIZE / 2 - INNER_CIRCLE_SIZE / 2 + visualPosition.y,
-    transform: "translate(0, 0)",
-    transition: pressed ? "none" : "all 0.2s ease-out",
-  };
   return (
     <div className={`p-4 ${positioning}  `}>
       <div
@@ -167,7 +163,7 @@ const Joystick = ({ styles, positioning, name, inner_joystick }) => {
         onTouchStart={handleTouchStart}
       >
         <div
-          className={`absolute rounded-full ${styles.border} bg-${styles.outer_color} `}
+          className={`${outer_classes} absolute rounded-full ${styles.border} ${styles.outer_color}    `}
           style={{
             width: OUTER_CIRCLE_SIZE,
             height: OUTER_CIRCLE_SIZE,
@@ -175,8 +171,10 @@ const Joystick = ({ styles, positioning, name, inner_joystick }) => {
         />
 
         <div
-          className={`absolute flex items-center justify-center rounded-full bg-${styles.inner_color}`}
+          className={`${inner_classes} absolute rounded-full ${styles.inner_color} `}
           style={{
+            /*background:
+              "radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 20%, rgba(255, 255, 255, 0) 40%), radial-gradient(circle at center,  #18181b 0%,  #000 100%)",*/
             width: INNER_CIRCLE_SIZE,
             height: INNER_CIRCLE_SIZE,
             left:
@@ -186,15 +184,9 @@ const Joystick = ({ styles, positioning, name, inner_joystick }) => {
             transform: "translate(0, 0)",
             transition: pressed ? "none" : "all 0.2s ease-out", // Smooth return to center
             // backgroundColor: styles.inner_color,
-            opacity: pressed ? 1 : 0.8,
+            // opacity: pressed ? 1 : 0.8,
           }}
-        >
-          <Loop_components
-            key={inner_joystick.name}
-            component_array={[inner_joystick]}
-            customStyle={customStyle}
-          ></Loop_components>
-        </div>
+        />
       </div>
     </div>
   );

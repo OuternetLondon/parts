@@ -13,7 +13,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const VirtualTouchpad = ({ name, style, position }) => {
+const VirtualTouchpad = ({ name, style, position, classes }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
 
@@ -120,13 +120,11 @@ const VirtualTouchpad = ({ name, style, position }) => {
       ref={touchpadRef}
       style={{
         ...position,
-        height: style.height,
-        width: style.width,
+        height: style.height ? style.height : "100px",
+        width: style.width ? style.width : "200px",
         zIndex: position.zIndex,
       }}
-      className={` w-full h-64 bg-${style.backgroundColor} rounded-lg ${
-        isPressed ? "border-blue-500" : "border-gray-300"
-      } touch-none select-none flex items-center justify-center cursor-pointer`}
+      className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg  touch-none select-none flex items-center justify-center cursor-pointer`}
       onMouseDown={handleMouseDown}
       onMouseMove={handleMouseMove}
       onMouseUp={handleMouseUp}
@@ -136,9 +134,7 @@ const VirtualTouchpad = ({ name, style, position }) => {
       onTouchEnd={handleTouchEnd}
     >
       <div className="text-center space-y-2">
-        <p className="text-lg font-medium">
-          {touchInfo.direction ? ` ${touchInfo.direction} swipe` : ""}
-        </p>
+        <p className="text-lg font-medium"></p>
         <div className="text-sm text-gray-600"></div>
       </div>
     </div>

@@ -47,10 +47,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               {" "}
             </ToggleButton>
           );
-        } else if (
-          component.type === "button" ||
-          component.type === "inner_joystick"
-        ) {
+        } else if (component.type === "button") {
           //set inline styles for button
           let inlineStyles = {};
           let radial;
@@ -93,8 +90,10 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               tailwindStyles += ` border-8`;
             } else if (component.border === "medium") {
               tailwindStyles += ` border-4`;
-            } else {
+            } else if (component.border === "small") {
               tailwindStyles += ` border-2`;
+            } else {
+              tailwindStyles += ` border-0`;
             }
           }
           if (component.border_color) {
@@ -143,7 +142,6 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             <Button
               key={component.name}
               name={component.name}
-              type={component.type}
               position={component.position}
               classes={component.classes}
               fontClass={component.font_style.classes}
@@ -164,6 +162,8 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.style.border) {
             if (component.style.border === "large") {
               border_style = "border-8";
+            } else if (component.style.border === "none") {
+              border_style = "border-0";
             } else if (component.style.border === "medium") {
               border_style = "border-4";
             } else {
@@ -189,8 +189,8 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
             inner_h: inner_size,
             outer_h: outer_size,
             border: border_style,
-            inner_color: component.style.inner_color,
-            outer_color: component.style.outer_color,
+            inner_color: `bg-${component.style.inner_color}`,
+            outer_color: `bg-${component.style.outer_color}`,
           };
           let positioning = {
             ...component.position,
@@ -200,8 +200,9 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               key={component.name}
               styles={styles}
               positioning={positioning}
-              inner_joystick={component.inner_joystick}
               name={component.name}
+              inner_classes={component.inner_classes}
+              outer_classes={component.outer_classes}
             ></Joystick>
           );
         } else if (component.type === "steeringWheel") {
@@ -232,6 +233,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               name={component.name}
               style={component.style}
               position={component.position}
+              classes={component.classes}
             ></Touchpad>
           );
         }

@@ -68,67 +68,32 @@ const App = () => {
         },
         children: [],
       },*/
+
       {
         id: "SectionTwo",
         type: "ButtonJoystick",
         position: {
-          top: "0%",
+          top: "-5%",
           left: "0%",
         },
         //style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
-        size: "200px",
+        size: "250px",
         distance: 0.3,
-        // outerborderWidth: "70%",
+        //outerborderWidth: "70%",
         //outerborderColor: "secondary",
         children: [
           {
             name: "joystickL",
             type: "joystick",
             position: "z-0",
-            size: { inner_height_width: 90, outer_height_width: 100 },
-            inner_joystick: {
-              name: "innerJoystick",
-              type: "inner_joystick",
-              //position: "absolute top-0 left-1/2 z-0",
-              classes: "standard-button circular-button",
-              height: "",
-              width: "",
-              size: "",
-              opacity: "low",
-              img_url:
-                "https://a-z-animals.com/media/2022/12/shutterstock_1645981366.jpg",
-              color: "neutral",
-              hover_color: "white",
-              border: "medium",
-              border_color: "primary",
-              button_text_display: (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke-width="4"
-                  stroke="currentColor"
-                  class="size-12"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="m19.5 19.5-15-15m0 0v11.25m0-11.25h11.25"
-                  />
-                </svg>
-              ),
-              font_style: {
-                classes: "button-text",
-                fontSize: "",
-                fontWeight: "",
-                color: "secondary",
-                hover_color: "primary",
-              },
-            },
+            size: { inner_height_width: 80, outer_height_width: 130 },
+            inner_classes: "standard-inner-joystick",
+            outer_classes: "standard-outer-joystick",
             style: {
-              outer_color: "white",
-              border: "large",
-              border_color: "primary",
+              inner_color: "",
+              outer_color: "",
+              border: "",
+              border_color: "",
             },
             mapping: "joystickL",
           },
@@ -149,6 +114,22 @@ const App = () => {
           bottom: "10%",
         },
         children: [
+          /*{
+            name: "touchpad1",
+            type: "touchpad",
+            classes: "standard-touchpad",
+            position: {
+              position: "absolute",
+              top: "10px",
+              left: "300px",
+              zIndex: 0,
+            },
+            style: {
+              width: "200px",
+              height: "110px",
+              //backgroundColor: "secondary",
+            },
+          },*/
           {
             name: "buttonA",
             type: "button",
@@ -186,12 +167,12 @@ const App = () => {
             size: "xl", //sm md lg xl
             img_url: "",
             color: "",
-            hover_color: "white",
-            border: "small",
-            border_color: "black",
+            hover_color: "",
+            border: "",
+            border_color: "",
             outer_container_text: "",
             middle_container_text: "Button Two",
-            button_text_display: "test 3",
+            button_text_display: "",
             font_style: {
               classes: "",
               fontSize: "xl", // xs sm base lg xl..etc.

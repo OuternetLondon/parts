@@ -21,7 +21,6 @@ function Button({
   text_display,
   container_text,
   name,
-  type,
   /* flashColor,
   hoverColor,
   fontStyle,*/
@@ -62,70 +61,48 @@ function Button({
   }
   return (
     <>
-      {type === "inner_joystick" && (
-        <button
-          onClick={() => handleClick()}
-          className={`${classes}  ${tailwindStyles}   `}
-          style={{
-            ...(radial && {
-              background: `radial-gradient(circle at 50% 75%, ${lightColor}, ${color} 50%, ${darkColor} 90%)`,
-            }),
-            ...inlineStyles,
-            ...position,
-          }}
-        >
-          <p
-            className={`${fontClass} ${fontTailwind}`}
-            style={{ ...font_style }}
+      <div
+        style={{
+          ...(angle && {
+            transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
+            position: "absolute",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transition: "transform 0.3s",
+          }),
+          ...customStyle,
+        }}
+        id="outer-btn-container"
+        className="outer-btn-container"
+      >
+        <div id="middle-btn-container" className="middle-btn-container">
+          <button
+            onClick={() => handleClick()}
+            className={`${classes}  ${tailwindStyles}   `}
+            style={{
+              ...(radial && {
+                background: `radial-gradient(circle at 50% 75%, ${lightColor}, ${color} 50%, ${darkColor} 90%)`,
+              }),
+              ...inlineStyles,
+              ...position,
+            }}
           >
-            {text_display}
-          </p>
-        </button>
-      )}
-      {type === "button" && (
-        <div
-          style={{
-            ...(angle && {
-              transform: `rotate(${angle}deg) translate(${radius}) rotate(-${angle}deg)`,
-              position: "absolute",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "transform 0.3s",
-            }),
-            ...customStyle,
-          }}
-          id="outer-btn-container"
-          className="outer-btn-container"
-        >
-          <div id="middle-btn-container" className="middle-btn-container">
-            <button
-              onClick={() => handleClick()}
-              className={`${classes}  ${tailwindStyles}   `}
-              style={{
-                ...(radial && {
-                  background: `radial-gradient(circle at 50% 75%, ${lightColor}, ${color} 50%, ${darkColor} 90%)`,
-                }),
-                ...inlineStyles,
-                ...position,
-              }}
+            <p
+              className={`${fontClass} ${fontTailwind}`}
+              style={{ ...font_style }}
             >
-              <p
-                className={`${fontClass} ${fontTailwind}`}
-                style={{ ...font_style }}
-              >
-                {text_display}
-              </p>
-            </button>
-            <span id="middle-btn-container-text">
-              {container_text.middleContainerText}
-            </span>
-          </div>
-          <span id="outer-btn-container-text">
-            {container_text.outerContainerText}
+              {text_display}
+            </p>
+          </button>
+          <span id="middle-btn-container-text">
+            {container_text.middleContainerText}
           </span>
         </div>
-      )}
+        <span id="outer-btn-container-text">
+          {container_text.outerContainerText}
+        </span>
+      </div>
     </>
   );
 }

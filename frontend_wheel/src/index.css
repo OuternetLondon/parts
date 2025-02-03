@@ -40,6 +40,19 @@
   .standard-button {
     @apply btn btn-primary btn-xl [box-shadow:inset_0_0_5px_0_#333] drop-shadow-lg active:scale-99;
   }
+
+  .standard-inner-joystick {
+    @apply [box-shadow:inset_0_0_5px_0_#333] drop-shadow-xl bg-gray-500 opacity-80;
+  }
+
+  .standard-outer-joystick {
+    @apply [box-shadow:inset_0_0_5px_0_#333] drop-shadow-xl bg-neutral-content border-2 border-black opacity-80;
+  }
+
+  .standard-touchpad {
+    @apply [box-shadow:inset_0_0_5px_0_#333] drop-shadow-xl bg-gray-700 border-2 border-black opacity-80;
+  }
+
   .radial {
     background: radial-gradient(
       circle at 50% 75%,
