@@ -60,7 +60,7 @@ function RacingWheel({ style, positioning, name }) {
       "orientation-gama": motion.orientation.gamma,
       "orientation-beta": motion.orientation.beta,
     });
-    socket.emit("controls_data", JSON);
+    socket.emit("racing_wheel_data", JSON);
   }, [user, motion, socket]);
 
   return (

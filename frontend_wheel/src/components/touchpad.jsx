@@ -83,7 +83,8 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
       `swipe${direction}`,
       `position:${touchInfo.position}`
     );
-    socket.emit("controls_data", JSON);
+    console.log("touchpad JSON", JSON);
+    socket.emit("touchpad_data", JSON);
     setIsPressed(false);
   };
 

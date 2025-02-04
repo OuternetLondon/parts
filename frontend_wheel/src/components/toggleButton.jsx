@@ -13,6 +13,7 @@ const ToggleButton = ({
   toggle_off_style,
   toggle_on_inline,
   toggle_off_inline,
+  font_style,
 }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
@@ -26,9 +27,10 @@ const ToggleButton = ({
       action = "toggleOff";
     }
     const JSON = usegenerateJSON(user, name, "toggleButton", action, null);
-    socket.emit("controls_data", JSON);
+    console.log("toggle JSON", JSON);
+    socket.emit("toggle_data", JSON);
 
-    setIsFlashing(true);
+    //setIsFlashing(true);
   }
 
   let toggle_on = classes.toggleon;
@@ -43,14 +45,23 @@ const ToggleButton = ({
               setIsOn(!isOn);
               handleClick();
             }}
+            /*onTouchStart={() => {
+              setIsOn(!isOn);
+              handleClick();
+            }}*/
+            //tabIndex="0"
             className={
               isOn
                 ? `${toggle_on} ${toggle_on_style}`
                 : `${toggleoff} ${toggle_off_style}`
             }
-            style={isOn ? { ...toggle_on_inline } : { ...toggle_off_inline }}
+            style={{
+              ...(isOn ? toggle_on_inline : toggle_off_inline),
+            }}
           >
-            <p> {isOn ? text.toggleon : text.toggleoff}</p>
+            <p className={`${font_style}`}>
+              {isOn ? text.toggleon : text.toggleoff}
+            </p>
           </button>
         </div>
       </div>

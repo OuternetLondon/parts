@@ -78,6 +78,17 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.toggle_off.size && component.toggle_off.size.width) {
             toggle_off_inline["width"] = component.toggle_off.size.width;
           }
+          let font_style;
+          if (component.font_style.fontSize) {
+            font_style += ` text-${component.font_style.fontSize}`;
+          }
+          if (component.font_style.fontWeight) {
+            font_style += ` font-${component.font_style.fontWeight}`;
+          }
+          if (component.font_style.color) {
+            font_style += ` text-${component.font_style.color}`;
+          }
+
           return (
             <ToggleButton
               key={component.id}
@@ -88,6 +99,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               toggle_off_style={toggle_off}
               toggle_on_inline={toggle_on_inline}
               toggle_off_inline={toggle_off_inline}
+              font_style={font_style}
             ></ToggleButton>
           );
         } else if (component.type === "button") {
@@ -107,6 +119,10 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           }
           if (component.color) {
             tailwindStyles += ` bg-${component.color}`;
+            tailwindStyles += ` btn-${component.color}`;
+          } else {
+            tailwindStyles += ` bg-primary`;
+            //tailwindStyles += ` btn-primary`;
           }
 
           if (component.img_url) {
@@ -125,9 +141,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           if (component.size) {
             tailwindStyles += ` btn-${component.size}`;
           }
-          if (component.type === "inner_joystick") {
-            tailwindStyles += `no-animation`;
-          }
+
           if (component.border) {
             if (component.border === "large") {
               tailwindStyles += ` border-8`;
@@ -148,6 +162,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               document.documentElement
             ).getPropertyValue(`--color-${component.radial}`);
             console.log("yes radial", radial);
+            // tailwindStyles += ` btn-${component.radial}`;
           } else {
             console.log("no radial");
             radial = false;

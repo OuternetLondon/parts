@@ -38,7 +38,7 @@
 
 @layer components {
   .standard-button {
-    @apply btn btn-primary btn-xl [box-shadow:inset_0_0_5px_0_#333] drop-shadow-lg active:scale-99;
+    @apply btn  btn-xl [box-shadow:inset_0_0_5px_0_#333] drop-shadow-lg active:scale-99;
   }
 
   .standard-inner-joystick {

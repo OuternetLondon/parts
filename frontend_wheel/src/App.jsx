@@ -14,6 +14,10 @@ import { on } from "ws";
 import useSetColors from "./hooks/useSetColors";
 import ToggleButton from "./components/toggleButton";
 import { useStyles } from "./hooks/useStyles";
+import buttonOne from "./assets/button_one.jpg";
+import buttonTwo from "./assets/button_two.jpg";
+import buttonThree from "./assets/button_three.jpg";
+import buttonFour from "./assets/button_four.jpg";
 
 import "./index.css";
 import { use } from "react";
@@ -54,6 +58,112 @@ const App = () => {
       cell_size: "1fr",
     },
     components: [
+      {
+        id: "GridSection",
+        type: "GridLayout",
+        style: {
+          //     column_number: 2,
+          //   row_number: 2,
+          //gap: "10px",
+          //cell_size: "1fr",
+        },
+        size: { width: "300px" },
+        position: {
+          left: "5%",
+          bottom: "10%",
+        },
+        children: [
+          {
+            name: "buttonA",
+            type: "button",
+            //position: "absolute top-0 left-1/2 z-0",
+            classes: " standard-button circular-button ",
+            height: "",
+            width: "",
+            size: "",
+            img_url: "",
+            color: "secondary",
+            hover_color: "",
+            border: "",
+            border_color: "",
+            button_text_display: "",
+            radial: "",
+            opacity: "",
+            font_style: {
+              classes: "",
+              fontSize: "",
+              fontWeight: "", //light, normal, medium, bold, extrabold
+              color: "",
+              hover_color: "",
+            },
+            position: {
+              position: "absolute",
+            },
+          },
+          {
+            name: "touchpad1",
+            type: "touchpad",
+            classes: "standard-touchpad",
+            position: {
+              //   position: "absolute",
+              //  top: "10px",
+              // left: "300px",
+              zIndex: 0,
+            },
+            style: {
+              width: "200px",
+              height: "110px",
+              //backgroundColor: "secondary",
+            },
+          },
+          {
+            name: "steeringWheel1",
+            type: "steeringWheel",
+            position: { position: "absolute", top: "-50px", left: "310px" },
+            size: { width: "300px", height: "300px" },
+            style: {
+              outer_rim_color: "neutral",
+              spoke_color: "primary",
+              hub_color: "secondary",
+              center_marker_color: "secondary",
+            },
+            mapping: "steering",
+          },
+          {
+            name: "toggleButtonOne",
+            type: "toggle_button",
+            // toggle_on_classes: "toggle-on-default",
+            // toggle_off_classes: "toggle-off-default",
+            font_style: {
+              classes: "",
+              fontSize: "",
+              fontWeight: "", //light, normal, medium, bold, extrabold
+              color: "",
+            },
+            toggle_on: {
+              classes: "toggle-on-default",
+              text_display: "ON",
+              /* color: "success",
+              hover_color: "warning",
+              border: "large",
+              borderColor: "red-500",
+              size: {
+                height: "50px",
+                width: "100px",
+              },*/
+            },
+            toggle_off: {
+              classes: "toggle-off-default",
+              text_display: "OFF",
+              /*  color: "error",
+              hover_color: "warning",
+              border: "large",
+              borderColor: "primary",
+              size: { height: "50px", width: "100px" },*/
+            },
+          },
+        ],
+      },
       /*{
         id: "flex_section",
         type: "FlexLayout",
@@ -75,10 +185,11 @@ const App = () => {
         position: {
           top: "-5%",
           left: "0%",
+          zIndex: -2,
         },
         //style: "absolute top-0 left-[60%] z-0 justify-center items-center flex",
-        size: "450px",
-        distance: 0.4,
+        size: "350px",
+        distance: 0.3,
         //outerborderWidth: "70%",
         //outerborderColor: "secondary",
         children: [
@@ -105,13 +216,14 @@ const App = () => {
             height: "",
             width: "",
             size: "",
-            img_url: "./src/assets/button_one.jpg",
+            img_url: buttonOne,
             color: "",
             hover_color: "",
             border: "large",
             border_color: "primary",
             button_text_display: "",
             radial: "",
+            opacity: "",
             font_style: {
               classes: "",
               fontSize: "",
@@ -131,7 +243,7 @@ const App = () => {
             height: "",
             width: "",
             size: "",
-            img_url: "./src/assets/button_two.jpg",
+            img_url: buttonTwo,
             color: "",
             hover_color: "",
             border: "large",
@@ -157,7 +269,7 @@ const App = () => {
             height: "",
             width: "",
             size: "",
-            img_url: "./src/assets/button_three.jpg",
+            img_url: buttonThree,
             color: "",
             hover_color: "",
             border: "large",
@@ -183,7 +295,7 @@ const App = () => {
             height: "",
             width: "",
             size: "",
-            img_url: "./src/assets/button_four.jpg",
+            img_url: buttonFour,
             color: "",
             hover_color: "",
             border: "large",

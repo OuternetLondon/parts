@@ -39,6 +39,26 @@ io.on("connection", (socket) => {
   socket.on("controls_data", (JSON) => {
     console.log("Message received:", JSON);
   });
+  socket.on("button_data", (JSON) => {
+    socket.emit("button_action", JSON);
+    console.log("Button data", JSON);
+  });
+  socket.on("joystick_data", (JSON) => {
+    socket.emit("joystick_action", JSON);
+    console.log("Joystick data", JSON);
+  });
+  socket.on("racing_wheel_data", (JSON) => {
+    socket.emit("racing_wheel_action", JSON);
+    console.log("Racing wheel data", JSON);
+  });
+  socket.on("toggle_data", (JSON) => {
+    socket.emit("toggle_action", JSON);
+    console.log("Toggle data", JSON);
+  });
+  socket.on("touchpad_data", (JSON) => {
+    socket.emit("touchpad_action", JSON);
+    console.log("Touchpad data", JSON);
+  });
 
   socket.on("disconnect", () => {
     //users.delete(socket.id)

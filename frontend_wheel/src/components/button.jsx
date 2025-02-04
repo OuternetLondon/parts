@@ -36,16 +36,15 @@ function Button({
   angle,
   radius,
 }) {
-  console.log("fontstyle button", font_style);
   let color;
   let lightColor;
   let darkColor;
   if (radial) {
     color = tinycolor(radial.trim()).toHexString();
-    console.log("color radial", color);
+    // console.log("color radial", color);
     lightColor = tinycolor(color).lighten(45).toHexString();
     darkColor = tinycolor(color).darken(40).toHexString();
-    console.log("darkColor", darkColor);
+    //console.log("darkColor", darkColor);
     color = tinycolor(color).toHexString();
   }
 
@@ -53,11 +52,8 @@ function Button({
   const socket = useSocket();
 
   function handleClick() {
-    if (type === "inner_joystick") {
-      return;
-    }
     const JSON = generateJSON(user, name, "button", "click", null);
-    socket.emit("controls_data", JSON);
+    socket.emit("button_data", JSON);
   }
   return (
     <>
