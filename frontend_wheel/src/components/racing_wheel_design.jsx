@@ -2,16 +2,33 @@ import { useRef, useEffect } from "react";
 const RacingWheelDesign = ({ rotation, style }) => {
   const canvasRef = useRef(null);
 
-  let outer_rim_color = getComputedStyle(
-    document.documentElement
-  ).getPropertyValue(`--color-${style.outer_rim_color}`);
+  let outer_rim_color;
+  if (style.outer_rim_color) {
+    outer_rim_color = getComputedStyle(
+      document.documentElement
+    ).getPropertyValue(`--color-${style.outer_rim_color}`);
+  } else {
+    outer_rim_color = "#000000";
+  }
 
-  let spoke_color = getComputedStyle(document.documentElement).getPropertyValue(
-    `--color-${style.spoke_color}`
-  );
-  let hub_color = getComputedStyle(document.documentElement).getPropertyValue(
-    `--color-${style.hub_color}`
-  );
+  let spoke_color;
+  if (style.spoke_color) {
+    spoke_color = getComputedStyle(document.documentElement).getPropertyValue(
+      `--color-${style.spoke_color}`
+    );
+  } else {
+    spoke_color = "#808080";
+  }
+
+  let hub_color;
+  if (style.hub_color) {
+    hub_color = getComputedStyle(document.documentElement).getPropertyValue(
+      `--color-${style.hub_color}`
+    );
+  } else {
+    hub_color = "#654321";
+  }
+
   let center_marker_color = getComputedStyle(
     document.documentElement
   ).getPropertyValue(`--color-${style.center_marker_color}`);

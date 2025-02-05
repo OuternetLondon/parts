@@ -42,6 +42,7 @@ const App = () => {
         { name: "error", value: "#ff637d" },
         { name: "black", value: "#000000" },
         { name: "white", value: "#ffffff" },
+        { name: "gray-500", value: "#6a7282" },
         { name: "blue-500", value: "#0000ff" },
         { name: "red-500", value: "#ff0000" },
         { name: "green-500", value: "#00ff00" },
@@ -126,7 +127,7 @@ const App = () => {
               size: { width: "300px", height: "300px" },
               style: {
                 outer_rim_color: "neutral",
-                spoke_color: "primary",
+                spoke_color: "gray-500",
                 hub_color: "secondary",
                 center_marker_color: "secondary",
               },
