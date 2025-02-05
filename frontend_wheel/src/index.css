@@ -24,6 +24,14 @@
   align-items: center;
 }
 
+.font-dynamic {
+  font-family: var(--global-font);
+}
+
+:root {
+  --global-font: "Arial", "Helvetica", "sans-serif";
+}
+
 .border-2 {
   border-width: var(--border-2);
 }

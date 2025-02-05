@@ -84,6 +84,8 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
           }
           if (component.font_style.fontWeight) {
             font_style += ` font-${component.font_style.fontWeight}`;
+          } else {
+            font_style += ` font-normal`;
           }
           if (component.font_style.color) {
             font_style += ` text-${component.font_style.color}`;

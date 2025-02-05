@@ -85,7 +85,7 @@ function Button({
             }}
           >
             <p
-              className={`${fontClass} ${fontTailwind}`}
+              className={` ${fontClass} ${fontTailwind} `}
               style={{ ...font_style }}
             >
               {text_display}

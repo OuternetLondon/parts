@@ -5,7 +5,8 @@ const useSetColors = (
   button_size,
   font_size,
   border_thickness,
-  font_weight
+  font_weight,
+  global_font
 ) => {
   color_object.forEach((color) => {
     document.documentElement.style.setProperty(
@@ -100,6 +101,11 @@ const useSetColors = (
       `${weight[1] * font_weight}`
     );
   });
+
+  document.documentElement.style.setProperty(
+    "--global-font",
+    `${global_font[0]}, ${global_font[1]}, ${global_font[2]}`
+  );
 
   return;
 };
