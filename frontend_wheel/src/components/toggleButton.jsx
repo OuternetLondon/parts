@@ -28,7 +28,7 @@ const ToggleButton = ({
     }
     const JSON = usegenerateJSON(user, name, "toggleButton", action, null);
     console.log("toggle JSON", JSON);
-    socket.emit("toggle_data", JSON);
+    socket.emit("controls_data", JSON);
 
     //setIsFlashing(true);
   }

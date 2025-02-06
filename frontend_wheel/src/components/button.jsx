@@ -53,7 +53,7 @@ function Button({
 
   function handleClick() {
     const JSON = generateJSON(user, name, "button", "click", null);
-    socket.emit("button_data", JSON);
+    socket.emit("controls_data", JSON);
   }
   return (
     <>

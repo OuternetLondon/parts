@@ -145,7 +145,7 @@ const Joystick = ({
       angle: position.angle,
       distance: position.distance,
     });
-    socket.emit("joystick_data", JSON);
+    socket.emit("controls_data", JSON);
   }, [user, position, socket]);
 
   const visualPosition = getPolarToCartesian(position.angle, position.distance);
