@@ -13,7 +13,7 @@ const generateJSON = (userId, name, controlType, action, data) => {
   };
 };
 
-const VirtualTouchpad = ({ name, style, position, classes }) => {
+const VirtualTouchpad = ({ name, style, position, classes, border }) => {
   const { user } = useContext(UserContext);
   const socket = useSocket();
 
@@ -189,7 +189,7 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
           width: style.width ? style.width : "200px",
           zIndex: position.zIndex,
         }}
-        className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg touch-none select-none flex items-center justify-center cursor-pointer`}
+        className={`${classes} ${border} w-full h-64 bg-${style.backgroundColor} rounded-lg touch-none select-none flex items-center justify-center cursor-pointer`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

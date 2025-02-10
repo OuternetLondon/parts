@@ -298,6 +298,21 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
         } else if (component.type === "dPad") {
           return <DPad position={component.position}></DPad>;
         } else if (component.type === "touchpad") {
+          let border;
+          if (component.style.border) {
+            if (component.style.border === "large") {
+              border = "border-8";
+            } else if (component.style.border === "medium") {
+              border = "border-4";
+            } else if (component.style.border === "small") {
+              border = "border-2";
+            } else {
+              border = "border-0";
+            }
+          }
+          if (component.style.border_color) {
+            border += ` border-${component.style.border_color}`;
+          }
           return (
             <Touchpad
               key={component.id}
@@ -305,6 +320,7 @@ const Loop_components = ({ component_array, customStyle, angle, radius }) => {
               style={component.style}
               position={component.position}
               classes={component.classes}
+              border={border}
             ></Touchpad>
           );
         }

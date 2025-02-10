@@ -117,7 +117,9 @@ const App = () => {
               style: {
                 width: "200px",
                 height: "110px",
-                //backgroundColor: "secondary",
+                backgroundColor: "secondary",
+                border: "large",
+                border_color: "primary",
               },
             },
             {
