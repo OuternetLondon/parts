@@ -24,65 +24,128 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
     startY: 0,
     moveX: 0,
     moveY: 0,
+    endX: 0,
+    endY: 0,
     direction: "",
     position: "",
+    touchEvents: [],
+    totalDistance: 0,
+    pressure: 0,
+    touchType: "",
   });
 
   // Minimum distance for swipe detection
   const MIN_SWIPE_DISTANCE = 50;
 
-  const handleStart = (clientX, clientY) => {
+  const handleStart = (clientX, clientY, event) => {
     const rect = touchpadRef.current.getBoundingClientRect();
     setIsPressed(true);
+
+    // Determine touch characteristics
+    const touchType = event.type.includes("mouse")
+      ? "mouse"
+      : event.touches && event.touches.length > 1
+      ? "multi-touch"
+      : "single-touch";
+
+    const pressure = event.type.includes("mouse")
+      ? event.pressure || 0.5
+      : event.touches[0]?.force || 0.5;
 
     setTouchInfo({
       startX: clientX,
       startY: clientY,
       moveX: 0,
       moveY: 0,
+      endX: 0,
+      endY: 0,
       direction: "",
       position: clientX - rect.left < rect.width / 2 ? "left" : "right",
+      touchEvents: [
+        {
+          type: "touchstart",
+          x: clientX,
+          y: clientY,
+          timestamp: new Date().toISOString(),
+        },
+      ],
+      totalDistance: 0,
+      pressure: pressure,
+      touchType: touchType,
     });
   };
 
-  const handleMove = (clientX, clientY) => {
+  const handleMove = (clientX, clientY, event) => {
     if (!isPressed) return;
 
-    setTouchInfo((prev) => ({
-      ...prev,
-      moveX: clientX - prev.startX,
-      moveY: clientY - prev.startY,
-    }));
+    setTouchInfo((prev) => {
+      const moveX = clientX - prev.startX;
+      const moveY = clientY - prev.startY;
+      const totalDistance = Math.sqrt(moveX * moveX + moveY * moveY);
+
+      const newTouchEvents = [
+        ...prev.touchEvents,
+        {
+          type: "touchmove",
+          x: clientX,
+          y: clientY,
+          timestamp: new Date().toISOString(),
+        },
+      ];
+
+      return {
+        ...prev,
+        moveX,
+        moveY,
+        totalDistance,
+        touchEvents: newTouchEvents,
+      };
+    });
   };
 
-  const handleEnd = () => {
+  const handleEnd = (event) => {
     if (!isPressed) return;
 
-    const { moveX, moveY } = touchInfo;
+    const { moveX, moveY, touchEvents } = touchInfo;
     const absX = Math.abs(moveX);
     const absY = Math.abs(moveY);
 
-    if (Math.max(absX, absY) < MIN_SWIPE_DISTANCE) {
-      setTouchInfo((prev) => ({ ...prev, direction: "tap" }));
-      setIsPressed(false);
-      return;
-    }
-
     let direction = "";
-    if (absX > absY) {
+    if (Math.max(absX, absY) < MIN_SWIPE_DISTANCE) {
+      direction = "tap";
+    } else if (absX > absY) {
       direction = moveX > 0 ? "right" : "left";
     } else {
       direction = moveY > 0 ? "down" : "up";
     }
 
-    setTouchInfo((prev) => ({ ...prev, direction }));
-    const JSON = generateJSON(
-      user,
-      name,
-      "touchpad",
-      `swipe${direction}`,
-      `position:${touchInfo.position}`
-    );
+    const endEvent = {
+      type: "touchend",
+      x: touchEvents[touchEvents.length - 1].x,
+      y: touchEvents[touchEvents.length - 1].y,
+      timestamp: new Date().toISOString(),
+    };
+
+    const updatedTouchInfo = {
+      ...touchInfo,
+      direction,
+      endX: endEvent.x,
+      endY: endEvent.y,
+      touchEvents: [...touchEvents, endEvent],
+    };
+
+    setTouchInfo(updatedTouchInfo);
+
+    const JSON = generateJSON(user, name, "touchpad", `swipe${direction}`, {
+      position: updatedTouchInfo.position,
+      startCoords: { x: touchInfo.startX, y: touchInfo.startY },
+      endCoords: { x: updatedTouchInfo.endX, y: updatedTouchInfo.endY },
+      moveDistance: { x: moveX, y: moveY },
+      totalDistance: touchInfo.totalDistance,
+      touchType: touchInfo.touchType,
+      pressure: touchInfo.pressure,
+    });
+
     console.log("touchpad JSON", JSON);
     socket.emit("controls_data", JSON);
     setIsPressed(false);
@@ -90,30 +153,30 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
 
   // Mouse event handlers
   const handleMouseDown = (e) => {
-    handleStart(e.clientX, e.clientY);
+    handleStart(e.clientX, e.clientY, e);
   };
 
   const handleMouseMove = (e) => {
-    handleMove(e.clientX, e.clientY);
+    handleMove(e.clientX, e.clientY, e);
   };
 
-  const handleMouseUp = () => {
-    handleEnd();
+  const handleMouseUp = (e) => {
+    handleEnd(e);
   };
 
   // Touch event handlers
   const handleTouchStart = (e) => {
     const touch = e.touches[0];
-    handleStart(touch.clientX, touch.clientY);
+    handleStart(touch.clientX, touch.clientY, e);
   };
 
   const handleTouchMove = (e) => {
     const touch = e.touches[0];
-    handleMove(touch.clientX, touch.clientY);
+    handleMove(touch.clientX, touch.clientY, e);
   };
 
-  const handleTouchEnd = () => {
-    handleEnd();
+  const handleTouchEnd = (e) => {
+    handleEnd(e);
   };
 
   return (
@@ -126,7 +189,7 @@ const VirtualTouchpad = ({ name, style, position, classes }) => {
           width: style.width ? style.width : "200px",
           zIndex: position.zIndex,
         }}
-        className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg  touch-none select-none flex items-center justify-center cursor-pointer`}
+        className={`${classes} w-full h-64 bg-${style.backgroundColor} rounded-lg touch-none select-none flex items-center justify-center cursor-pointer`}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
